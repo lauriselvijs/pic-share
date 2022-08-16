@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Image;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('app');
+// All images 
+Route::get("/", function () {
+    return view("images", [
+        "heading" => "Image Gallery",
+        "images" => Image::all()
+    ]);
+});
+
+// Single image
+Route::get('/images/{id}', function ($id) {
+    return view(
+        "image",
+        [
+            "image" => Image::find($id)
+        ]
+    );
 });
