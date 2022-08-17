@@ -31,3 +31,11 @@ Route::get('/images/{id}', function ($id) {
         ]
     );
 });
+
+Route::get('/sign-up', function () {
+    return view("sign-up");
+});
+
+Route::get('/login', function () {
+    return view("login");
+});
