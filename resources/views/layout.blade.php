@@ -6,22 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
     <title>PicShare</title>
 </head>
 
 
 
 <body>
-    <header
-        class="h-20 sm:h-10 pr-12 pl-12 sm:pr-48 sm:pl-48 bg-black text-base font-normal text-white flex gap-8 justify-between sm:justify-end items-center transition-all">
-        <ul class="sm:order-3 hidden sm:flex gap-8 justify-between items-center whitespace-nowrap">
+    <header x-data="{ openHamburgerMenuModal: false }"
+        class="h-20 sm:h-10 pr-6 pl-6 sm:pr-40 sm:pl-40 bg-black text-base font-normal text-white flex gap-8 justify-start sm:justify-end items-center transition-all">
+        <ul class="sm:order-2 hidden sm:flex gap-8 justify-between items-center whitespace-nowrap">
             <li class="cursor-pointer hover:text-sunset"><a href="/sign-up"> Sign up </a></li>
             <li class="cursor-pointer hover:text-sunset"><a href="/login">Login</a></li>
         </ul>
-        {{--
-        TODO:
-        [] - When search bar opens remove hambuger menu and logo PicShare of website --}}
-        <button aria-label="Hamburger menu" class="order-2 sm:order-3 block sm:hidden cursor-pointer">
+        <button x-on:click="openHamburgerMenuModal = true" aria-label="Hamburger menu"
+            class="order-1 block sm:hidden cursor-pointer">
             <svg class=" fill-white hover:fill-sunset w-8 h-8" viewBox="0 0 100 80">
                 <rect width="100" height="20"></rect>
                 <rect y="30" width="100" height="20"></rect>
@@ -30,15 +29,19 @@
         </button>
         <!-- Hamburger modal -->
         <div id="hamburgerMenu" aria-hidden="true"
-            class="hidden sm:hidden fixed top-0 right-0 left-0 z-50 bg-shadow bg-opacity-40 backdrop-blur-sm	transition-all">
+            class="sm:hidden fixed top-0 right-0 left-0 z-50 bg-shadow bg-opacity-40 backdrop-blur-sm transition-all">
             <!-- Hamburger modal content -->
-            <div class="bg-sunset rounded-br-lg shadow h-screen w-1/2">
+            <div class="bg-sunset rounded-br-lg shadow h-screen w-1/2" x-show="openHamburgerMenuModal"
+                x-transition:enter="transition-all duration-300" x-transition:enter-start="w-0 opacity-0"
+                x-transition:enter-end="w-1/2" x-transition:leave="transition-all duration-300"
+                x-transition:leave-start="w-1/2" x-transition:leave-end="w-0">
                 <!-- Hamburger modal header -->
-                <div class="flex justify-between items-start p-4 rounded-t border-b border-white">
+                <div class="flex justify-between items-start p-4 rounded-t border-b border-white"
+                    x-show="openHamburgerMenuModal" x-transition.opacity>
                     <h3 class="text-xl font-bold text-black">
                         Menu
                     </h3>
-                    <button type="button"
+                    <button type="button" x-on:click="openHamburgerMenuModal = false"
                         class="text-black bg-transparent hover:bg-shadow hover:text-sunset rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                         data-modal-toggle="hamburgerMenu">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -51,7 +54,7 @@
                     </button>
                 </div>
                 <!-- Hamburger modal body -->
-                <div class="p-6">
+                <div class="p-6" x-show="openHamburgerMenuModal" x-transition.opacity>
                     <ul class="text-black">
                         <li class="cursor-pointer hover:text-shadow"><a href="/sign-up"> Sign up </a></li>
                         <li class="cursor-pointer hover:text-shadow"><a href="/login">Login</a></li>
@@ -59,26 +62,18 @@
                 </div>
             </div>
         </div>
-        <a href="/" class="flex items-center order-3 sm:order-1 sm:flex-1 flex-none font-bold text-4xl">
+        <a href="/" class="flex items-center order-2 sm:order-1 sm:flex-1 flex-none font-bold text-4xl">
             <img class="w-8 h-8 mr-2" src={{asset("images/logo.png") }} alt="logo">
             PicShare</a>
-        <form class="flex items-center gap-2 order-4 sm:order-2 w-1/4">
-            <label for="simple-search" class="sr-only">Search</label>
-            <input type="text" id="simple-search" class="bg-white text-black text-base block w-full p-1 pl-8"
-                placeholder="Search" required>
-            <button aria-label="Search" class="block cursor-pointer">
-                <svg class=" fill-white hover:fill-sunset w-8 h-8 sm:w-4 sm:h-4" viewBox="0 0 16 16">
-                    <path
-                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                </svg>
-            </button>
-        </form>
     </header>
     <main>
         @yield("content")
     </main>
 
-    <footer class="bg-black text-white transition-all">
+    <div>
+
+    </div>
+    <footer class="bg-black text-white transition-all sm:px-40">
         <div class="grid grid-cols-2 gap-8 py-8 px-6 md:grid-cols-4">
             <div>
                 <h2 class="mb-6 text-sm font-semibold uppercase">Company</h2>
