@@ -13,13 +13,9 @@
 
 
 <body>
-    <header x-data="{ openHamburgerMenuModal: false }"
-        class="h-20 sm:h-10 pr-6 pl-6 sm:pr-40 sm:pl-40 bg-black text-base font-normal text-white flex gap-8 justify-start sm:justify-end items-center transition-all">
-        <ul class="sm:order-2 hidden sm:flex gap-8 justify-between items-center whitespace-nowrap">
-            <li class="cursor-pointer hover:text-sunset"><a href="/new-image"> Add new image </a></li>
-            <li class="cursor-pointer hover:text-sunset"><a href="/sign-up"> Sign up </a></li>
-            <li class="cursor-pointer hover:text-sunset"><a href="/login">Login</a></li>
-        </ul>
+    <header
+        class="h-20 sm:h-10 pr-6 pl-6 sm:pr-40 sm:pl-40 bg-black text-base font-normal text-white flex gap-8 justify-start sm:justify-end items-center transition-all"
+        x-data="{ openHamburgerMenuModal: $persist(false) }">
         <button x-on:click="openHamburgerMenuModal = true" aria-label="Hamburger menu"
             class="order-1 block sm:hidden cursor-pointer">
             <svg class=" fill-white hover:fill-sunset w-8 h-8" viewBox="0 0 100 80">
@@ -28,44 +24,74 @@
                 <rect y="60" width="100" height="20"></rect>
             </svg>
         </button>
-        <!-- Hamburger modal -->
-        <div id="hamburgerMenu" aria-hidden="true"
-            class="sm:hidden fixed top-0 right-0 left-0 z-50 bg-shadow bg-opacity-40 backdrop-blur-sm transition-all">
-            <!-- Hamburger modal content -->
-            <div class="bg-sunset rounded-br-lg shadow h-screen w-1/2" x-show="openHamburgerMenuModal"
-                x-transition:enter="transition-all duration-300" x-transition:enter-start="w-0 opacity-0"
-                x-transition:enter-end="w-1/2" x-transition:leave="transition-all duration-300"
-                x-transition:leave-start="w-1/2" x-transition:leave-end="w-0">
-                <!-- Hamburger modal header -->
-                <div class="flex justify-between items-start p-4 rounded-t border-b border-white"
-                    x-show="openHamburgerMenuModal" x-transition.opacity>
-                    <h3 class="text-xl font-bold text-black">
-                        Menu
-                    </h3>
-                    <button type="button" x-on:click="openHamburgerMenuModal = false"
-                        class="text-black bg-transparent hover:bg-shadow hover:text-sunset rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                        data-modal-toggle="hamburgerMenu">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </div>
-                <!-- Hamburger modal body -->
-                <div class="p-6" x-show="openHamburgerMenuModal" x-transition.opacity>
-                    <ul class="text-black">
-                        <li class="cursor-pointer hover:text-shadow"><a href="/sign-up"> Sign up </a></li>
-                        <li class="cursor-pointer hover:text-shadow"><a href="/login">Login</a></li>
-                    </ul>
+        <template x-if="true">
+            <!-- Hamburger modal -->
+            <div id="hamburgerMenu" aria-hidden="true" x-show="openHamburgerMenuModal"
+                class="sm:hidden fixed top-0 right-0 left-0 z-50 bg-shadow bg-opacity-40 backdrop-blur-sm transition-all">
+                <!-- Hamburger modal content -->
+                <div class="bg-sunset rounded-br-lg shadow h-screen w-1/2" x-show="openHamburgerMenuModal"
+                    x-transition:enter="transition-all duration-300" x-transition:enter-start="w-0 opacity-0"
+                    x-transition:enter-end="w-1/2" x-transition:leave="transition-all duration-300"
+                    x-transition:leave-start="w-1/2" x-transition:leave-end="w-0">
+                    <!-- Hamburger modal header -->
+                    <div class="flex justify-between items-start p-4 rounded-t border-b border-white"
+                        x-show="openHamburgerMenuModal" x-transition.opacity>
+                        <h3 class="text-xl font-bold text-black">
+                            Menu
+                        </h3>
+                        <button type="button" x-on:click="openHamburgerMenuModal = false"
+                            class="text-black bg-transparent hover:bg-shadow hover:text-sunset rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                            data-modal-toggle="hamburgerMenu">
+                            <svg aria-hidden="true" class="w-5 h-5 viewBox=" 0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" fill="currentColor"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Hamburger modal body -->
+                    <div class="p-6" x-show="openHamburgerMenuModal" x-transition.opacity>
+                        <ul class="text-black">
+                            <li class="cursor-pointer hover:text-shadow"><a href="/sign-up"> Sign up </a></li>
+                            <li class="cursor-pointer hover:text-shadow"><a href="/login">Login</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+        </template>
+        <div class="flex items-center order-2 sm:order-1 sm:flex-1 flex-none font-bold text-4xl cursor-default">
+            <a href="/">
+                <img class="w-8 h-8 mr-2 cursor-pointer" src={{asset("images/logo.png") }} alt="logo"></a>
+            <a href="/"><span class="hover:text-sunset cursor-pointer">PicShare</span></a>
         </div>
-        <a href="/" class="flex items-center order-2 sm:order-1 sm:flex-1 flex-none font-bold text-4xl">
-            <img class="w-8 h-8 mr-2" src={{asset("images/logo.png") }} alt="logo">
-            PicShare</a>
+        <ul class="sm:order-2 hidden sm:flex gap-8 justify-between items-center whitespace-nowrap">
+            <li class="cursor-pointer hover:text-sunset"><a href="/new-image"> Add new image </a></li>
+            <li class="cursor-pointer hover:text-sunset"><a href="/sign-up"> Sign up </a></li>
+            <li class="cursor-pointer hover:text-sunset"><a href="/login">Login</a></li>
+        </ul>
+        <div class="order-3 flex-1 flex justify-end mx-8">
+            <template x-if="true">
+                <button class="fill-white hover:fill-sunset" aria-label="Dark mode" x-data="{darkMode: $persist(false)}"
+                    x-on:click="darkMode = !darkMode">
+                    <svg x-show="darkMode" width="24" height="24" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <title>Sun</title>
+                        <path
+                            d="M11 3a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0V3zm0 16a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm1-2a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-9-2a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2H3zm16 0a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2h-2zm-.707-8.707a1 1 0 0 1 1.414 1.414l-1.581 1.581a1 1 0 0 1-1.414-1.414l1.58-1.581zM5.707 19.707a1 1 0 1 1-1.414-1.414l1.581-1.581a1 1 0 1 1 1.414 1.414l-1.58 1.581zm-1.414-14a1 1 0 0 1 1.414-1.414l1.581 1.581a1 1 0 0 1-1.414 1.414l-1.581-1.58zm15.414 12.586a1 1 0 0 1-1.414 1.414l-1.581-1.581a1 1 0 0 1 1.414-1.414l1.581 1.58z" />
+                    </svg>
+                    <svg x-show="!darkMode" width="24" height="24" viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <title>Moon</title>
+                        <path
+                            d="M13.2 11.9c-4.5 0-8.1-3.6-8.1-8.1 0-1.4 0.3-2.7 0.9-3.8-3.4 0.9-6 4.1-6 7.9 0 4.5 3.6 8.1 8.1 8.1 3.1 0 5.8-1.8 7.2-4.4-0.6 0.2-1.3 0.3-2.1 0.3zM8.1 15c-3.9 0-7.1-3.2-7.1-7.1 0-2.5 1.3-4.7 3.3-6-0.2 0.6-0.2 1.2-0.2 1.9 0 5 4.1 9.1 9.1 9.2-1.4 1.2-3.2 2-5.1 2z">
+                        </path>
+                    </svg>
+                </button>
+            </template>
+
+        </div>
     </header>
     <main>
         @yield("content")

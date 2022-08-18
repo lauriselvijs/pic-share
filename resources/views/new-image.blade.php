@@ -42,7 +42,7 @@ Add Image
                         <input hidden aria-describedby="image" id="image" type="file" accept="image/png, image/jpeg"
                             x-on:change="files = Object.values($event.target.files)">
                         <span title="Click to remove" class="text-base font-medium text-black cursor-pointer"
-                            x-text="files && files.map(file => file.name).join(', ')" @click="files = null"></span>
+                            x-text="files && files.map(file => file.name).join(', ')" x-on:click="files = null"></span>
                     </div>
                     <button type="submit"
                         class="w-full text-white bg-black hover:bg-shadow focus:ring-4 focus:outline-none focus:ring-sunset font-medium text-base px-5 py-2.5 text-center">Save
