@@ -1,5 +1,9 @@
 @extends("layout")
 
+@section("title")
+Sign Up
+@endsection
+
 @section("content")
 <div class="bg-sunset">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto">
@@ -61,7 +65,7 @@
                         class="w-full text-white bg-black hover:bg-shadow focus:ring-4 focus:outline-none focus:ring-sunset font-medium text-base px-5 py-2.5 text-center">Create
                         an account</button>
                     <p class="text-sm font-light text-black">
-                        Already have an account? <a href="#" class="font-medium text-black hover:underline">Login
+                        Already have an account? <a href="/login" class="font-medium text-black hover:underline">Login
                             here</a>
                     </p>
                 </form>

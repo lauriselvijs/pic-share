@@ -39,3 +39,7 @@ Route::get('/sign-up', function () {
 Route::get('/login', function () {
     return view("login");
 });
+
+Route::get('/new-image', function () {
+    return view("new-image");
+});

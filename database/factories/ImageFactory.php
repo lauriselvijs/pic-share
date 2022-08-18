@@ -19,7 +19,7 @@ class ImageFactory extends Factory
         return [
             "title" =>  rtrim(fake()->sentence(3), "."),
             "author" => fake()->name(),
-            "tags" => "history, forest, nature"
+            "tags" => "History, Forest, Nature"
         ];
     }
 }

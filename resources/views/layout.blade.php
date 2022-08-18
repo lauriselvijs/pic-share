@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite('resources/css/app.css')
     @vite('resources/js/app.js')
-    <title>PicShare</title>
+    @vite('resources/css/app.css')
+    <title>PicShare - @yield('title')</title>
 </head>
 
 
@@ -16,6 +16,7 @@
     <header x-data="{ openHamburgerMenuModal: false }"
         class="h-20 sm:h-10 pr-6 pl-6 sm:pr-40 sm:pl-40 bg-black text-base font-normal text-white flex gap-8 justify-start sm:justify-end items-center transition-all">
         <ul class="sm:order-2 hidden sm:flex gap-8 justify-between items-center whitespace-nowrap">
+            <li class="cursor-pointer hover:text-sunset"><a href="/new-image"> Add new image </a></li>
             <li class="cursor-pointer hover:text-sunset"><a href="/sign-up"> Sign up </a></li>
             <li class="cursor-pointer hover:text-sunset"><a href="/login">Login</a></li>
         </ul>

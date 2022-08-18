@@ -1,5 +1,9 @@
 @extends("layout")
 
+@section("title")
+Login
+@endsection
+
 @section("content")
 <div class="bg-sunset">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto">
