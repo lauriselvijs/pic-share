@@ -15,7 +15,7 @@
 <body>
     <header
         class="h-20 sm:h-10 pr-6 pl-6 sm:pr-40 sm:pl-40 bg-black text-base font-normal text-white flex gap-8 justify-start sm:justify-end items-center transition-all"
-        x-data="{ openHamburgerMenuModal: $persist(false) }">
+        x-data="{ openHamburgerMenuModal: false }">
         <button x-on:click="openHamburgerMenuModal = true" aria-label="Hamburger menu"
             class="order-1 block sm:hidden cursor-pointer">
             <svg class=" fill-white hover:fill-sunset w-8 h-8" viewBox="0 0 100 80">
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </template>
-        <div class="flex items-center order-2 sm:order-1 sm:flex-1 flex-none font-bold text-4xl cursor-default">
+        <div class="flex items-center order-2 sm:order-1 sm:flex-1 flex-1 font-bold text-4xl cursor-default">
             <a href="/">
                 <img class="w-8 h-8 mr-2 cursor-pointer" src={{asset("images/logo.png") }} alt="logo"></a>
             <a href="/"><span class="hover:text-sunset cursor-pointer">PicShare</span></a>
@@ -71,9 +71,9 @@
             <li class="cursor-pointer hover:text-sunset"><a href="/sign-up"> Sign up </a></li>
             <li class="cursor-pointer hover:text-sunset"><a href="/login">Login</a></li>
         </ul>
-        <div class="order-3 flex-1 flex justify-end mx-8">
+        <div class="order-3 flex justify-end mx-4">
             <template x-if="true">
-                <button class="fill-white hover:fill-sunset" aria-label="Dark mode" x-data="{darkMode: $persist(false)}"
+                <button class="fill-white hover:fill-sunset" aria-label="Dark mode" x-data="{darkMode: false}"
                     x-on:click="darkMode = !darkMode">
                     <svg x-show="darkMode" width="24" height="24" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
