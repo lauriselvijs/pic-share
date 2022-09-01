@@ -23,11 +23,11 @@ Route::get("/", function () {
 });
 
 // Single image
-Route::get('/images/{id}', function ($id) {
+Route::get('/images/{image}', function (Image $image) {
     return view(
         "image",
         [
-            "image" => Image::find($id)
+            "image" => $image
         ]
     );
 });
