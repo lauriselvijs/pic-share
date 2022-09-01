@@ -15,23 +15,26 @@ use App\Http\Controllers\ImageController;
 |
 */
 
-// All images 
-Route::get("/", [ImageController::class, "index"]);
+// Show add new image form
+Route::get('/images/create', [ImageController::class, "create"]);
 
-// Single image
+// Show single image
 Route::get('/images/{image}', [ImageController::class, "show"]);
 
-// Create new image
-Route::get('/new-image', function () {
-    return view("new-image");
-});
+// Adds new image
+Route::post('/images', [ImageController::class, "store"]);
 
-// Sign up
-Route::get('/sign-up', function () {
-    return view("sign-up");
-});
+// Show all images 
+Route::get("/", [ImageController::class, "index"]);
 
-// Login
-Route::get('/login', function () {
-    return view("login");
-});
+
+
+// // Sign up
+// Route::get('/sign-up', function () {
+//     return view("sign-up");
+// });
+
+// // Login
+// Route::get('/login', function () {
+//     return view("login");
+// });

@@ -9,8 +9,8 @@
         <a href="/"><span class="hover:text-sunset cursor-pointer">PicShare</span></a>
     </div>
     <ul class="sm:order-2 hidden sm:flex gap-8 justify-between items-center whitespace-nowrap">
-        <li class="cursor-pointer hover:text-sunset"><a href="/new-image"> Add new image </a></li>
-        <li class="cursor-pointer hover:text-sunset"><a href="/sign-up"> Sign up </a></li>
+        <li class="cursor-pointer hover:text-sunset"><a href="/images/create">Add new image</a></li>
+        <li class="cursor-pointer hover:text-sunset"><a href="/sign-up">Sign up</a></li>
         <li class="cursor-pointer hover:text-sunset"><a href="/login">Login</a></li>
     </ul>
     @include("partials._dark-mode-btn")

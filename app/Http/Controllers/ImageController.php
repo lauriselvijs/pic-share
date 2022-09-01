@@ -11,7 +11,7 @@ class ImageController extends Controller
     /**
      * Undocumented function
      *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -24,8 +24,8 @@ class ImageController extends Controller
     /**
      * Show single image
      *
-     * @param Image $image
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     * @param App\Models\Image $image
+     * @return \Illuminate\Contracts\View\View
      */
     public function show(Image $image)
     {
@@ -35,5 +35,31 @@ class ImageController extends Controller
                 "image" => $image
             ]
         );
+    }
+
+
+    /**
+     * Show create form
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function create()
+    {
+        return view("images.create");
+    }
+
+    /**
+     * Store new image in DB
+     *
+     * @param Illuminate\Http\Request $request
+     * @return void
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            "image-title" => "sometimes|required|unique:products",
+            "tags" => "string",
+
+        ]);
     }
 }
