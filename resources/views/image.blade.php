@@ -9,11 +9,7 @@
     <h2 class="text-2xl font-bold p-4 leading-snug">
         {{ $image->title }}
     </h2>
-    <div class="flex justify-start gap-2 px-4 text-base font-normal text-white">
-        <p class="bg-black px-2 rounded-lg">History</p>
-        <p class="bg-black px-2 rounded-lg">Art</p>
-        <p class="bg-black px-2 rounded-lg">Forest</p>
-    </div>
+    <x-tag :image="$image" />
     <p class="text-base font-bold p-4">
         {{ $image->author }}
     </p>

@@ -9,7 +9,7 @@ Sign Up
     <x-slot name="heading">
         Create an account
     </x-slot>
-    <x-auth.form>
+    <x-form.auth>
         <x-slot name="extraInputFields">
             <x-input label="Confirm password" type="confirm-password" name="confirm-password" placeholder="••••••••"
                 required="" />
@@ -40,6 +40,6 @@ Sign Up
             Already have an account? <x-link href="/login" class="font-medium">Sign
                 in here</x-link>
         </x-slot>
-    </x-auth.form>
+    </x-form.auth>
 </x-card.logo>
 @endsection

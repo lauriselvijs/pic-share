@@ -9,7 +9,7 @@ Login
     <x-slot name="heading">
         Sign in to your account
     </x-slot>
-    <x-auth.form>
+    <x-form.auth>
         <x-slot name="extraInputFields">
         </x-slot>
         <x-slot name="addAuthFormInfo">
@@ -35,6 +35,6 @@ Login
                 Sign
                 up</x-link>
         </x-slot>
-    </x-auth.form>
+    </x-form.auth>
 </x-card.logo>
 @endsection
