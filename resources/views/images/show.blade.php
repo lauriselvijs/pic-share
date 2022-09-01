@@ -1,4 +1,4 @@
-@extends("sections.layout")
+@extends("layout.index")
 @section("title")
 {{ $image->title }}
 @endsection
@@ -10,22 +10,18 @@
         {{ $image->title }}
     </h2>
 
-    @php
-    $tags = explode(", ", $image->tags);
-    @endphp
-
-    <x-tag :tags="$tags" />
+    <x-tag :tagsCsv="$image->tags" />
     <p class="text-base font-bold p-4">
         {{ $image->author }}
     </p>
     <div class="self-end flex gap-8">
-        <button class=" bg-sunset text-black font-bold text-xl w-36 shadow active:ring-4 active:ring-black">
+        <x-button.tertiary type="button">
             Delete
-        </button>
+        </x-button.tertiary>
         <a href="/">
-            <button class="bg-sunset text-black font-bold text-xl w-36 shadow active:ring-4 active:ring-black">
+            <x-button.tertiary type="button">
                 Back
-            </button>
+            </x-button.tertiary>
         </a>
     </div>
 </div>

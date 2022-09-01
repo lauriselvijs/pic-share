@@ -1,4 +1,4 @@
-@extends("sections.layout")
+@extends("layout.index")
 @section("title")
 Images
 @endsection

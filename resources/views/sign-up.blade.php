@@ -1,4 +1,4 @@
-@extends("sections.layout")
+@extends("layout.index")
 
 @section("title")
 Sign Up
@@ -33,9 +33,11 @@ Sign Up
                 </div>
             </div>
         </x-slot>
-        <button type="submit"
-            class="w-full text-white bg-black hover:bg-shadow focus:ring-4 focus:outline-none focus:ring-sunset font-medium text-base px-5 py-2.5 text-center">Sign
-            in</button>
+        <x-slot name="submit">
+            <x-button type="submit">
+                Sign up
+            </x-button>
+        </x-slot>
         <x-slot name="authFormFooter">
             Already have an account? <x-link href="/login" class="font-medium">Sign
                 in here</x-link>

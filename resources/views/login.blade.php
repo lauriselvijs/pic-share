@@ -1,4 +1,4 @@
-@extends("sections.layout")
+@extends("layout.index")
 
 @section("title")
 Login
@@ -7,7 +7,7 @@ Login
 @section("content")
 <x-card.logo>
     <x-slot name="heading">
-        Sign in to your account
+        Login to your account
     </x-slot>
     <x-form.auth>
         <x-slot name="extraInputFields">
@@ -27,9 +27,11 @@ Login
                     password?</x-link>
             </div>
         </x-slot>
-        <button type="submit"
-            class="w-full text-white bg-black hover:bg-shadow focus:ring-4 focus:outline-none focus:ring-sunset font-medium text-base px-5 py-2.5 text-center">Sign
-            in</button>
+        <x-slot name="submit">
+            <x-button type="submit">
+                Login
+            </x-button>
+        </x-slot>
         <x-slot name="authFormFooter">
             Don’t have an account yet? <x-link href="/sign-up" class="font-medium text-black hover:underline">
                 Sign

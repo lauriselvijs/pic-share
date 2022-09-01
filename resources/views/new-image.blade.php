@@ -1,4 +1,4 @@
-@extends("sections.layout")
+@extends("layout.index")
 @section("title")
 Add Image
 @endsection
