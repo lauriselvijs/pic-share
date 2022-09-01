@@ -1,4 +1,5 @@
-<x-form action="#">
+@props(["action"])
+<x-form action={{ $action }}>
     <x-input label="Your email" type="email" name="email" placeholder="name@company.com" required="true" />
     <x-input label="Password" type="password" name="password" placeholder="••••••••" required="true" />
     {{ $extraInputFields }}

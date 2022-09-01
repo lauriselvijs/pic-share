@@ -1,4 +1,4 @@
-@extends("layout")
+@extends("sections.layout")
 @section("title")
 {{ $image->title }}
 @endsection
@@ -9,7 +9,12 @@
     <h2 class="text-2xl font-bold p-4 leading-snug">
         {{ $image->title }}
     </h2>
-    <x-tag :image="$image" />
+
+    @php
+    $tags = explode(", ", $image->tags);
+    @endphp
+
+    <x-tag :tags="$tags" />
     <p class="text-base font-bold p-4">
         {{ $image->author }}
     </p>

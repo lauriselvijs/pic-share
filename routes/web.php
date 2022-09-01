@@ -2,6 +2,7 @@
 
 use App\Models\Image;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,31 +16,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 // All images 
-Route::get("/", function () {
-    return view("images", [
-        "heading" => "Image Gallery",
-        "images" => Image::all()
-    ]);
-});
+Route::get("/", [ImageController::class, "index"]);
 
 // Single image
-Route::get('/images/{image}', function (Image $image) {
-    return view(
-        "image",
-        [
-            "image" => $image
-        ]
-    );
+Route::get('/images/{image}', [ImageController::class, "show"]);
+
+// Create new image
+Route::get('/new-image', function () {
+    return view("new-image");
 });
 
+// Sign up
 Route::get('/sign-up', function () {
     return view("sign-up");
 });
 
+// Login
 Route::get('/login', function () {
     return view("login");
-});
-
-Route::get('/new-image', function () {
-    return view("new-image");
 });

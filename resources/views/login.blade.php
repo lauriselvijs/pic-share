@@ -1,4 +1,4 @@
-@extends("layout")
+@extends("sections.layout")
 
 @section("title")
 Login
