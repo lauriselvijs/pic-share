@@ -10,14 +10,16 @@ Add Image
     </x-slot>
     <x-form method="POST" action="/images">
         @csrf
-        <x-input label="Title" type="text" name="title" placeholder="My image title" required="" />
+        <x-input label="Title" type="text" name="title" placeholder="My image title" required=""
+            value="{{ old('title') }}" />
         @error("title")
         <x-message.error>
             {{ $message }}
         </x-message.error>
         @enderror
 
-        <x-input label="Author" type="text" name="author" placeholder="Author name" required="" />
+        <x-input label="Author" type="text" name="author" placeholder="Author name" required=""
+            value="{{ old('author') }}" />
         @error("author")
         <x-message.error>
             {{ $message }}
@@ -25,7 +27,8 @@ Add Image
         @enderror
 
 
-        <x-input label="Tags" type="text" name="tags" placeholder="History, Art, Forest" required="" />
+        <x-input label="Tags" type="text" name="tags" placeholder="History, Art, Forest" required=""
+            value="{{ old('tags') }}" />
         @error("tags")
         <x-message.error>
             {{ $message }}

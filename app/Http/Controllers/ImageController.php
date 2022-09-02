@@ -17,7 +17,7 @@ class ImageController extends Controller
     {
 
         return view("images.index", [
-            "images" => Image::latest()->filter(request(["tag", "search"]))->get()
+            "images" => Image::latest()->filter(request(["tag", "search"]))->paginate(9)
         ]);
     }
 
