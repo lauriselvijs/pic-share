@@ -52,14 +52,18 @@ class ImageController extends Controller
      * Store new image in DB
      *
      * @param Illuminate\Http\Request $request
-     * @return void
+     * @return \Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "image-title" => "sometimes|required|unique:products",
+        $formData = $request->validate([
+            "title" => "string|required",
+            "author" => "required|string",
             "tags" => "string",
-
         ]);
+
+        Image::create($formData);
+
+        return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Image has been added to PicShare successfully!'));
     }
 }

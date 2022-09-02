@@ -10,6 +10,13 @@ class Image extends Model
     use HasFactory;
 
     /**
+     * Allow mass assignment to provided fields
+     *
+     * @var array<string>
+     */
+    protected $fillable = ["title", "author", "tags"];
+
+    /**
      * Filter images
      *
      * @param mixed $query

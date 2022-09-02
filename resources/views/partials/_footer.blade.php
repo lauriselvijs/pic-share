@@ -1,7 +1,7 @@
 <footer class="bg-black text-white transition-all sm:px-40">
     <div class="grid grid-cols-2 gap-8 py-8 px-6 md:grid-cols-4">
         <div>
-            <h2 class="mb-6 text-sm font-semibold uppercase">Company</h2>
+            <h4 class="mb-6 text-sm font-semibold uppercase">Company</h4>
             <ul>
                 <li class="mb-4">
                     <x-link.secondary href="#" class="hover:underline">About</x-link.secondary>
@@ -18,7 +18,7 @@
             </ul>
         </div>
         <div>
-            <h2 class="mb-6 text-sm font-semibold uppercase">Help center</h2>
+            <h4 class="mb-6 text-sm font-semibold uppercase">Help center</h4>
             <ul>
                 <li class="mb-4">
                     <x-link.secondary href="#" class="hover:underline">Discord Server</x-link.secondary>
@@ -35,7 +35,7 @@
             </ul>
         </div>
         <div>
-            <h2 class="mb-6 text-sm font-semibold  uppercase">Legal</h2>
+            <h4 class="mb-6 text-sm font-semibold  uppercase">Legal</h4>
             <ul class="">
                 <li class="mb-4">
                     <x-link.secondary href="#" class="hover:underline">Privacy Policy</x-link.secondary>
@@ -49,7 +49,7 @@
             </ul>
         </div>
         <div>
-            <h2 class="mb-6 text-sm font-semibold  uppercase">Download</h2>
+            <h4 class="mb-6 text-sm font-semibold  uppercase">Download</h4>
             <ul class="">
                 <li class="mb-4">
                     <x-link.secondary href="#" class="hover:underline">iOS</x-link.secondary>

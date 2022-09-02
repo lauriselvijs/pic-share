@@ -10,11 +10,10 @@
     <title>PicShare - @yield('title')</title>
 </head>
 
-
-
 <body>
     @include("partials._header")
-    <main>
+    <main class="relative">
+        <x-message.flash />
         @yield("content")
     </main>
     @include("partials._footer")

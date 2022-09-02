@@ -29,12 +29,12 @@ Route::get("/", [ImageController::class, "index"]);
 
 
 
-// // Sign up
-// Route::get('/sign-up', function () {
-//     return view("sign-up");
-// });
+// Sign up
+Route::get('/sign-up', function () {
+    return view("auth.sign-up");
+});
 
-// // Login
-// Route::get('/login', function () {
-//     return view("login");
-// });
+// Login
+Route::get('/login', function () {
+    return view("auth.login");
+});

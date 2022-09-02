@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->string("author");
-            $table->string("tags");
+            $table->string("tags")->nullable();
             $table->timestamps();
         });
     }

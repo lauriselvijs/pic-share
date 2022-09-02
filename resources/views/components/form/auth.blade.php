@@ -10,7 +10,7 @@
         <span class="text-base font-light text-black px-4">or</span>
         <hr class="bg-black w-full opacity-20" />
     </div>
-    @include("partials._google-auth-btn")
+    @include("partials.button._google-auth")
     {{ $addAuthFormInfo }}
     {{ $submit }}
     <p class="text-sm font-light text-black">
