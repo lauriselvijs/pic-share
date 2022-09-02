@@ -1,5 +1,6 @@
 @props(["type"])
 
-<button type={{ $type }} class=" bg-sunset text-black font-bold text-xl w-36 shadow active:ring-4 active:ring-black">
+<button type={{ $type }}
+    class="flex justify-center gap-2 items-center bg-sunset text-black font-bold text-xl w-36 shadow-md hover:text-white hover:bg-black active:bg-sunset active:text-black fill-black hover:fill-white active:fill-black">
     {{ $slot }}
 </button>
