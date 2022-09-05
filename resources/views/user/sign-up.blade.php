@@ -9,17 +9,23 @@ Sign Up
     <x-slot name="heading">
         Create an account
     </x-slot>
-    <x-form.auth>
+    <x-form.auth confirmPassword="false" action="/sign-up">
         <x-slot name="extraInputFields">
-            <x-input label="Confirm password" type="confirm-password" name="confirm-password" placeholder="••••••••"
-                required="" />
+            <x-input label="Your name" type="text" name="name" placeholder="John Doe" required="required"
+                value="{{ old('name') }}" />
+            @error("name")
+            <x-message.error>
+                {{ $message }}
+            </x-message.error>
+            @enderror
         </x-slot>
         <x-slot name="addAuthFormInfo">
             <div class="flex items-center justify-between">
                 <div class="flex items-start">
                     <div class="flex items-center h-5">
-                        <input id="remember" aria-describedby="remember" type="checkbox"
-                            class="w-4 h-4 border border-black rounded bg-white accent-black">
+                        <input id="remember" aria-describedby="remember" type="checkbox" name="agreement"
+                            class="w-4 h-4 border border-black rounded bg-white accent-black" required="required" {{
+                            old('agreement')=='on' ? 'checked' : '' }}>
                     </div>
                     <div class="ml-3 text-sm">
                         <label for="remember" class="text-black">By signing up, you are creating a PicShare account, and
@@ -28,10 +34,15 @@ Sign Up
                                 of
                                 Use</x-link> and <x-link class="font-bold" href="/privacy-policy">
                                 Privacy
-                                Policy</x-link>.</label>
+                                Policy</x-link>.<span class='text-error'>*</span></label>
                     </div>
                 </div>
             </div>
+            @error("agreement")
+            <x-message.error>
+                {{ $message }}
+            </x-message.error>
+            @enderror
         </x-slot>
         <x-slot name="submit">
             <x-button type="submit">

@@ -1,17 +1,18 @@
 @extends("layout.index")
 @section("title")
-Add Image
+Edit Image
 @endsection
 
 @section("content")
 <x-card.logo>
     <x-slot name="heading">
-        Upload new image
+        Edit image info
     </x-slot>
-    <x-form method="POST" action="/images" enctype="multipart/form-data">
+    <x-form method="POST" action="/images/{{ $image->id }}" enctype="multipart/form-data">
         @csrf
+        @method("PUT")
         <x-input label="Title" type="text" name="title" placeholder="My image title" required="required"
-            value="{{ old('title') }}" />
+            value="{{ $image->title }}" />
         @error("title")
         <x-message.error>
             {{ $message }}
@@ -19,7 +20,7 @@ Add Image
         @enderror
 
         <x-input label="Author" type="text" name="author" placeholder="Author name" required="required"
-            value="{{ old('author') }}" />
+            value="{{ $image->author }}" />
         @error("author")
         <x-message.error>
             {{ $message }}
@@ -28,7 +29,7 @@ Add Image
 
 
         <x-input label="Tags" type="text" name="tags" placeholder="History, Art, Forest" required=""
-            value="{{ old('tags') }}" />
+            value="{{ $image->tags }}" />
         @error("tags")
         <x-message.error>
             {{ $message }}
@@ -53,6 +54,8 @@ Add Image
                 {{ $message }}
             </x-message.error>
             @enderror
+
+            <img class="h-full w-full" src={{ asset($image->image) }} alt="User image">
         </div>
         <x-button id="submit-image-btn" type="submit">
             Save image

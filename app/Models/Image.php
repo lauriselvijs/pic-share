@@ -14,7 +14,7 @@ class Image extends Model
      *
      * @var array<string>
      */
-    protected $fillable = ["title", "author", "tags"];
+    protected $fillable = ["title", "author", "tags", "image"];
 
     /**
      * Filter images

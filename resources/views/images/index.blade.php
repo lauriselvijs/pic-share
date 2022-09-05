@@ -4,14 +4,13 @@ Images
 @endsection
 
 @section("content")
-<div class="relative transition-all sm:block flex justify-center">
+<div class="relative md:block flex justify-center transition-all">
     @include("partials._hero")
     @include("partials._search")
 </div>
 
 @unless (count($images) == 0)
-<div
-    class="grid md:grid-cols-3 grid-cols-1 gap-0 sm:gap-8 sm:px-40 px-0 py-0 sm:pt-24 sm:pb-24 bg-sunset transition-all">
+<div class="grid md:grid-cols-3 grid-cols-1 gap-0 md:gap-8 md:px-40 md:py-24 px-0 py-0 bg-sunset transition-all">
     @foreach ($images as $image)
     <x-card.image :image="$image" />
     @endforeach

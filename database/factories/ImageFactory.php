@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ImageFactory extends Factory
 {
+
+
+
     /**
      * Define the model's default state.
      *
@@ -16,10 +19,18 @@ class ImageFactory extends Factory
      */
     public function definition()
     {
+        /**
+         * Image tags
+         *
+         * @var array<string>
+         */
+        $tags = ["History", "Forest", "Water", "Castle", "Sea"];
+
         return [
             "title" =>  rtrim(fake()->sentence(3), "."),
             "author" => fake()->name(),
-            "tags" => "History, Forest, Nature"
+            "image" => fake()->imageUrl(),
+            "tags" => implode(", ", fake()->randomElements($tags, 3))
         ];
     }
 }

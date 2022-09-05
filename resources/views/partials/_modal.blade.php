@@ -1,7 +1,7 @@
 <template x-if="true">
     <!-- Hamburger modal -->
     <div id="hamburgerMenu" aria-hidden="true" x-show="openHamburgerMenuModal"
-        class="sm:hidden fixed top-0 right-0 left-0 z-50 bg-shadow bg-opacity-40 backdrop-blur-sm transition-all">
+        class="md:hidden fixed top-0 right-0 left-0 z-50 bg-shadow bg-opacity-40 backdrop-blur-sm transition-all">
         <!-- Hamburger modal content -->
         <div class="bg-sunset rounded-br-lg shadow h-screen w-1/2" x-show="openHamburgerMenuModal"
             x-transition:enter="transition-all duration-300" x-transition:enter-start="w-0 opacity-0"
