@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,9 +27,16 @@ class ImageFactory extends Factory
          */
         $tags = ["History", "Forest", "Water", "Castle", "Sea"];
 
+        /**
+         * Image tags
+         *
+         * @var array<int>
+         */
+        $user_id = User::pluck("id")->toArray();
+
         return [
             "title" =>  rtrim(fake()->sentence(3), "."),
-            "author" => fake()->name(),
+            "user_id" =>  fake()->randomElement($user_id),
             "image" => fake()->imageUrl(),
             "tags" => implode(", ", fake()->randomElements($tags, 3))
         ];

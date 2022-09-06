@@ -18,15 +18,6 @@ Add Image
         </x-message.error>
         @enderror
 
-        <x-input label="Author" type="text" name="author" placeholder="Author name" required="required"
-            value="{{ old('author') }}" />
-        @error("author")
-        <x-message.error>
-            {{ $message }}
-        </x-message.error>
-        @enderror
-
-
         <x-input label="Tags" type="text" name="tags" placeholder="History, Art, Forest" required=""
             value="{{ old('tags') }}" />
         @error("tags")

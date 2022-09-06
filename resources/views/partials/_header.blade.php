@@ -10,17 +10,13 @@
         <a href="/"><span class="hover:text-sunset cursor-pointer">PicShare</span></a>
     </div>
     <nav class="md:flex md:order-2 hidden ">
-        <ul class="md:flex gap-8 justify-between items-center whitespace-nowrap">
-            @auth
-            <li class="cursor-pointer hover:text-sunset"><a href="/images/create">Add new image</a></li>
-            <li class="cursor-pointer hover:text-sunset"><a href="/images/my-images">My images</a></li>
-            <li>Wellcome {{ auth()->user()->name }}</li>
-            <li class="cursor-pointer hover:text-sunset"><a href="/sign-out">Sign out</a></li>
-            @else
-            <li class="cursor-pointer hover:text-sunset"><a href="/sign-up">Sign up</a></li>
-            <li class="cursor-pointer hover:text-sunset"><a href="/login">Login</a></li>
-            @endauth
-        </ul>
+        <x-nav.ul hoverLinkColor="text-sunset" class="text-white">
+            <x-slot name="addListItem">
+                @auth
+                <li>Welcome {{ auth()->user()->name }}</li>
+                @endauth
+            </x-slot>
+        </x-nav.ul>
     </nav>
     @include("partials.button._dark-mode")
 </header>

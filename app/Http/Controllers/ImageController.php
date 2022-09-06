@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,9 +17,14 @@ class ImageController extends Controller
      */
     public function index()
     {
+        $images = Image::latest()->filter(request(["tag", "search"]))->paginate(9);
+
+        foreach ($images as $image) {
+            $image["author"] = Image::getUserNameOfImage($image->id);
+        }
 
         return view("images.index", [
-            "images" => Image::latest()->filter(request(["tag", "search"]))->paginate(9)
+            "images" => $images
         ]);
     }
 
@@ -30,6 +36,8 @@ class ImageController extends Controller
      */
     public function show(Image $image)
     {
+        $image["author"] = Image::getUserNameOfImage($image->id);
+
         return view(
             "images.show",
             [
@@ -59,7 +67,6 @@ class ImageController extends Controller
     {
         $formData = $request->validate([
             "title" => "required|string",
-            "author" => "required|string",
             "image" => "required|image|mimes:jpeg,png",
             "tags" => "string",
         ]);
@@ -68,6 +75,7 @@ class ImageController extends Controller
         $imagePath = parse_url(Storage::disk("media")->url($imageName))["path"];
 
         $formData["image"] = $imagePath;
+        $formData["user_id"] = auth()->id();
 
         Image::create($formData);
 
@@ -96,7 +104,6 @@ class ImageController extends Controller
     {
         $formData = $request->validate([
             "title" => "required|string",
-            "author" => "required|string",
             "image" => "sometimes|image|mimes:jpeg,png",
             "tags" => "string",
         ]);

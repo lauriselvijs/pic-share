@@ -9,7 +9,7 @@ Sign Up
     <x-slot name="heading">
         Create an account
     </x-slot>
-    <x-form.auth confirmPassword="false" action="/sign-up">
+    <x-form.auth confirmPassword="false" action="/users">
         <x-slot name="extraInputFields">
             <x-input label="Your name" type="text" name="name" placeholder="John Doe" required="required"
                 value="{{ old('name') }}" />

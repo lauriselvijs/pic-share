@@ -46,4 +46,47 @@ class UserController extends Controller
 
         return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Your PicShare account created successfully!'));
     }
+
+    /**
+     * User logout
+     *
+     * @param Request $request
+     * @return \Illuminate\Routing\Redirector
+     */
+    public function logout(Request $request)
+    {
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Successfully logged out!'));
+    }
+
+    /**
+     * Show log in user form
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function login()
+    {
+        return view("user.login");
+    }
+
+    public function authenticate(Request $request)
+    {
+        $formData = $request->validate([
+            "email" => "required|email",
+            "password" => "required|string",
+        ]);
+
+        if (auth()->attempt($formData)) {
+            $request->session()->regenerate();
+            // TODO:
+            // [] - For flash msg create const values
+            return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'You have been logged in successfully!'));
+        } else {
+            return back()->withErrors(["password" => "Invalid credentials"])->onlyInput("password");
+        }
+    }
 }

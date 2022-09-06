@@ -9,14 +9,14 @@ Login
     <x-slot name="heading">
         Login to your account
     </x-slot>
-    <x-form.auth>
+    <x-form.auth action="/users/authenticate">
         <x-slot name="extraInputFields">
         </x-slot>
         <x-slot name="addAuthFormInfo">
             <div class="flex items-center justify-between">
                 <div class="flex items-start">
                     <div class="flex items-center h-5">
-                        <input id="remember" aria-describedby="remember" type="checkbox"
+                        <input id="remember" name="remember" aria-describedby="remember" type="checkbox"
                             class="w-4 h-4 border border-black rounded bg-white accent-black">
                     </div>
                     <div class="ml-3 text-sm">

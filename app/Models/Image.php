@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Image extends Model
 {
@@ -14,7 +15,7 @@ class Image extends Model
      *
      * @var array<string>
      */
-    protected $fillable = ["title", "author", "tags", "image"];
+    protected $fillable = ["title", "user_id", "tags", "image"];
 
     /**
      * Filter images
@@ -35,5 +36,27 @@ class Image extends Model
                 ->orWhere("author", "like", "%" . request("search") . "%")
                 ->orWhere("tags", "like", "%" . request("search") . "%");
         }
+    }
+
+    /**
+     * Relationship to user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    /**
+     * Gets user name of given image
+     *
+     * @param string $imageId
+     * @return string
+     */
+    public static function getUserNameOfImage($imageId)
+    {
+        return static::where("id", $imageId)->first()->user()->pluck("name")->first();
     }
 }

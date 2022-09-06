@@ -17,22 +17,22 @@ use App\Http\Controllers\ImageController;
 */
 
 // Show add new image form
-Route::get('/images/create', [ImageController::class, "create"]);
+Route::get('/images/create', [ImageController::class, "create"])->middleware("auth");
 
 // Show single image
 Route::get('/images/{image}', [ImageController::class, "show"]);
 
 // Show image edit form
-Route::get('/images/{image}/edit', [ImageController::class, "edit"]);
+Route::get('/images/{image}/edit', [ImageController::class, "edit"])->middleware("auth");
 
 // Delete single image
-Route::delete('/images/{image}', [ImageController::class, "delete"]);
+Route::delete('/images/{image}', [ImageController::class, "delete"])->middleware("auth");
 
-// Adds new image
-Route::post('/images', [ImageController::class, "store"]);
+// Add new image
+Route::post('/images', [ImageController::class, "store"])->middleware("auth");
 
 // Edit existing image
-Route::put('/images/{image}', [ImageController::class, "update"]);
+Route::put('/images/{image}', [ImageController::class, "update"])->middleware("auth");
 
 // Show all images 
 Route::get("/", [ImageController::class, "index"]);
@@ -40,10 +40,16 @@ Route::get("/", [ImageController::class, "index"]);
 
 
 // Show sign up form
-Route::get('/sign-up', [UserController::class, "create"]);
+Route::get('/sign-up', [UserController::class, "create"])->middleware("guest");
+
+// Sign in user
+Route::post('/users/authenticate', [UserController::class, "authenticate"])->middleware("guest");
 
 // Create new user
-Route::post('/sign-up', [UserController::class, "store"]);
+Route::post('/users', [UserController::class, "store"])->middleware("guest");
 
 // Show login form
-Route::get('/login', [UserController::class, "login"]);
+Route::get('/login', [UserController::class, "login"])->name("login")->middleware("guest");
+
+// User logout
+Route::post('/logout', [UserController::class, "logout"])->middleware("auth");;

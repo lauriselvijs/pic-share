@@ -20,18 +20,12 @@
                 <x-button.close onClick="openHamburgerMenuModal = false" />
             </div>
             <!-- Hamburger modal body -->
-            <div class="p-6" x-show="openHamburgerMenuModal" x-transition.opacity>
-                <ul class="text-black flex flex-col justify-center items-start gap-8">
-                    @auth
-                    <li class="cursor-pointer hover:text-shadow"><a href="/images/create">Add new image</a></li>
-                    <li class="cursor-pointer hover:text-shadow"><a href="/images/my-images">My images</a></li>
-                    <li class="cursor-pointer hover:text-shadow"><a href="/sign-out">Sign out</a></li>
-                    @else
-                    <li class="cursor-pointer hover:text-shadow"><a href="/sign-up">Sign up</a></li>
-                    <li class="cursor-pointer hover:text-shadow"><a href="/login">Login</a></li>
-                    @endauth
-                </ul>
-            </div>
+            <nav class="p-6" x-show="openHamburgerMenuModal" x-transition.opacity>
+                <x-nav.ul hoverLinkColor="text-shadow" class="text-black">
+                    <x-slot name="addListItem">
+                    </x-slot>
+                </x-nav.ul>
+            </nav>
         </div>
     </div>
 </template>
