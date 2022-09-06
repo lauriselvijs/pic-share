@@ -48,6 +48,9 @@ Route::post('/users/authenticate', [UserController::class, "authenticate"])->mid
 // Create new user
 Route::post('/users', [UserController::class, "store"])->middleware("guest");
 
+// User images
+Route::get('/user/images', [ImageController::class, "userImages"])->middleware("auth");;
+
 // Show login form
 Route::get('/login', [UserController::class, "login"])->name("login")->middleware("guest");
 

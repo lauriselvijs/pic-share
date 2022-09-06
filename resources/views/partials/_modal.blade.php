@@ -8,7 +8,7 @@
             x-transition:enter-end="w-1/2" x-transition:leave="transition-all duration-300"
             x-transition:leave-start="w-1/2" x-transition:leave-end="w-0">
             <!-- Hamburger modal header -->
-            <div class="flex justify-between gap-8 items-start p-4 rounded-t border-b border-white"
+            <div class="flex justify-between gap-8 items-start p-6 rounded-t border-b border-white"
                 x-show="openHamburgerMenuModal" x-transition.opacity>
                 @auth
                 <h3 class="text-xl font-bold text-black">{{ auth()->user()->name }}</h3>

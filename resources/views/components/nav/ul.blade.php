@@ -1,15 +1,33 @@
 @props(["hoverLinkColor"])
 
-<ul {{ $attributes->merge(["class" => "md:flex gap-8 justify-between items-center whitespace-nowrap"]) }}>
+<ul {{ $attributes->merge(["class" => "md:flex md:flex-row md:pr-0 md:gap-8 flex flex-col pr-8 gap-4 justify-between
+    items-start
+    whitespace-nowrap"])
+    }}>
     @auth
     <li class="cursor-pointer hover:{{ $hoverLinkColor }}"><a href="/images/create">Add new image</a></li>
-    <li class="cursor-pointer hover:{{ $hoverLinkColor }}"><a href="/images/my-images">My images</a></li>
+    <template x-if="true">
+        <li class="cursor-pointer hover:{{ $hoverLinkColor }}" x-data="{showAllImages: $persist(false)}">
+            <form method="GET" action="/user/images" x-show="showAllImages === false" x-transition>
+                @csrf
+                <button type="submit" x-on:click="showAllImages = true">My Images</button>
+            </form>
+            <form method="GET" action="/" x-show="showAllImages === true" x-transition>
+                @csrf
+                <button type="submit" x-on:click="showAllImages = false">All
+                    images</button>
+            </form>
+
+        </li>
+    </template>
     {{ $addListItem }}
     <li class="cursor-pointer hover:{{ $hoverLinkColor }}">
         <form method="POST" action="/logout">
             @csrf
             <button type="submit" class="flex justify-center items-center gap-4">
                 Log out
+                {{-- TODO:
+                [] - switch to one icon style --}}
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

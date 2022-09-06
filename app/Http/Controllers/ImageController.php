@@ -65,6 +65,7 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
+
         $formData = $request->validate([
             "title" => "required|string",
             "image" => "required|image|mimes:jpeg,png",
@@ -90,6 +91,8 @@ class ImageController extends Controller
      */
     public function edit(Image $image)
     {
+        $image["author"] = Image::getUserNameOfImage($image->id);
+
         return view("images.edit", ["image" => $image]);
     }
 
@@ -102,6 +105,11 @@ class ImageController extends Controller
      */
     public function update(Image $image, Request $request)
     {
+        //Check if user have rights
+        if ($image->user_id !== auth()->id()) {
+            abort(403, "Unauthorized action");
+        }
+
         $formData = $request->validate([
             "title" => "required|string",
             "image" => "sometimes|image|mimes:jpeg,png",
@@ -128,8 +136,27 @@ class ImageController extends Controller
      */
     public function delete(Image $image)
     {
+        //Check if user have rights
+        if ($image->user_id !== auth()->id()) {
+            abort(403, "Unauthorized action");
+        }
+
+
         $image->delete();
 
         return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Image has been deleted'));
+    }
+
+    public function userImages()
+    {
+        $images = Image::latest()->where("user_id", auth()->id())->filter(request(["tag", "search"]))->paginate(9);
+
+        foreach ($images as $image) {
+            $image["author"] = Image::getUserNameOfImage($image->id);
+        }
+
+        return view("images.index", [
+            "images" => $images
+        ]);
     }
 }
