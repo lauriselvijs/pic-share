@@ -9,8 +9,11 @@ Images
     @include("partials._search")
 </div>
 
+<x-tag.filter :tagsCsv="app('request')->input('tag')" class="bg-sunset md:px-40 px-6 py-4" />
+
 @unless (count($images) == 0)
-<div class="grid md:grid-cols-3 grid-cols-1 gap-0 md:gap-8 md:px-40 md:py-24 px-0 py-0 bg-sunset transition-all">
+<div
+    class="grid md:grid-cols-3 grid-cols-1 gap-0 md:gap-8 md:px-40 md:pt-12 md:pb-24 px-0 py-0 bg-sunset transition-all">
     @foreach ($images as $image)
     <x-card.image :image="$image" />
     @endforeach

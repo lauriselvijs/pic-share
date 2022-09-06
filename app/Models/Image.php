@@ -25,8 +25,9 @@ class Image extends Model
      */
     public function scopeFilter($query, array $filters)
     {
+
         if ($filters["tag"] ?? false) {
-            $query->where("tags", "like", "%" . request("tag") . "%");
+            $query->where("tags", "like", "%" . implode(", ", request("tag")) . "%");
         }
 
         if ($filters["search"] ?? false) {

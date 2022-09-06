@@ -1,0 +1,1 @@
+<li class="bg-black px-4 py-2 text-center rounded-lg hover:text-sunset">{{ $slot }} </li>

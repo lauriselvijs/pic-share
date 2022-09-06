@@ -16,6 +16,7 @@
             {{ $image->author }}
         </p>
         <div class="flex md:justify-between md:flex-row flex-col md:gap-8 gap-8 pt-8">
+            @auth
             <div class="flex gap-8">
                 <a href="/images/{{ $image->id }}/edit">
                     <x-button.tertiary type="button">
@@ -38,6 +39,7 @@
                     </x-button.tertiary>
                 </form>
             </div>
+            @endauth
             <a href="/">
                 <x-button.tertiary type="button">
                     <svg aria-hidden="true" class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
