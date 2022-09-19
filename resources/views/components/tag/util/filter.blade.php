@@ -1,7 +1,7 @@
 @props(["tag"])
 
 @php
-$requestUri = Request::getRequestUri()
+$requestUri = urldecode(Request::getRequestUri())
 @endphp
 
 @if (str_contains($requestUri, "&" . config('constants.TAG_QUERY_STRING') . $tag))
