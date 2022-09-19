@@ -20,7 +20,7 @@ class ImageController extends Controller
         $images = Image::latest()->filter(request(["tag", "search"]))->paginate(9);
 
         foreach ($images as $image) {
-            $image["author"] = Image::getUserNameOfImage($image->id);
+            $image["author"] = Image::getImageAuthorName($image->id);
         }
 
         return view("images.index", [
@@ -36,7 +36,7 @@ class ImageController extends Controller
      */
     public function show(Image $image)
     {
-        $image["author"] = Image::getUserNameOfImage($image->id);
+        $image["author"] = Image::getImageAuthorName($image->id);
 
         return view(
             "images.show",
@@ -91,7 +91,7 @@ class ImageController extends Controller
      */
     public function edit(Image $image)
     {
-        $image["author"] = Image::getUserNameOfImage($image->id);
+        $image["author"] = Image::getImageAuthorName($image->id);
 
         return view("images.edit", ["image" => $image]);
     }
@@ -152,7 +152,7 @@ class ImageController extends Controller
         $images = Image::latest()->where("user_id", auth()->id())->filter(request(["tag", "search"]))->paginate(9);
 
         foreach ($images as $image) {
-            $image["author"] = Image::getUserNameOfImage($image->id);
+            $image["author"] = Image::getImageAuthorName($image->id);
         }
 
         return view("images.index", [

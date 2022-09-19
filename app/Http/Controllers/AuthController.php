@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
-
     /**
      * Show sign up user form
      *
@@ -15,7 +14,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.sign-up');
+        return view('auth.sign-up');
     }
 
     /**
@@ -70,7 +69,7 @@ class UserController extends Controller
      */
     public function login()
     {
-        return view('user.login');
+        return view('auth.login');
     }
 
 

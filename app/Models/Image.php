@@ -15,7 +15,7 @@ class Image extends Model
      *
      * @var array<string>
      */
-    protected $fillable = ["title", "user_id", "tags", "image"];
+    protected $fillable = ['title', 'user_id', 'tags', 'image'];
 
     /**
      * Filter images
@@ -27,14 +27,13 @@ class Image extends Model
     public function scopeFilter($query, array $filters)
     {
 
-        if ($filters["tag"] ?? false) {
-            $query->where("tags", "like", "%" . implode(", ", request("tag")) . "%");
+        if ($filters['tag'] ?? false) {
+            $query->where('tags', 'like', '%' . implode(', ', request('tag')) . '%');
         }
 
-        if ($filters["search"] ?? false) {
-            $query->where("title", "like", "%" . request("search") . "%")
-                ->orWhere("author", "like", "%" . request("search") . "%")
-                ->orWhere("tags", "like", "%" . request("search") . "%");
+        if ($filters['search'] ?? false) {
+            $query->where('title', 'like', '%' . request('search') . '%')
+                ->orWhere('tags', 'like', '%' . request('search') . '%');
         }
     }
 
@@ -55,8 +54,8 @@ class Image extends Model
      * @param string $imageId
      * @return string
      */
-    public static function getUserNameOfImage($imageId)
+    public static function getImageAuthorName($imageId)
     {
-        return static::where("id", $imageId)->first()->user()->pluck("name")->first();
+        return self::where('id', $imageId)->first()->user()->pluck('name')->first();
     }
 }

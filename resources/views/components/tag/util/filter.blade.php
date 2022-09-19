@@ -1,15 +1,19 @@
 @props(["tag"])
 
-@if (str_contains(Request::getRequestUri(), "&" . config('constants.TAG_URL_QUERY') . $tag))
-<a href={{ str_replace("&" . config('constants.TAG_URL_QUERY') . $tag,"", Request::getRequestUri()) }}>
+@php
+$requestUri = Request::getRequestUri()
+@endphp
+
+@if (str_contains($requestUri, "&" . config('constants.TAG_QUERY_STRING') . $tag))
+<a href={{ str_replace("&" . config('constants.TAG_QUERY_STRING') . $tag,"", $requestUri) }}>
     <x-list.item>{{ $tag }} x</x-list.item>
 </a>
-@elseif(str_contains(Request::getRequestUri(), '?' . config('constants.TAG_URL_QUERY') . $tag . '&'))
-<a href={{ str_replace('?' . config('constants.TAG_URL_QUERY') . $tag . '&' ,'?', Request::getRequestUri()) }}>
+@elseif(str_contains($requestUri, '?' . config('constants.TAG_QUERY_STRING') . $tag . '&'))
+<a href={{ str_replace('?' . config('constants.TAG_QUERY_STRING') . $tag . '&' ,'?', $requestUri) }}>
     <x-list.item>{{ $tag }} x</x-list.item>
 </a>
-@elseif(str_contains(Request::getRequestUri(), '?' . config('constants.TAG_URL_QUERY') . $tag))
-<a href={{ str_replace('?' . config('constants.TAG_URL_QUERY') . $tag,'', Request::getRequestUri()) }}>
+@elseif(str_contains($requestUri, '?' . config('constants.TAG_QUERY_STRING') . $tag))
+<a href={{ str_replace('?' . config('constants.TAG_QUERY_STRING') . $tag,'', $requestUri) }}>
     <x-list.item>{{ $tag }} x</x-list.item>
 </a>
 @endif

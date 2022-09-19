@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'TAG_URL_QUERY' => "tag[]=",
+    'TAG_QUERY_STRING' => 'tag[]=',
 ];
