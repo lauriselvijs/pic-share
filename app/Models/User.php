@@ -44,7 +44,7 @@ class User extends Authenticatable
     ];
 
     // Relationship to image
-    public function image()
+    public function images()
     {
         return $this->hasMany(Image::class);
     }

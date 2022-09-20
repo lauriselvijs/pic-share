@@ -1,4 +1,4 @@
-@props(['action', 'confirmPassword' => ''])
+@props(['action', 'confirmPassword' => false])
 
 <form method='POST' action={{ $action }} class='space-y-4'>
     @csrf

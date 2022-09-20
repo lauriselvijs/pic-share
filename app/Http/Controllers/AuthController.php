@@ -27,6 +27,7 @@ class AuthController extends Controller
     {
         // TODO: 
         // [] - add agreement checked to user table as column
+        // [] - add username field
         $formData = $request->validate([
             'name' => 'required|string:min:3',
             'email' => 'required|email|unique:users',

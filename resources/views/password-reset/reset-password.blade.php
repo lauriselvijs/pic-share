@@ -1,35 +1,37 @@
-@extends("layout.index")
+@extends('layout.index')
 
-@section("title")
+@section('title')
 Sign Up
 @endsection
 
-@section("content")
+@section('content')
 <x-card.logo>
-    <x-slot name="heading">
+    <x-slot name='heading'>
         Reset password
     </x-slot>
-    <x-form action="/password-reset/reset-password" method="POST">
+    <x-form :action='route("password.update")' method='POST'>
         @csrf
 
-        <x-input label="Your email" type="email" name="email" placeholder="name@company.com" required="true"
-            value="{{ old('email') }}" />
-        @error("email")
+        {{-- TODO:
+        [] - move inputs that repeat to a component --}}
+        <x-input label='Your email' type='email' name='email' placeholder='name@company.com' required value='{{ old('
+            email') }}' />
+        @error('email')
         <x-message.error>
             {{ $message }}
         </x-message.error>
         @enderror
 
-        <x-input label="Password" type="password" name="password" placeholder="••••••••" required="true" />
-        @error("password")
+        <x-input label='Password' type='password' name='password' placeholder='••••••••' required />
+        @error('password')
         <x-message.error>
             {{ $message }}
         </x-message.error>
         @enderror
 
         <x-input label='Confirm password' type='password' name='password_confirmation' placeholder='••••••••'
-            required='required' />
-        @error("password_confirmation")
+            required />
+        @error('password_confirmation')
         <x-message.error>
             {{ $message }}
         </x-message.error>
@@ -37,7 +39,7 @@ Sign Up
 
         <input type='hidden' name='token' value={{ $token }} />
 
-        <x-button type="submit">
+        <x-button type='submit'>
             Reset password
         </x-button>
     </x-form>

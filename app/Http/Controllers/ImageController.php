@@ -69,7 +69,7 @@ class ImageController extends Controller
         $formData = $request->validate([
             "title" => "required|string",
             "image" => "required|image|mimes:jpeg,png",
-            "tags" => "string",
+            "tags" => "nullable|sometimes|string|filled",
         ]);
 
         $imageName = Storage::disk("media")->put("images", $request->file("image"));
@@ -105,15 +105,15 @@ class ImageController extends Controller
      */
     public function update(Image $image, Request $request)
     {
-        //Check if user have rights
+        //Check if user have permission
         if ($image->user_id !== auth()->id()) {
             abort(403, "Unauthorized action");
         }
 
         $formData = $request->validate([
-            "title" => "required|string",
-            "image" => "sometimes|image|mimes:jpeg,png",
-            "tags" => "string",
+            "title" => "sometimes|required|string",
+            "image" => "sometimes|required|image|mimes:jpeg,png",
+            "tags" => "nullable|sometimes|string|filled",
         ]);
 
         if ($request->hasFile("image")) {

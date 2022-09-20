@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PasswordResetController;
 /*
@@ -16,48 +15,24 @@ use App\Http\Controllers\PasswordResetController;
 |
 */
 
-
-// Show add new image form
-Route::get('/images/create', [ImageController::class, 'create'])->middleware('auth');
+// Images
+Route::prefix('images')->group(function () {
+    Route::name('images.')->group(function () {
+        Route::get('/create', [ImageController::class, 'create'])->middleware('auth')->name('create');
+        Route::get('/{image}', [ImageController::class, 'show'])->name('show');;
+        Route::get('/{image}/edit', [ImageController::class, 'edit'])->middleware('auth')->name('edit');
+        Route::delete('/{image}', [ImageController::class, 'delete'])->middleware('auth')->name('delete');
+        Route::put('/{image}', [ImageController::class, 'update'])->middleware('auth')->name('update');
+        Route::post('/', [ImageController::class, 'store'])->middleware('auth')->name('update');;
+        Route::get('/', [ImageController::class, 'index'])->name('index');;
+    });
+});
 
 // Images of current auth user
 Route::get('/images/user', [ImageController::class, 'userImages'])->middleware('auth');
 
-// Show single image
-Route::get('/images/{image}', [ImageController::class, 'show']);
-
-// Show image edit form
-Route::get('/images/{image}/edit', [ImageController::class, 'edit'])->middleware('auth');
-
-// Delete single image
-Route::delete('/images/{image}', [ImageController::class, 'delete'])->middleware('auth');
-
-// Add new image
-Route::post('/images', [ImageController::class, 'store'])->middleware('auth');
-
-// Edit existing image
-Route::put('/images/{image}', [ImageController::class, 'update'])->middleware('auth');
-
 // Show all images 
 Route::get('/', [ImageController::class, 'index']);
-
-
-
-// // Show sign up form
-// Route::get('/sign-up', [UserController::class, 'create'])->middleware('guest');
-
-// // Sign in user
-// Route::post('/users/authenticate', [UserController::class, 'authenticate'])->middleware('guest');
-
-// // Create new user
-// Route::post('/users', [UserController::class, 'store'])->middleware('guest');
-
-// // Show login form
-// Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
-
-// // User logout
-// Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
-
 
 // Authentication
 Route::prefix('auth')->group(function () {
