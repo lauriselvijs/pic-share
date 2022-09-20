@@ -5,11 +5,11 @@
     whitespace-nowrap'])
     }}>
     @auth
-    <li class='cursor-pointer hover:{{ $hoverLinkColor }}'><a href='/images/create'>Add new image</a></li>
+    <li class='cursor-pointer hover:{{ $hoverLinkColor }}'><a href='/posts/create'>Add new post</a></li>
     <li class='cursor-pointer hover:{{ $hoverLinkColor }}'>
-        <form method='GET' action='/images/user'>
+        <form method='GET' action='/posts/user'>
             @csrf
-            <button type='submit'>My Images</button>
+            <button type='submit'>My Posts</button>
         </form>
     </li>
     {{ $addListItem }}

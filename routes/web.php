@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ImageController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\PasswordResetController;
 /*
 |--------------------------------------------------------------------------
@@ -15,24 +16,28 @@ use App\Http\Controllers\PasswordResetController;
 |
 */
 
+// Home page
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
 // Images
-Route::prefix('images')->group(function () {
-    Route::name('images.')->group(function () {
-        Route::get('/create', [ImageController::class, 'create'])->middleware('auth')->name('create');
-        Route::get('/{image}', [ImageController::class, 'show'])->name('show');;
-        Route::get('/{image}/edit', [ImageController::class, 'edit'])->middleware('auth')->name('edit');
-        Route::delete('/{image}', [ImageController::class, 'delete'])->middleware('auth')->name('delete');
-        Route::put('/{image}', [ImageController::class, 'update'])->middleware('auth')->name('update');
-        Route::post('/', [ImageController::class, 'store'])->middleware('auth')->name('update');;
-        Route::get('/', [ImageController::class, 'index'])->name('index');;
+Route::prefix('posts')->group(function () {
+    Route::name('posts.')->group(function () {
+        Route::get('/create', [PostController::class, 'create'])->middleware('auth')->name('create');
+        Route::get('/{post}', [PostController::class, 'show'])->name('show');;
+        Route::get('/{post}/edit', [PostController::class, 'edit'])->middleware('auth')->name('edit');
+        Route::delete('/{post}', [PostController::class, 'delete'])->middleware('auth')->name('delete');
+        Route::put('/{post}', [PostController::class, 'update'])->middleware('auth')->name('update');
+        Route::post('/', [PostController::class, 'store'])->middleware('auth')->name('update');;
+        Route::get('/', [PostController::class, 'index'])->name('index');;
     });
 });
 
-// Images of current auth user
-Route::get('/images/user', [ImageController::class, 'userImages'])->middleware('auth');
-
-// Show all images 
-Route::get('/', [ImageController::class, 'index']);
+// TODO:
+// [] - move to user controller users/{user}/posts
+// Post of current auth user
+Route::get('/posts/user', [ImageController::class, 'userPosts'])->middleware('auth');
 
 // Authentication
 Route::prefix('auth')->group(function () {

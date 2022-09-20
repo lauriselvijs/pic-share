@@ -2,63 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Image;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ImageController extends Controller
+class PostController extends Controller
 {
 
     /**
-     * Undocumented function
+     * Return all posts
      *
      * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $images = Image::latest()->filter(request(["tag", "search"]))->paginate(9);
+        $posts = Post::latest()->filter(request(["tag", "search"]))->paginate(9);
 
-        foreach ($images as $image) {
-            $image["author"] = Image::getImageAuthorName($image->id);
+        foreach ($posts as $post) {
+            $post["author"] = Post::getPostAuthorName($post->id);
         }
 
-        return view("images.index", [
-            "images" => $images
+        return view("posts.index", [
+            "posts" => $posts
         ]);
     }
 
     /**
-     * Show single image
+     * Show single post
      *
-     * @param App\Models\Image $image
+     * @param App\Models\Post $post
      * @return \Illuminate\Contracts\View\View
      */
-    public function show(Image $image)
+    public function show(Post $post)
     {
-        $image["author"] = Image::getImageAuthorName($image->id);
+        $post["author"] = Post::getPostAuthorName($post->id);
 
         return view(
-            "images.show",
+            "posts.show",
             [
-                "image" => $image
+                "post" => $post
             ]
         );
     }
 
 
     /**
-     * Show create form
+     * Show create post form
      *
      * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
-        return view("images.create");
+        return view("posts.create");
     }
 
     /**
-     * Store new image in DB
+     * Store new post in DB
      *
      * @param Illuminate\Http\Request $request
      * @return \Illuminate\Routing\Redirector
@@ -78,35 +77,35 @@ class ImageController extends Controller
         $formData["image"] = $imagePath;
         $formData["user_id"] = auth()->id();
 
-        Image::create($formData);
+        Post::create($formData);
 
-        return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Image has been added to PicShare successfully!'));
+        return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been added to PicShare successfully!'));
     }
 
     /**
-     * Show edit image form
+     * Show edit post form
      *
-     * @param App\Models\Image $image
+     * @param App\Models\Post $post
      * @return \Illuminate\Routing\Redirector
      */
-    public function edit(Image $image)
+    public function edit(Post $post)
     {
-        $image["author"] = Image::getImageAuthorName($image->id);
+        $post["author"] = Post::getPostAuthorName($post->id);
 
-        return view("images.edit", ["image" => $image]);
+        return view("posts.edit", ["post" => $post]);
     }
 
     /**
-     * Update existing image
+     * Update existing post
      *
-     * @param App\Models\Image $image
+     * @param App\Models\Post $post
      * @param Illuminate\Http\Request $request
      * @return \Illuminate\Routing\Redirector
      */
-    public function update(Image $image, Request $request)
+    public function update(Post $post, Request $request)
     {
         //Check if user have permission
-        if ($image->user_id !== auth()->id()) {
+        if ($post->user_id !== auth()->id()) {
             abort(403, "Unauthorized action");
         }
 
@@ -123,40 +122,45 @@ class ImageController extends Controller
             $formData["image"] = $imagePath;
         }
 
-        $image->update($formData);
+        $post->update($formData);
 
-        return back()->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Image has been update!'));
+        return back()->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been update!'));
     }
 
     /**
-     * Remove image from DB
+     * Remove post from DB
      *
-     * @param App\Models\Image $image
+     * @param App\Models\Post $post
      * @return \Illuminate\Routing\Redirector
      */
-    public function delete(Image $image)
+    public function delete(Post $post)
     {
         //Check if user have rights
-        if ($image->user_id !== auth()->id()) {
+        if ($post->user_id !== auth()->id()) {
             abort(403, "Unauthorized action");
         }
 
 
-        $image->delete();
+        $post->delete();
 
-        return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Image has been deleted'));
+        return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been deleted'));
     }
 
-    public function userImages()
+    /**
+     * Get all user posts
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function userPosts()
     {
-        $images = Image::latest()->where("user_id", auth()->id())->filter(request(["tag", "search"]))->paginate(9);
+        $posts = Post::latest()->where("user_id", auth()->id())->filter(request(["tag", "search"]))->paginate(9);
 
-        foreach ($images as $image) {
-            $image["author"] = Image::getImageAuthorName($image->id);
+        foreach ($posts as $post) {
+            $post["author"] = Post::getPostAuthorName($post->id);
         }
 
-        return view("images.index", [
-            "images" => $images
+        return view("posts.index", [
+            "posts" => $posts
         ]);
     }
 }

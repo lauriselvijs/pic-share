@@ -1,6 +1,6 @@
 <div class='bg-sunset'>
     <div class='flex flex-col items-center justify-center px-6 py-8 mx-auto'>
-        <a href='/' class='flex items-center mb-6 text-2xl font-bold text-black'>
+        <a href={{ route('home')}} class='flex items-center mb-6 text-2xl font-bold text-black'>
             <img class='w-8 h-8 mr-2' src={{ asset('assets/images/logo.png') }} alt='logo'>
             <h2 class='text-4xl'>
                 PicShare

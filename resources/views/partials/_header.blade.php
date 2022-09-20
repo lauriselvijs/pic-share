@@ -7,7 +7,7 @@
         class='flex justify-center sm:justify-start  items-center order-2 md:order-1 md:flex-1 flex-1 font-bold text-4xl cursor-default'>
         <a href='/'>
             <img class='w-8 h-8 mr-2 cursor-pointer' src={{asset('assets/images/logo.png') }} alt='logo'></a>
-        <a href='/'><span class='hover:text-sunset cursor-pointer'>PicShare</span></a>
+        <a href={{ route('home')}}><span class='hover:text-sunset cursor-pointer'>PicShare</span></a>
     </div>
     <nav class='md:flex md:order-2 hidden '>
         <x-nav.ul hoverLinkColor='text-sunset' class='text-white'>

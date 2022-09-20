@@ -1,14 +1,14 @@
-@props(['action', 'image' => ''])
+@props(['action', 'post' => ''])
 
 <form method='POST' action={{ $action }} enctype='multipart/form-data' class='space-y-4'>
     @csrf
 
-    @if ($image)
+    @if ($post)
     @method('PUT')
     @endif
 
-    <x-input label='Title' type='text' name='title' placeholder='My image title' required='required'
-        value="{{ $image ? $image->title : old('title') }}" />
+    <x-input label='Title' type='text' name='title' placeholder='My post title' required='required'
+        value="{{ $post ? $post->title : old('title') }}" />
     @error('title')
     <x-message.error>
         {{ $message }}
@@ -16,7 +16,7 @@
     @enderror
 
     <x-input label='Tags' type='text' name='tags' placeholder='History, Art, Forest' required=''
-        value="{{ $image ? $image->tags : old('tags') }}" />
+        value="{{ $post ? $post->tags : old('tags') }}" />
     @error('tags')
     <x-message.error>
         {{ $message }}
@@ -42,13 +42,13 @@
         </x-message.error>
         @enderror
 
-        @if ($image)
-        <img class='h-full w-full' src={{ asset($image->image) }} alt='User image'>
+        @if ($post)
+        <img class='h-full w-full' src={{ asset($post->image) }} alt='User image'>
         @endif
 
     </div>
 
     <x-button type='submit'>
-        Save image
+        Save post
     </x-button>
 </form>

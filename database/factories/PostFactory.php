@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
  */
-class ImageFactory extends Factory
+class PostFactory extends Factory
 {
 
 
@@ -21,14 +21,14 @@ class ImageFactory extends Factory
     public function definition()
     {
         /**
-         * Image tags
+         * Post tags
          *
          * @var array<string>
          */
         $tags = ["History", "Forest", "Water", "Castle", "Sea"];
 
         /**
-         * Image tags
+         * User ids
          *
          * @var array<int>
          */

@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Image extends Model
+class Post extends Model
 {
     use HasFactory;
 
@@ -18,7 +18,7 @@ class Image extends Model
     protected $fillable = ['title', 'user_id', 'tags', 'image'];
 
     /**
-     * Filter images
+     * Filter posts
      *
      * @param mixed $query
      * @param array<string> $filters
@@ -49,13 +49,13 @@ class Image extends Model
 
 
     /**
-     * Gets user name of given image
+     * Gets user name of given posts
      *
-     * @param string $imageId
+     * @param string $postId
      * @return string
      */
-    public static function getImageAuthorName($imageId)
+    public static function getPostAuthorName($postId)
     {
-        return self::where('id', $imageId)->first()->user()->pluck('name')->first();
+        return self::where('id', $postId)->first()->user()->pluck('name')->first();
     }
 }

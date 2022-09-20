@@ -1,14 +1,14 @@
 @extends('layout.index')
 @section('title')
-Edit Image
+Edit Post
 @endsection
 
 @section('content')
 <x-card.logo>
     <x-slot name='heading'>
-        Edit image info
+        Edit post info
     </x-slot>
-    <x-form.post action='/images/{{ $image->id }}' :image='$image' />
+    <x-form.post action='/posts/{{ $post->id }}' :post='$post' />
 </x-card.logo>
 
 @endsection

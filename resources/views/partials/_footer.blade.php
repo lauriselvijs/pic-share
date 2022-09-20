@@ -67,8 +67,10 @@
         </div>
     </div>
     <div class='py-6 px-4 md:flex md:items-center md:justify-between'>
-        <span class='text-sm sm:text-center'>© {{ date('Y') }} <x-link.secondary class='hover:text-sunset' href='/'>
-                PicShare™</x-link.secondary>.
+        <span class='text-sm sm:text-center'>© {{ date('Y') }}
+            <x-link.secondary class='hover:text-sunset' :href="route('home')">
+                PicShare™
+            </x-link.secondary>.
             All Rights Reserved.
         </span>
         <div class='flex mt-4 space-x-6 sm:justify-center md:mt-0'>
