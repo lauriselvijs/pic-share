@@ -2,10 +2,10 @@
 
 <button type='button' x-on:click='{{ $onClick }}'
     class='text-black bg-transparent hover:bg-shadow hover:text-sunset rounded-lg text-sm p-1.5 ml-auto inline-flex items-center'>
-    <svg aria-hidden='true' class='w-5 h-5 viewBox=' 0 0 20 20' xmlns='http://www.w3.org/2000/svg'>
-        <path fill-rule='evenodd' fill='currentColor'
-            d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
-            clip-rule='evenodd'></path>
+    <svg class='w-6 h-6' fill='currentColor' stroke='currentColor' xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 320 512">
+        <path
+            d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z" />
     </svg>
     <span class='sr-only'>Close modal</span>
 </button>

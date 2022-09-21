@@ -44,11 +44,10 @@
             @endauth
             <a href={{ route('posts.index') }}>
                 <x-button.tertiary type='button'>
-                    <svg aria-hidden='true' class='mr-2 w-5 h-5' fill='currentColor' viewBox='0 0 20 20'
-                        xmlns='http://www.w3.org/2000/svg'>
-                        <path fill-rule='evenodd'
-                            d='M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z'
-                            clip-rule='evenodd'></path>
+                    <svg class='mr-2 w-5 h-5' fill='currentColor' xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512">
+                        <path
+                            d="M109.3 288L480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288z" />
                     </svg>
                     Back
                 </x-button.tertiary>
