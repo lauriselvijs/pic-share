@@ -5,7 +5,7 @@
     @include('partials._modal')
     <div
         class='flex justify-center sm:justify-start  items-center order-2 md:order-1 md:flex-1 flex-1 font-bold text-4xl cursor-default'>
-        <a href='/'>
+        <a href={{ route('home') }}>
             <img class='w-8 h-8 mr-2 cursor-pointer' src={{asset('assets/images/logo.png') }} alt='logo'></a>
         <a href={{ route('home')}}><span class='hover:text-sunset cursor-pointer'>PicShare</span></a>
     </div>

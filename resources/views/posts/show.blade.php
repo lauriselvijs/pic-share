@@ -1,25 +1,25 @@
 @extends('layout.index')
 @section('title')
-{{ $image->title }}
+{{ $post->title }}
 @endsection
 @section('content')
 
 <div class='flex flex-col gap-2 md:px-40 pt-0 pb-24 bg-shadow text-white text-left'>
-    <img class='h-auto w-full md:scale-75 scale-100' src={{ asset($image->image) }} alt='User image'>
+    <img class='h-auto w-full md:scale-75 scale-100' src={{ asset($post->image) }} alt='User posted image'>
     <div class='px-6'>
         <h2 class='text-2xl font-bold py-4 leading-snug'>
-            {{ $image->title }}
+            {{ $post->title }}
         </h2>
 
-        <x-tag :tagsCsv='$image->tags' />
+        <x-tag :tagsCsv='$post->tags' />
         <p class='text-base font-bold py-4'>
-            {{ $image->author }}
+            {{ $post->author }}
         </p>
         <div class='flex md:justify-between md:flex-row flex-col md:gap-8 gap-8 pt-8'>
             @auth
-            @if (auth()->user()->name == $image->author)
+            @if (auth()->user()->name == $post->author)
             <div class='flex gap-8'>
-                <a href='/images/{{ $image->id }}/edit'>
+                <a href={{ route('posts.edit', $post->id) }}>
                     <x-button.tertiary type='button'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'>
                             <path
@@ -28,7 +28,7 @@
                         Edit
                     </x-button.tertiary>
                 </a>
-                <form action='/images/{{ $image->id }}' method='POST'>
+                <form action={{ route('posts.delete', $post->id) }} method='POST'>
                     @csrf
                     @method('DELETE')
                     <x-button.tertiary type='submit'>
@@ -42,7 +42,7 @@
             </div>
             @endif
             @endauth
-            <a href='/'>
+            <a href={{ route('posts.index') }}>
                 <x-button.tertiary type='button'>
                     <svg aria-hidden='true' class='mr-2 w-5 h-5' fill='currentColor' viewBox='0 0 20 20'
                         xmlns='http://www.w3.org/2000/svg'>

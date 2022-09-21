@@ -5,9 +5,11 @@
     whitespace-nowrap'])
     }}>
     @auth
-    <li class='cursor-pointer hover:{{ $hoverLinkColor }}'><a href='/posts/create'>Add new post</a></li>
+    <a href={{ route('posts.create') }} class='cursor-pointer hover:{{ $hoverLinkColor }}'>
+        <li>Add new post</li>
+    </a>
     <li class='cursor-pointer hover:{{ $hoverLinkColor }}'>
-        <form method='GET' action='/posts/user'>
+        <form method='GET' action={{ route('users.posts', auth()->id()) }}>
             @csrf
             <button type='submit'>My Posts</button>
         </form>

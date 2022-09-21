@@ -16,14 +16,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->filter(request(["tag", "search"]))->paginate(9);
+        $posts = Post::latest()->filter(request(['tag', 'search']))->paginate(9);
 
         foreach ($posts as $post) {
-            $post["author"] = Post::getPostAuthorName($post->id);
+            $post['author'] = Post::getPostAuthorName($post->id);
         }
 
-        return view("posts.index", [
-            "posts" => $posts
+        return view('posts.index', [
+            'posts' => $posts
         ]);
     }
 
@@ -35,12 +35,12 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post["author"] = Post::getPostAuthorName($post->id);
+        $post['author'] = Post::getPostAuthorName($post->id);
 
         return view(
-            "posts.show",
+            'posts.show',
             [
-                "post" => $post
+                'post' => $post
             ]
         );
     }
@@ -53,7 +53,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view("posts.create");
+        return view('posts.create');
     }
 
     /**
@@ -66,20 +66,20 @@ class PostController extends Controller
     {
 
         $formData = $request->validate([
-            "title" => "required|string",
-            "image" => "required|image|mimes:jpeg,png",
-            "tags" => "nullable|sometimes|string|filled",
+            'title' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png',
+            'tags' => 'nullable|sometimes|string|filled',
         ]);
 
-        $imageName = Storage::disk("media")->put("images", $request->file("image"));
-        $imagePath = parse_url(Storage::disk("media")->url($imageName))["path"];
+        $imageName = Storage::disk('media')->put('images', $request->file('image'));
+        $imagePath = parse_url(Storage::disk('media')->url($imageName))['path'];
 
-        $formData["image"] = $imagePath;
-        $formData["user_id"] = auth()->id();
+        $formData['image'] = $imagePath;
+        $formData['user_id'] = auth()->id();
 
         Post::create($formData);
 
-        return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been added to PicShare successfully!'));
+        return redirect()->route('posts.index')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been added to PicShare successfully!'));
     }
 
     /**
@@ -90,9 +90,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $post["author"] = Post::getPostAuthorName($post->id);
+        $post['author'] = Post::getPostAuthorName($post->id);
 
-        return view("posts.edit", ["post" => $post]);
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
@@ -106,25 +106,25 @@ class PostController extends Controller
     {
         //Check if user have permission
         if ($post->user_id !== auth()->id()) {
-            abort(403, "Unauthorized action");
+            abort(403, 'Unauthorized action');
         }
 
         $formData = $request->validate([
-            "title" => "sometimes|required|string",
-            "image" => "sometimes|required|image|mimes:jpeg,png",
-            "tags" => "nullable|sometimes|string|filled",
+            'title' => 'sometimes|required|string',
+            'image' => 'sometimes|required|image|mimes:jpeg,png',
+            'tags' => 'nullable|sometimes|string|filled',
         ]);
 
-        if ($request->hasFile("image")) {
-            $imageName = Storage::disk("media")->put("images", $request->file("image"));
-            $imagePath = parse_url(Storage::disk("media")->url($imageName))["path"];
+        if ($request->hasFile('image')) {
+            $imageName = Storage::disk('media')->put('images', $request->file('image'));
+            $imagePath = parse_url(Storage::disk('media')->url($imageName))['path'];
 
-            $formData["image"] = $imagePath;
+            $formData['image'] = $imagePath;
         }
 
         $post->update($formData);
 
-        return back()->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been update!'));
+        return back()->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been update!'));
     }
 
     /**
@@ -137,30 +137,12 @@ class PostController extends Controller
     {
         //Check if user have rights
         if ($post->user_id !== auth()->id()) {
-            abort(403, "Unauthorized action");
+            abort(403, 'Unauthorized action');
         }
 
 
         $post->delete();
 
-        return redirect("/")->with("message",  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been deleted'));
-    }
-
-    /**
-     * Get all user posts
-     *
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function userPosts()
-    {
-        $posts = Post::latest()->where("user_id", auth()->id())->filter(request(["tag", "search"]))->paginate(9);
-
-        foreach ($posts as $post) {
-            $post["author"] = Post::getPostAuthorName($post->id);
-        }
-
-        return view("posts.index", [
-            "posts" => $posts
-        ]);
+        return redirect()->route('posts.index')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been deleted'));
     }
 }

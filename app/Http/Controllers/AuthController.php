@@ -44,7 +44,7 @@ class AuthController extends Controller
         // Login user
         auth()->login($user);
 
-        return redirect('/')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Your PicShare account created successfully!'));
+        return redirect()->route('posts.index')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Your PicShare account created successfully!'));
     }
 
     /**
@@ -60,7 +60,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Successfully logged out!'));
+        return redirect()->route('home')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Successfully logged out!'));
     }
 
     /**
@@ -74,7 +74,7 @@ class AuthController extends Controller
     }
 
 
-    // hegopocydi@mailinator.com
+    // kawuzipilo@mailinator.com
     // 123456
 
     /**
@@ -94,7 +94,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             // TODO:
             // [] - For flash msg create const values
-            return redirect('/')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'You have been logged in successfully!'));
+            return redirect()->route('posts.index')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'You have been logged in successfully!'));
         } else {
             return back()->withErrors(['password' => 'Invalid credentials'])->onlyInput('password');
         }

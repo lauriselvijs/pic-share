@@ -23,9 +23,11 @@
     </x-message.error>
     @enderror
 
+    {{-- TODO:
+    [] - implement drag and drop file upload using jqueary --}}
     <div class='w-full p-20 bg-sunset flex flex-col justify-center items-center gap-2' x-data='{ files: null }'>
         <img class='w-6 h-6' src={{ asset('assets/images/upload-icon.svg') }} alt='Upload'>
-        <p class='text-xs whitespace-nowrap font-medium text-black'>Drag profile picture to this
+        <p class='text-xs whitespace-nowrap font-medium text-black'>Drag picture to this
             drop
             zone.
             *.jpeg *.png</p>

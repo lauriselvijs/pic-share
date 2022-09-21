@@ -15,12 +15,14 @@ Login
                 View posts
             </x-button>
         </a>
-
+        @auth
+        @else
         <a href={{ route('auth.create')}}>
             <x-button type='button'>
                 Sign up
             </x-button>
         </a>
+        @endauth
     </div>
 </x-card.logo>
 @endsection

@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordResetController;
 /*
 |--------------------------------------------------------------------------
@@ -21,23 +21,26 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-// Images
+// Posts
 Route::prefix('posts')->group(function () {
     Route::name('posts.')->group(function () {
         Route::get('/create', [PostController::class, 'create'])->middleware('auth')->name('create');
-        Route::get('/{post}', [PostController::class, 'show'])->name('show');;
+        Route::get('/{post}', [PostController::class, 'show'])->name('show');
         Route::get('/{post}/edit', [PostController::class, 'edit'])->middleware('auth')->name('edit');
         Route::delete('/{post}', [PostController::class, 'delete'])->middleware('auth')->name('delete');
         Route::put('/{post}', [PostController::class, 'update'])->middleware('auth')->name('update');
-        Route::post('/', [PostController::class, 'store'])->middleware('auth')->name('update');;
-        Route::get('/', [PostController::class, 'index'])->name('index');;
+        Route::post('/', [PostController::class, 'store'])->middleware('auth')->name('store');
+        Route::get('/', [PostController::class, 'index'])->name('index');
     });
 });
 
-// TODO:
-// [] - move to user controller users/{user}/posts
-// Post of current auth user
-Route::get('/posts/user', [ImageController::class, 'userPosts'])->middleware('auth');
+// Users
+Route::prefix('users')->group(function () {
+    Route::name('users.')->group(function () {
+        Route::get('/{user}/posts', [UserController::class, 'posts'])->middleware('auth')->name('posts');
+    });
+});
+
 
 // Authentication
 Route::prefix('auth')->group(function () {
