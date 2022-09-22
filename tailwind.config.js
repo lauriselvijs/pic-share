@@ -21,7 +21,7 @@ module.exports = {
         },
         extend: {},
         fontFamily: {
-            sans: ["Quicksand", "sans-serif"],
+            sans: ["PrimaryFont", "sans-serif"],
         },
     },
     plugins: [],

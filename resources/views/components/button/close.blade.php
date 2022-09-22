@@ -1,6 +1,4 @@
-@props(['onClick'])
-
-<button type='button' x-on:click='{{ $onClick }}'
+<button type='button' id='close-modal-btn'
     class='text-black bg-transparent hover:bg-shadow hover:text-sunset rounded-lg text-sm p-1.5 ml-auto inline-flex items-center'>
     <svg class='w-6 h-6' fill='currentColor' stroke='currentColor' xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 320 512">
