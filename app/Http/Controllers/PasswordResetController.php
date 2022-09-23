@@ -35,7 +35,7 @@ class PasswordResetController extends Controller
         );
 
         return $status === Password::RESET_LINK_SENT
-            ? redirect("/")->with(['message' =>  array('msgTitle' => 'Success!', 'msgInfo' => 'Rest link has been sent!')])
+            ? redirect()->route('posts.index')->with(['message' => __('passwords.sent_alert')])
             : back()->withErrors(['email' => __($status)]);
     }
 
@@ -58,6 +58,8 @@ class PasswordResetController extends Controller
      */
     public function update(Request $request)
     {
+        // TODO:
+        // [] - move to separate request class
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
@@ -77,8 +79,10 @@ class PasswordResetController extends Controller
             }
         );
 
+        // TODO:
+        // [] - move msg to constant file like PASSWORDS_RESET_ALERT = 'passwords.reset_alert'
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('message', array('msgTitle' => 'Success!', 'msgInfo' => 'Password has been reset!'))
+            ? redirect()->route('auth.login')->with('message', __('passwords.reset_alert'))
             : back()->withErrors(['email' => [__($status)]]);
     }
 }

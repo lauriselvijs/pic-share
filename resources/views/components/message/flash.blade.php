@@ -5,7 +5,7 @@
     <div class='flex items-center'>
         <span class='sr-only'>Info</span>
         <h2 class='text-2xl font-medium text-black'> {{ session('message')['msg_title'] }}</h2>
-        <x-button.close id='close-alert-box-btn' />
+        <x-button.close id='close-flash-msg-btn' />
     </div>
     <p class='mt-2 mb-4 text-base text-black'>
         {{ session('message')['msg_info'] }}

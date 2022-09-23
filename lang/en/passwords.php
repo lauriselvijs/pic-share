@@ -19,4 +19,6 @@ return [
     'token' => 'This password reset token is invalid.',
     'user' => "We can't find a user with that email address.",
 
+    'reset_alert' => ['msg_title' => 'Success!', 'msg_info' => 'Your password has been reset!'],
+    'sent_alert' => ['msg_title' => 'Success!', 'msg_info' => 'We have emailed your password reset link!'],
 ];

@@ -27,7 +27,7 @@ $("#close-modal-btn").on("click", function () {
 });
 
 // flash msg
-$("#close-alert-box-btn").on("click", function () {
+$("#close-flash-msg-btn").on("click", function () {
     $("#flash-msg").hide();
 });
 

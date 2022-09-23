@@ -110,8 +110,8 @@ class PostController extends Controller
         }
 
         $formData = $request->validate([
-            'title' => 'sometimes|required|string',
-            'image' => 'sometimes|required|image|mimes:jpeg,png',
+            'title' => 'sometimes|string',
+            'image' => 'sometimes|image|mimes:jpeg,png',
             'tags' => 'nullable|sometimes|string|filled',
         ]);
 
