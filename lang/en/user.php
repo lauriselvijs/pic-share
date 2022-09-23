@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Authentication Language Lines
+    | User Language Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during authentication for various
@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'created' => ['msg_title' => 'Success!', 'msg_info' => 'Your PicShare account created successfully!'],
+    'logged_in' => ['msg_title' => 'Success!', 'msg_info' => 'You have been logged in successfully!'],
+    'logged_out' => ['msg_title' => 'Success!', 'msg_info' => 'You have been logged out successfully!']
+
 ];

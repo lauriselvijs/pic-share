@@ -12,7 +12,7 @@
                 Menu
             </h3>
             @endauth
-            <x-button.close />
+            <x-button.close id='close-modal-btn' />
         </div>
         <!-- Hamburger modal body -->
         <nav class='p-6'>

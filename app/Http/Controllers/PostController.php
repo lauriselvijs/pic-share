@@ -79,7 +79,7 @@ class PostController extends Controller
 
         Post::create($formData);
 
-        return redirect()->route('posts.index')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been added to PicShare successfully!'));
+        return redirect()->route('posts.index')->with('message',  __('post.created'));
     }
 
     /**
@@ -124,7 +124,7 @@ class PostController extends Controller
 
         $post->update($formData);
 
-        return back()->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been update!'));
+        return back()->with('message',  __('post.updated'));
     }
 
     /**
@@ -143,6 +143,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect()->route('posts.index')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Post has been deleted'));
+        return redirect()->route('posts.index')->with('message',  __('post.deleted'));
     }
 }

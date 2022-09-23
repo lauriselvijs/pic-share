@@ -44,7 +44,7 @@ class AuthController extends Controller
         // Login user
         auth()->login($user);
 
-        return redirect()->route('posts.index')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Your PicShare account created successfully!'));
+        return redirect()->route('posts.index')->with('message',  __('user.created'));
     }
 
     /**
@@ -60,7 +60,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'Successfully logged out!'));
+        return redirect()->route('home')->with('message', __('user.logged_out'));
     }
 
     /**
@@ -94,9 +94,9 @@ class AuthController extends Controller
             $request->session()->regenerate();
             // TODO:
             // [] - For flash msg create const values
-            return redirect()->route('posts.index')->with('message',  array('msgTitle' => 'Success!', 'msgInfo' => 'You have been logged in successfully!'));
+            return redirect()->route('posts.index')->with('message',  __('user.logged_in'));
         } else {
-            return back()->withErrors(['password' => 'Invalid credentials'])->onlyInput('password');
+            return back()->withErrors(['password' => __('auth.failed')])->onlyInput('password');
         }
     }
 }
