@@ -28,19 +28,19 @@
     [] - implement drag and drop file upload using jqueary
     [] - add progress bar
     --}}
-    <div class='w-full p-20 bg-sunset flex flex-col justify-center items-center gap-2' x-data='{ files: null }'>
+    <div id='image-drop-box' class='w-full p-20 bg-sunset flex flex-col justify-center items-center gap-2'>
         <img class='w-6 h-6' src={{ asset('assets/icons/upload-icon.svg') }} alt='Upload'>
         <p class='text-xs whitespace-nowrap font-medium text-black'>Drag picture to this
             drop
             zone.
             *.jpeg *.png</p>
-        <label for='image'
+        <label for='image-drop-box-input'
             class='text-sm font-medium text-white bg-black px-2.5 py-2.5 text-center hover:bg-shadow cursor-pointer'>Upload
             your image</label>
-        <input hidden aria-describedby='image' id='image' name='image' type='file' accept='image/png, image/jpeg'
-            x-on:change='files = Object.values($event.target.files)'>
-        <span title='Click to remove' class='text-base font-medium text-black cursor-pointer'
-            x-text="files && files.map(file => file.name).join(' , ')" x-on:click='files = null'></span>
+        <input hidden aria-describedby='image' id='image-drop-box-input' name='image' type='file'
+            accept='image/png, image/jpeg'>
+        <span id="image-drop-box-file-name" title='Click to remove'
+            class='text-base font-medium text-black cursor-pointer'></span>
         @error('image')
         <x-message.error class='whitespace-nowrap'>
             {{ $message }}
