@@ -25,7 +25,6 @@
 
     {{--
     TODO:
-    [] - implement drag and drop file upload using jqueary
     [] - add progress bar
     --}}
     <div id='image-drop-box' class='w-full p-20 bg-sunset flex flex-col justify-center items-center gap-2'>
@@ -34,11 +33,10 @@
             drop
             zone.
             *.jpeg *.png</p>
-        <label for='image-drop-box-input'
+        <label for='image-drop-box-input' aria-describedby='image-drop-box-input'
             class='text-sm font-medium text-white bg-black px-2.5 py-2.5 text-center hover:bg-shadow cursor-pointer'>Upload
             your image</label>
-        <input hidden aria-describedby='image' id='image-drop-box-input' name='image' type='file'
-            accept='image/png, image/jpeg'>
+        <input hidden id='image-drop-box-input' name='image' type='file' accept='image/png, image/jpeg'>
         <span id="image-drop-box-file-name" title='Click to remove'
             class='text-base font-medium text-black cursor-pointer'></span>
         @error('image')

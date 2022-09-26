@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
 {
@@ -59,17 +61,12 @@ class PostController extends Controller
     /**
      * Store new post in DB
      *
-     * @param Illuminate\Http\Request $request
+     * @param StorePostRequest $request
      * @return \Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-
-        $formData = $request->validate([
-            'title' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png',
-            'tags' => 'nullable|sometimes|string|filled',
-        ]);
+        $formData = $request->validated();
 
         $imageName = Storage::disk('media')->put('images', $request->file('image'));
         $imagePath = parse_url(Storage::disk('media')->url($imageName))['path'];
@@ -99,21 +96,12 @@ class PostController extends Controller
      * Update existing post
      *
      * @param App\Models\Post $post
-     * @param Illuminate\Http\Request $request
+     * @param UpdatePostRequest $request
      * @return \Illuminate\Routing\Redirector
      */
-    public function update(Post $post, Request $request)
+    public function update(Post $post, UpdatePostRequest $request)
     {
-        //Check if user have permission
-        if ($post->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action');
-        }
-
-        $formData = $request->validate([
-            'title' => 'sometimes|string',
-            'image' => 'sometimes|image|mimes:jpeg,png',
-            'tags' => 'nullable|sometimes|string|filled',
-        ]);
+        $formData = $request->validated();
 
         if ($request->hasFile('image')) {
             $imageName = Storage::disk('media')->put('images', $request->file('image'));
@@ -124,7 +112,7 @@ class PostController extends Controller
 
         $post->update($formData);
 
-        return back()->with('message',  __('post.updated'));
+        return redirect()->route('posts.index')->with('message',  __('post.updated'));
     }
 
     /**
@@ -135,12 +123,6 @@ class PostController extends Controller
      */
     public function delete(Post $post)
     {
-        //Check if user have rights
-        if ($post->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action');
-        }
-
-
         $post->delete();
 
         return redirect()->route('posts.index')->with('message',  __('post.deleted'));

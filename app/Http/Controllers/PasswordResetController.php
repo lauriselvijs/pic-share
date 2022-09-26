@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\Http\Requests\EmailPasswordResetRequest;
+use App\Http\Requests\UpdatePasswordResetRequest;
 
 class PasswordResetController extends Controller
 {
@@ -23,12 +25,12 @@ class PasswordResetController extends Controller
     /**
      * Sends email reset link
      *
-     * @param Request $request
+     * @param EmailPasswordResetRequest $request
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function email(Request $request)
+    public function email(EmailPasswordResetRequest $request)
     {
-        $request->validate(['email' => 'required|email']);
+        $request->validated();
 
         $status = Password::sendResetLink(
             $request->only('email')
@@ -53,18 +55,14 @@ class PasswordResetController extends Controller
     /**
      * Resets password
      *
-     * @param Request $request
+     * @param UpdatePasswordResetRequest $request
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function update(UpdatePasswordResetRequest $request)
     {
         // TODO:
         // [] - move to separate request class
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:6|confirmed',
-        ]);
+        $request->validated();
 
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
@@ -79,8 +77,6 @@ class PasswordResetController extends Controller
             }
         );
 
-        // TODO:
-        // [] - move msg to constant file like PASSWORDS_RESET_ALERT = 'passwords.reset_alert'
         return $status === Password::PASSWORD_RESET
             ? redirect()->route('auth.login')->with('message', __('passwords.reset_alert'))
             : back()->withErrors(['email' => [__($status)]]);

@@ -22,43 +22,42 @@ Route::get('/', function () {
 })->name('home');
 
 // Posts
-Route::prefix('posts')->group(function () {
-    Route::name('posts.')->group(function () {
-        Route::get('/create', [PostController::class, 'create'])->middleware('auth')->name('create');
-        Route::get('/{post}', [PostController::class, 'show'])->name('show');
-        Route::get('/{post}/edit', [PostController::class, 'edit'])->middleware('auth')->name('edit');
-        Route::delete('/{post}', [PostController::class, 'delete'])->middleware('auth')->name('delete');
-        Route::put('/{post}', [PostController::class, 'update'])->middleware('auth')->name('update');
-        Route::post('/', [PostController::class, 'store'])->middleware('auth')->name('store');
-        Route::get('/', [PostController::class, 'index'])->name('index');
+Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/create', [PostController::class, 'create'])->name('create');
+        Route::get('/{post}/edit', [PostController::class, 'edit'])->name('edit');
+        Route::delete('/{post}', [PostController::class, 'delete'])->name('delete');
+        Route::put('/{post}', [PostController::class, 'update'])->name('update');
+        Route::post('/', [PostController::class, 'store'])->name('store');
     });
+    Route::get('/{post}', [PostController::class, 'show'])->name('show');
+    Route::get('/', [PostController::class, 'index'])->name('index');
 });
 
+
 // Users
-Route::prefix('users')->group(function () {
-    Route::name('users.')->group(function () {
-        Route::get('/{user}/posts', [UserController::class, 'posts'])->middleware('auth')->name('posts');
-    });
+Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
+    Route::get('/{user}/posts', [UserController::class, 'posts'])->middleware('auth')->name('posts');
 });
+
 
 
 // Authentication
-Route::prefix('auth')->group(function () {
-    Route::name('auth.')->group(function () {
-        Route::get('/sign-up',  [AuthController::class, 'create'])->middleware('guest')->name('create');
-        Route::post('/sign-up',  [AuthController::class, 'store'])->middleware('guest')->name('store');
-        Route::get('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');
-        Route::post('/login', [AuthController::class, 'authenticate'])->middleware('guest')->name('authenticate');
-        Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+    Route::group(['middleware' => 'guest'], function () {
+        Route::get('/sign-up',  [AuthController::class, 'create'])->name('create');
+        Route::post('/sign-up',  [AuthController::class, 'store'])->name('store');
+        Route::get('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
     });
+    Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 });
 
+
 // Password reset
-Route::prefix('password-reset')->group(function () {
-    Route::name('password.')->group(function () {
-        Route::get('/forgot-password',  [PasswordResetController::class, 'request'])->middleware('guest')->name('request');
-        Route::post('/forgot-password',  [PasswordResetController::class, 'email'])->middleware('guest')->name('email');
-        Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])->middleware('guest')->name('reset');
-        Route::post('/reset-password',  [PasswordResetController::class, 'update'])->middleware('guest')->name('update');
-    });
+Route::group(['prefix' => 'password-reset', 'middleware' => 'guest', 'as' => 'password.'], function () {
+    Route::get('/forgot-password',  [PasswordResetController::class, 'request'])->name('request');
+    Route::post('/forgot-password',  [PasswordResetController::class, 'email'])->name('email');
+    Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('reset');
+    Route::post('/reset-password',  [PasswordResetController::class, 'update'])->name('update');
 });

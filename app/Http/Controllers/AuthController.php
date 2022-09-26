@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\AuthRequest;
+use App\Http\Requests\StoreAuthRequest;
 
 class AuthController extends Controller
 {
@@ -20,20 +22,14 @@ class AuthController extends Controller
     /**
      * Create new user
      *
-     * @param Request $request
+     * @param StoreAuthRequest $request
      * @return \Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(StoreAuthRequest $request)
     {
         // TODO: 
         // [] - add agreement checked to user table as column
-        // [] - add username field
-        $formData = $request->validate([
-            'name' => 'required|string:min:3',
-            'email' => 'required|email|unique:users',
-            'agreement' => 'required',
-            'password' => 'required|string|confirmed|min:6',
-        ]);
+        $formData = $request->validated();
 
         // Hash password
         $formData['password'] = bcrypt($formData['password']);
@@ -80,15 +76,12 @@ class AuthController extends Controller
     /**
      * Authenticate user
      *
-     * @param Request $request
+     * @param AuthRequest $request
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Http\RedirectResponse
      */
-    public function authenticate(Request $request)
+    public function authenticate(AuthRequest $request)
     {
-        $formData = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+        $formData = $request->validated();
 
         if (auth()->attempt($formData, $request->remember)) {
             $request->session()->regenerate();
