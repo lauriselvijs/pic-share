@@ -123,6 +123,8 @@ class PostController extends Controller
      */
     public function delete(Post $post)
     {
+        // TODO:
+        // [] - implement policies or  access delegation
         $post->delete();
 
         return redirect()->route('posts.index')->with('message',  __('post.deleted'));

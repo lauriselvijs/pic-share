@@ -17,6 +17,8 @@
         </p>
         <div class='flex md:justify-between md:flex-row flex-col md:gap-8 gap-8 pt-8'>
             @auth
+            {{-- // TODO:
+            // [] - replace with blade policies directives --}}
             @if (auth()->user()->name == $post->author)
             <div class='flex gap-8'>
                 <a href={{ route('posts.edit', $post->id) }}>
