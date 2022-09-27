@@ -16,7 +16,6 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
-
     /**
      * Show sign up user form
      *
@@ -35,11 +34,9 @@ class AuthController extends Controller
      */
     public function store(StoreAuthRequest $request)
     {
-        $userData = $request->validated();
+        $user = $this->authService->store($request->validated());
 
-        $user = $this->authService->store($userData);
-
-        $this->authService->login($user);
+        auth()->login($user);
 
         return redirect()->route('posts.index')->with('message',  __('user.created'));
     }
@@ -52,7 +49,9 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $this->authService->logout($request->session());
+        auth()->logout();
+
+        $this->authService->invalidate($request->session());
 
         return redirect()->route('home')->with('message', __('user.logged_out'));
     }
@@ -79,7 +78,7 @@ class AuthController extends Controller
      */
     public function authenticate(AuthRequest $request)
     {
-        if ($this->authService->auth($request->session(), $request->validated(), $request->remember)) {
+        if ($this->authService->authenticate($request->session(), $request->validated(), $request->has('remember'))) {
             return redirect()->route('posts.index')->with('message',  __('user.logged_in'));
         }
 

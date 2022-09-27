@@ -8,9 +8,9 @@ use Illuminate\Contracts\Session\Session;
 class AuthService
 {
     /**
-     * Hash password for givin password field
+     * Store new user in database
      *
-     * @param array<mix> $userData
+     * @param array<string, mixed> $userData
      * @return User
      */
     public function store(array $userData): User
@@ -26,21 +26,14 @@ class AuthService
         return $user;
     }
 
-    public function login(User $user): void
-    {
-        auth()->login($user);
-    }
-
     /**
-     * Logout current user
+     * Invalidate current session and regenerate CSRF token
      *
      * @param Session $session
      * @return void
      */
-    public function logout(Session $session): void
+    public function invalidate(Session $session): void
     {
-        auth()->logout();
-
         $session->invalidate();
         $session->regenerateToken();
     }
@@ -49,13 +42,13 @@ class AuthService
      * Auth user
      *
      * @param Session $session
-     * @param array $userData
-     * @param string $remember
+     * @param array<string, string> $userData
+     * @param mixed $remember
      * @return bool
      */
-    public function auth(Session $session, array $userData, string|null $remember): bool
+    public function authenticate(Session $session, array $credentials, bool $remember): bool
     {
-        if (auth()->attempt($userData, $remember)) {
+        if (auth()->attempt($credentials, $remember)) {
             $session->regenerate();
             return true;
         }

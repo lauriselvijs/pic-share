@@ -14,22 +14,22 @@ Sign Up
 
         {{-- TODO:
         [] - move inputs that repeat to a component --}}
-        <x-input label='Your email' type='email' name='email' placeholder='name@company.com' required value='{{ old('
-            email') }}' />
+        <x-input label='Your email' type='email' name='email' placeholder='name@company.com' required value="{{ old('
+            email') }}" />
         @error('email')
         <x-message.error>
             {{ $message }}
         </x-message.error>
         @enderror
 
-        <x-input label='Password' type='password' name='password' placeholder='••••••••' required />
+        <x-input label='New password' type='password' name='password' placeholder='••••••••' required />
         @error('password')
         <x-message.error>
             {{ $message }}
         </x-message.error>
         @enderror
 
-        <x-input label='Confirm password' type='password' name='password_confirmation' placeholder='••••••••'
+        <x-input label='Confirm new password' type='password' name='password_confirmation' placeholder='••••••••'
             required />
         @error('password_confirmation')
         <x-message.error>
