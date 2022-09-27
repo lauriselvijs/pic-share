@@ -1,7 +1,7 @@
 @extends('layout.index')
 
 @section('title')
-Login
+Home
 @endsection
 
 @section('content')

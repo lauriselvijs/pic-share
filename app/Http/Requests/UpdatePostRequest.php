@@ -13,13 +13,7 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize()
     {
-        // TODO:
-        // [] - Replace with policies
-        if ($this->post->user_id == auth()->id()) {
-            return true;
-        }
-
-        return false;
+        return $this->user()->can('edit', $this->post);
     }
 
     /**

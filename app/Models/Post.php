@@ -48,13 +48,15 @@ class Post extends Model
     }
 
 
+    // TODO:
+    // [] - replace with scope filter
     /**
-     * Gets user name of given posts
+     * Gets auth name of given post
      *
      * @param string $postId
      * @return string
      */
-    public static function getPostAuthorName($postId)
+    public static function authorNameBy($postId)
     {
         return self::where('id', $postId)->first()->user()->pluck('name')->first();
     }

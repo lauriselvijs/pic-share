@@ -21,7 +21,7 @@ class PostController extends Controller
         $posts = Post::latest()->filter(request(['tag', 'search']))->paginate(9);
 
         foreach ($posts as $post) {
-            $post['author'] = Post::getPostAuthorName($post->id);
+            $post['author'] = Post::authorNameBy($post->id);
         }
 
         return view('posts.index', [
@@ -37,7 +37,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post['author'] = Post::getPostAuthorName($post->id);
+        $post['author'] = Post::authorNameBy($post->id);
 
         return view(
             'posts.show',
@@ -87,7 +87,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $post['author'] = Post::getPostAuthorName($post->id);
+        $this->authorize('edit', $post);
+
+        $post['author'] = Post::authorNameBy($post->id);
 
         return view('posts.edit', ['post' => $post]);
     }
@@ -123,8 +125,8 @@ class PostController extends Controller
      */
     public function delete(Post $post)
     {
-        // TODO:
-        // [] - implement policies or  access delegation
+        $this->authorize('delete_post', $post);
+
         $post->delete();
 
         return redirect()->route('posts.index')->with('message',  __('post.deleted'));

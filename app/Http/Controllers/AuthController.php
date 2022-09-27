@@ -6,9 +6,17 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\StoreAuthRequest;
+use App\Services\AuthService;
 
 class AuthController extends Controller
 {
+
+    public function __construct(private AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
+
     /**
      * Show sign up user form
      *
@@ -27,18 +35,11 @@ class AuthController extends Controller
      */
     public function store(StoreAuthRequest $request)
     {
-        // TODO: 
-        // [] - add agreement checked to user table as column
-        $formData = $request->validated();
+        $userData = $request->validated();
 
-        // Hash password
-        $formData['password'] = bcrypt($formData['password']);
+        $user = $this->authService->store($userData);
 
-        // Create user
-        $user = User::create($formData);
-
-        // Login user
-        auth()->login($user);
+        $this->authService->login($user);
 
         return redirect()->route('posts.index')->with('message',  __('user.created'));
     }
@@ -51,10 +52,7 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        auth()->logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $this->authService->logout($request->session());
 
         return redirect()->route('home')->with('message', __('user.logged_out'));
     }
@@ -81,15 +79,10 @@ class AuthController extends Controller
      */
     public function authenticate(AuthRequest $request)
     {
-        $formData = $request->validated();
-
-        if (auth()->attempt($formData, $request->remember)) {
-            $request->session()->regenerate();
-            // TODO:
-            // [] - For flash msg create const values
+        if ($this->authService->auth($request->session(), $request->validated(), $request->remember)) {
             return redirect()->route('posts.index')->with('message',  __('user.logged_in'));
-        } else {
-            return back()->withErrors(['password' => __('auth.failed')])->onlyInput('password');
         }
+
+        return back()->withErrors(['password' => __('auth.failed')])->onlyInput('password');
     }
 }

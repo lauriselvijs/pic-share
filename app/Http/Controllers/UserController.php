@@ -18,7 +18,7 @@ class UserController extends Controller
         $posts = Post::latest()->where('user_id', $user->id)->filter(request(['tag', 'search']))->paginate(9);
 
         foreach ($posts as $post) {
-            $post['author'] = Post::getPostAuthorName($post->id);
+            $post['author'] = Post::authorNameBy($post->id);
         }
 
         return view('posts.index', [

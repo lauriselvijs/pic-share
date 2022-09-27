@@ -17,10 +17,8 @@
         </p>
         <div class='flex md:justify-between md:flex-row flex-col md:gap-8 gap-8 pt-8'>
             @auth
-            {{-- // TODO:
-            // [] - replace with blade policies directives --}}
-            @if (auth()->user()->name == $post->author)
             <div class='flex gap-8'>
+                @can('update', $post)
                 <a href={{ route('posts.edit', $post->id) }}>
                     <x-button.tertiary type='button'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'>
@@ -30,6 +28,8 @@
                         Edit
                     </x-button.tertiary>
                 </a>
+                @endcan
+                @can('delete', $post)
                 <form action={{ route('posts.delete', $post->id) }} method='POST'>
                     @csrf
                     @method('DELETE')
@@ -41,8 +41,8 @@
                         Delete
                     </x-button.tertiary>
                 </form>
+                @endcan
             </div>
-            @endif
             @endauth
             <a href={{ route('posts.index') }}>
                 <x-button.tertiary type='button'>
