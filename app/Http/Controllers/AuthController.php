@@ -68,7 +68,7 @@ class AuthController extends Controller
 
 
     // kawuzipilo@mailinator.com
-    // 123456
+    // 12345678
 
     /**
      * Authenticate user

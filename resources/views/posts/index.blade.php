@@ -20,7 +20,6 @@ Posts
     @endforeach
 </div>
 <div class='bg-sunset sm:px-48 sm:pt-0 px-8 py-8'>
-    {{-- What are links()? --}}
     {{ $posts->links() }}
 </div>
 @endunless

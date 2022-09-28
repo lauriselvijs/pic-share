@@ -3,12 +3,25 @@
 namespace App\Models;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
     use HasFactory;
+
+
+    /**
+     * Query params used for post filtering
+     * 
+     * @var array<string>
+     * 
+     */
+    public const FILTERS = ['tag', 'search'];
 
     /**
      * Allow mass assignment to provided fields
@@ -21,35 +34,34 @@ class Post extends Model
      * Filter posts
      *
      * @param mixed $query
-     * @param array<string> $filters
+     * @param array<string, array<string>> $filters
      * @return void
      */
-    public function scopeFilter($query, array $filters)
+    public function scopeFilter(mixed $query, array $filters): void
     {
-
         if ($filters['tag'] ?? false) {
-            $query->where('tags', 'like', '%' . implode(', ', request('tag')) . '%');
+            $query->where('tags', 'like', '%' . implode(', ', $filters['tag']) . '%');
         }
 
         if ($filters['search'] ?? false) {
-            $query->where('title', 'like', '%' . request('search') . '%')
-                ->orWhere('tags', 'like', '%' . request('search') . '%');
+            $query->where('title', 'like', '%' . $filters['search'] . '%')
+                ->orWhere('tags', 'like', '%' . $filters['search'] . '%');
         }
     }
 
     /**
      * Relationship to user
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
 
     // TODO:
-    // [] - replace with scope filter
+    // [] - remove
     /**
      * Gets auth name of given post
      *
@@ -58,6 +70,24 @@ class Post extends Model
      */
     public static function authorNameBy($postId)
     {
-        return self::where('id', $postId)->first()->user()->pluck('name')->first();
+        return self::where('id', $postId)
+            ->first()
+            ->user()
+            ->pluck('name')
+            ->first();
+    }
+
+    /**
+     * Returns all post records paginated
+     *
+     * @param array<string, array<string>> $filters
+     * @return LengthAwarePaginator
+     */
+    public function paginate(array $filters): LengthAwarePaginator
+    {
+        return $this->with('user:id,name')
+            ->latest()
+            ->filter($filters)
+            ->paginate(9);
     }
 }

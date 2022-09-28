@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Services\PostService;
+use Illuminate\Contracts\View\View;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
@@ -11,18 +13,21 @@ use App\Http\Requests\UpdatePostRequest;
 class PostController extends Controller
 {
 
+    public function __construct(private Post $post, private PostService $postService)
+    {
+        $this->post = $post;
+        $this->postService = $postService;
+    }
     /**
      * Return all posts
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
-    public function index()
+    public function index(Request $request): View
     {
-        $posts = Post::latest()->filter(request(['tag', 'search']))->paginate(9);
+        $posts = $this->post->paginate($request->only(Post::FILTERS));
 
-        foreach ($posts as $post) {
-            $post['author'] = Post::authorNameBy($post->id);
-        }
+        $this->postService->setAuthorNamesTo($posts);
 
         return view('posts.index', [
             'posts' => $posts
@@ -32,12 +37,12 @@ class PostController extends Controller
     /**
      * Show single post
      *
-     * @param App\Models\Post $post
-     * @return \Illuminate\Contracts\View\View
+     * @param Post $post
+     * @return View
      */
-    public function show(Post $post)
+    public function show(Post $post): View
     {
-        $post['author'] = Post::authorNameBy($post->id);
+        $this->postService->setAuthorNameTo($post);
 
         return view(
             'posts.show',
@@ -51,9 +56,9 @@ class PostController extends Controller
     /**
      * Show create post form
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('posts.create');
     }
@@ -66,15 +71,12 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $formData = $request->validated();
+        $postData = $request->validated();
 
-        $imageName = Storage::disk('media')->put('images', $request->file('image'));
-        $imagePath = parse_url(Storage::disk('media')->url($imageName))['path'];
+        $imagePath = $this->postService->returnPathOf($postData['image']);
+        $userId = auth()->id();
 
-        $formData['image'] = $imagePath;
-        $formData['user_id'] = auth()->id();
-
-        Post::create($formData);
+        $this->postService->store($postData, $userId, $imagePath);
 
         return redirect()->route('posts.index')->with('message',  __('post.created'));
     }
@@ -82,14 +84,14 @@ class PostController extends Controller
     /**
      * Show edit post form
      *
-     * @param App\Models\Post $post
+     * @param Post $post
      * @return \Illuminate\Routing\Redirector
      */
     public function edit(Post $post)
     {
         $this->authorize('edit', $post);
 
-        $post['author'] = Post::authorNameBy($post->id);
+        // $post['author'] = $post->user->name;
 
         return view('posts.edit', ['post' => $post]);
     }
@@ -97,7 +99,7 @@ class PostController extends Controller
     /**
      * Update existing post
      *
-     * @param App\Models\Post $post
+     * @param Post $post
      * @param UpdatePostRequest $request
      * @return \Illuminate\Routing\Redirector
      */
@@ -125,7 +127,7 @@ class PostController extends Controller
      */
     public function delete(Post $post)
     {
-        $this->authorize('delete_post', $post);
+        $this->authorize('delete', $post);
 
         $post->delete();
 
