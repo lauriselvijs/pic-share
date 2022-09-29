@@ -11,7 +11,7 @@ class PasswordResetService
 {
 
     /**
-     * Sends reset password link to given email
+     * Sends reset password link to given email.
      *
      * @param array $email
      * @return array<string, string>
@@ -28,7 +28,7 @@ class PasswordResetService
     }
 
     /**
-     * Updates user password
+     * Updates user password.
      *
      * @param array<string, mixed> $credentials
      * @return array|boolean

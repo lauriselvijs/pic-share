@@ -5,24 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\PostService;
+use Illuminate\Contracts\View\View;
 
 class UserController extends Controller
 {
+    public function __construct(private Post $post, private PostService $postService)
+    {
+        $this->post = $post;
+        $this->postService = $postService;
+    }
+
     /**
      * Get all user posts
      *
-     * @return \Illuminate\Contracts\View\View
+     * @param Request $request
+     * @param User $user
+     * @return View
      */
-    public function posts(User $user)
+    public function posts(Request $request, User $user): View
     {
-        $posts = Post::latest()->where('user_id', $user->id)->filter(request(['tag', 'search']))->paginate(9);
-
-        foreach ($posts as $post) {
-            $post['author'] = Post::authorNameBy($post->id);
-        }
+        $posts = $this->post->paginatePostsContains($user->id, $request->only(Post::FILTERS));
 
         return view('posts.index', [
-            'posts' => $posts
+            'posts' => $this->postService->includeAuthorNames($posts)
         ]);
     }
 }

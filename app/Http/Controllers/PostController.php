@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Services\PostService;
 use Illuminate\Contracts\View\View;
 use App\Http\Requests\StorePostRequest;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
@@ -28,7 +27,7 @@ class PostController extends Controller
         $posts = $this->post->paginate($request->only(Post::FILTERS));
 
         return view('posts.index', [
-            'posts' => $this->postService->withAuthorNames($posts)
+            'posts' => $this->postService->includeAuthorNames($posts)
         ]);
     }
 
@@ -43,7 +42,7 @@ class PostController extends Controller
         return view(
             'posts.show',
             [
-                'post' =>  $this->postService->withAuthorName($post)
+                'post' =>  $this->postService->includeAuthorName($post)
             ]
         );
     }
@@ -94,9 +93,7 @@ class PostController extends Controller
      */
     public function update(Post $post, UpdatePostRequest $request)
     {
-        $postData = $request->validated();
-
-        $this->postService->update($post, $postData);
+        $this->postService->update($post, $request->validated());
 
         return redirect()->route('posts.index')->with('message',  __('post.updated'));
     }
@@ -104,14 +101,14 @@ class PostController extends Controller
     /**
      * Remove post from DB
      *
-     * @param App\Models\Post $post
+     * @param Post $post
      * @return \Illuminate\Routing\Redirector
      */
     public function delete(Post $post)
     {
         $this->authorize('delete', $post);
 
-        $post->delete();
+        $this->postService->delete($post);
 
         return redirect()->route('posts.index')->with('message',  __('post.deleted'));
     }
