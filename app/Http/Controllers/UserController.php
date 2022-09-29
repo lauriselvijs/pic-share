@@ -28,7 +28,7 @@ class UserController extends Controller
         $posts = $this->post->paginatePostsContains($user->id, $request->only(Post::FILTERS));
 
         return view('posts.index', [
-            'posts' => $this->postService->includeAuthorNames($posts)
+            'posts' => $this->postService->includeAuthorNamesInPosts($posts)
         ]);
     }
 }

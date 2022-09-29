@@ -26,7 +26,18 @@ $("#close-modal-btn").on("click", function () {
     });
 });
 
-// flash msg
+// TODO:
+// [] - access tailwind config and replace 1200 with theme.screens.md
+// Close modal if screen resized
+$(window).on("resize", function () {
+    if (document.body.offsetWidth > 1200) {
+        $("#modal-content").animate({ width: 0 }, "fast", function () {
+            $("#modal-menu").hide();
+        });
+    }
+});
+
+// Flash msg
 $("#close-flash-msg-btn").on("click", function () {
     $("#flash-msg").hide();
 });

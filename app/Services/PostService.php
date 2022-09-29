@@ -17,7 +17,7 @@ class PostService
      * @param LengthAwarePaginator $posts
      * @return LengthAwarePaginator
      */
-    public function includeAuthorNames(LengthAwarePaginator $posts): LengthAwarePaginator
+    public function includeAuthorNamesInPosts(LengthAwarePaginator $posts): LengthAwarePaginator
     {
         $posts->map(function ($post) {
             $post->author = $post->user->name;
@@ -32,7 +32,7 @@ class PostService
      * @param Post $post
      * @return Post
      */
-    public function includeAuthorName(Post $post): Post
+    public function includeAuthorNameInPost(Post $post): Post
     {
         $post->author = $post->user->name;
 

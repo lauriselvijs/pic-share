@@ -27,7 +27,7 @@ class PostController extends Controller
         $posts = $this->post->paginate($request->only(Post::FILTERS));
 
         return view('posts.index', [
-            'posts' => $this->postService->includeAuthorNames($posts)
+            'posts' => $this->postService->includeAuthorNamesInPosts($posts)
         ]);
     }
 
@@ -42,7 +42,7 @@ class PostController extends Controller
         return view(
             'posts.show',
             [
-                'post' =>  $this->postService->includeAuthorName($post)
+                'post' =>  $this->postService->includeAuthorNameInPost($post)
             ]
         );
     }
