@@ -121,6 +121,6 @@ class PostService
     {
         $this->deleteMediaFile($post->image);
 
-        // $post->delete();
+        $post->delete();
     }
 }
