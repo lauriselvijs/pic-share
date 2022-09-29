@@ -9,19 +9,28 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PostService
 {
-
     // TODO:
     // [] - setAuthorNamesTo and setAuthorNameTo replace with one function
-    public function setAuthorNamesTo(LengthAwarePaginator $posts): void
+    public function withAuthorNames(LengthAwarePaginator $posts): LengthAwarePaginator
     {
         $posts->map(function ($post) {
             $post->author = $post->user->name;
         });
+
+        return $posts;
     }
 
-    public function setAuthorNameTo(Post $post): void
+    /**
+     * Takes post and returns it with its author name
+     *
+     * @param Post $post
+     * @return Post
+     */
+    public function withAuthorName(Post $post): Post
     {
         $post->author = $post->user->name;
+
+        return $post;
     }
 
 
@@ -31,7 +40,7 @@ class PostService
      * @param UploadedFile $image
      * @return string
      */
-    public function returnPathOf(UploadedFile $image): string
+    public function saveAndReturnPathOfImage(UploadedFile $image): string
     {
         $imageName = Storage::disk('media')->put('images', $image);
         $imagePath = parse_url(Storage::disk('media')->url($imageName))['path'];
@@ -40,18 +49,61 @@ class PostService
     }
 
     /**
-     * Store post in database
+     * Delete givin media file
      *
-     * @param array<string, UploadedFile|string> $postData
-     * @param integer|string $userId
-     * @param string $imagePath
+     * @param string $file File path to delete
      * @return void
      */
-    public function store(array $postData, int|string $userId, string $imagePath): void
+    public function deleteMediaFile(string $file): void
     {
-        $postData['user_id'] = $userId;
+        Storage::disk('media')->delete($file);
+    }
+
+    /**
+     * Update existing image with new one and return new image path
+     *
+     * @param UploadedFile|null $newImage
+     * @param string $oldImagePath
+     * @return string|bool
+     */
+    public function updatePathOfImage(UploadedFile $newImage, string $oldImagePath): string
+    {
+        $this->deleteMediaFile($oldImagePath);
+        return $this->saveAndReturnPathOfImage($newImage);
+    }
+
+    /**
+     * Store post in database
+     *
+     * @param array<string, int|string|UploadedFile> $postData
+     * @return void
+     */
+    public function store(array $postData): void
+    {
+        $imagePath = $this->saveAndReturnPathOfImage($postData['image']);
         $postData['image'] = $imagePath;
 
         Post::create($postData);
+    }
+
+    /**
+     * Update post
+     *
+     * @param Post $post
+     * @param array $postData
+     * @return void
+     */
+    public function update(Post $post, array $postData)
+    {
+        if ($postData['image']) {
+            $imagePath = $this->updatePathOfImage($postData['image'], $post->image);
+            $postData['image'] = $imagePath;
+        }
+
+        // [] - Check if works
+        // $postData = [...$postData, 'image' =>  $imagePath];
+
+
+        $post->update($postData);
     }
 }

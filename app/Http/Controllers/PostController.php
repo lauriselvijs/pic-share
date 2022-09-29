@@ -27,10 +27,8 @@ class PostController extends Controller
     {
         $posts = $this->post->paginate($request->only(Post::FILTERS));
 
-        $this->postService->setAuthorNamesTo($posts);
-
         return view('posts.index', [
-            'posts' => $posts
+            'posts' => $this->postService->withAuthorNames($posts)
         ]);
     }
 
@@ -42,12 +40,10 @@ class PostController extends Controller
      */
     public function show(Post $post): View
     {
-        $this->postService->setAuthorNameTo($post);
-
         return view(
             'posts.show',
             [
-                'post' => $post
+                'post' =>  $this->postService->withAuthorName($post)
             ]
         );
     }
@@ -71,12 +67,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $postData = $request->validated();
-
-        $imagePath = $this->postService->returnPathOf($postData['image']);
-        $userId = auth()->id();
-
-        $this->postService->store($postData, $userId, $imagePath);
+        $this->postService->store([...$request->validated(), 'user_id' => auth()->id()]);
 
         return redirect()->route('posts.index')->with('message',  __('post.created'));
     }
@@ -91,8 +82,6 @@ class PostController extends Controller
     {
         $this->authorize('edit', $post);
 
-        // $post['author'] = $post->user->name;
-
         return view('posts.edit', ['post' => $post]);
     }
 
@@ -105,16 +94,9 @@ class PostController extends Controller
      */
     public function update(Post $post, UpdatePostRequest $request)
     {
-        $formData = $request->validated();
+        $postData = $request->validated();
 
-        if ($request->hasFile('image')) {
-            $imageName = Storage::disk('media')->put('images', $request->file('image'));
-            $imagePath = parse_url(Storage::disk('media')->url($imageName))['path'];
-
-            $formData['image'] = $imagePath;
-        }
-
-        $post->update($formData);
+        $this->postService->update($post, $postData);
 
         return redirect()->route('posts.index')->with('message',  __('post.updated'));
     }
