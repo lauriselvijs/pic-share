@@ -39,7 +39,6 @@ PicShare:
 ### Links
 
 -   Solution URL: [Github](https://github.com/lauriselvijs/pic-share)
--   Live Site URL: [Netlify](https://b2cf56-portfolio-react.netlify.app/projects)
 
 ## Installation
 
