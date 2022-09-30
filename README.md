@@ -1,64 +1,89 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# PicShare
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Table of contents
 
-## About Laravel
+- [PicShare](#picshare)
+  - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
+    - [Screenshot](#screenshot)
+    - [Links](#links)
+  - [Installation](#installation)
+    - [Steps to Setup](#steps-to-setup)
+    - [Steps to Run](#steps-to-run)
+  - [My process](#my-process)
+    - [Built with](#built-with)
+    - [Continued development](#continued-development)
+    - [Useful resources](#useful-resources)
+  - [Author](#author)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+PicShare:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   Show all user images
+-   Show only your images
+-   Sign up or Login
+-   Forget password functionality
+-   Add new image
+-   Update existing image
+-   Search by title or tags
+-   Filter by tags
 
-## Learning Laravel
+### Screenshot
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+![PicShare desktop](https://user-images.githubusercontent.com/85683069/193223608-51366e9f-9913-4221-b7ab-c16e7324cf10.png)
+![PicShare tablet](https://user-images.githubusercontent.com/85683069/193223595-cba31774-f655-4159-b2a9-cf3d5b5fd9fa.png)
+![PicShare mobile](https://user-images.githubusercontent.com/85683069/193223606-1c1e4369-1468-4a3b-8978-3816ccc25aca.jpg)
+![PicShare menu mobile](https://user-images.githubusercontent.com/85683069/193223603-54a90111-cdf8-4bff-bf2c-828cff7a8e24.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Links
 
-## Laravel Sponsors
+-   Solution URL: [Github](https://github.com/lauriselvijs/pic-share)
+-   Live Site URL: [Netlify](https://b2cf56-portfolio-react.netlify.app/projects)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Installation
 
-### Premium Partners
+### Steps to Setup
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Follow steps in https://laravel.com/docs/9.x/installation#your-first-laravel-project
 
-## Contributing
+### Steps to Run
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. In the project root directory, run <code>php artisan serve</code>
+2. In the project root directory run <code>npm run dev</code>
+3. In browser navigate to http://localhost:8000
 
-## Code of Conduct
+## My process
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Built with
 
-## Security Vulnerabilities
+-   HTML5 markup
+-   [TailwindCSS](https://tailwindcss.com/) - CSS utility classes
+-   [Laravel](https://laravel.com/) - PHP framework
+-   [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - Client side language
+-   [jQuery](https://jquery.com/) - JS library
+-   [MySQL](https://www.mysql.com/) - SQL database
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Continued development
 
-## License
+-   Add dark theme
+-   Add email verification
+-   Add Google sign in
+-   Move from TailwindCSS to SCSS
+-   Move from jQuery to JS
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Useful resources
+
+-   [JavaScript Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - JS docs
+-   [w3schools CSS Docs](https://www.w3schools.com/css/default.asp) - Great documentation to understand CSS
+-   [w3schools HTML Docs](https://www.w3schools.com/html/default.asp) - Great documentation to understand HTML
+-   [MDN CSS Docs](https://developer.mozilla.org/en-US/docs/Web/CSS) - Another great documentation to understand CSS
+-   [MDN HTML Docs](https://developer.mozilla.org/en-US/docs/Web/HTML) - Another great documentation to understand HTML
+-   [Laravel Docs](https://laravel.com/docs/9.x) - Documentation for Laravel
+-   [TailwindCSS Docs](https://tailwindcss.com/docs/installation) - Documentation for TailwindCSS
+-   [jQuery Docs](https://api.jquery.com/) - jQuery documentation
+-   [MySQL Docs](https://www.mysql.com/) - MySQL documentation
+
+## Author
+
+-   Website - [Lauris](https://b2cf56-portfolio.netlify.app/projects)
