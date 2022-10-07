@@ -12,7 +12,6 @@ class Post extends Model
 {
     use HasFactory;
 
-
     /**
      * Query params used for post filtering
      * 

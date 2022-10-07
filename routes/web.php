@@ -21,6 +21,8 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// TODO:
+// [] - Create resources for CRUD operations (see https://laravel.com/docs/9.x/controllers#resource-controllers).
 // Posts
 Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
     Route::group(['middleware' => 'auth'], function () {
