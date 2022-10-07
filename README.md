@@ -32,7 +32,7 @@ PicShare:
 ### Screenshot
 
 ![PicShare desktop](https://user-images.githubusercontent.com/85683069/193223608-51366e9f-9913-4221-b7ab-c16e7324cf10.png)
-![PicShare tablet](https://user-images.githubusercontent.com/85683069/193223595-cba31774-f655-4159-b2a9-cf3d5b5fd9fa.png)
+![PicShare tablet](https://user-images.githubusercontent.com/85683069/193243395-0a4e0c22-78d4-45ca-9b6f-4a7d9b3a4897.png)
 ![PicShare mobile](https://user-images.githubusercontent.com/85683069/193223606-1c1e4369-1468-4a3b-8978-3816ccc25aca.jpg)
 ![PicShare menu mobile](https://user-images.githubusercontent.com/85683069/193223603-54a90111-cdf8-4bff-bf2c-828cff7a8e24.png)
 
