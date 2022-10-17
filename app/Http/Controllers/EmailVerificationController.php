@@ -4,15 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
 
 class EmailVerificationController extends Controller
 {
+
+    /**
+     * Notifies user about email verification
+     *
+     * @param Request $request
+     * @return RedirectResponse|View
+     */
     public function notice(Request $request)
     {
         return $request->user()->hasVerifiedEmail() ? redirect()->route('posts.index') : view('email-verification.verify');
     }
 
+    /**
+     * Verify user email
+     *
+     * @param EmailVerificationRequest $request
+     * @return RedirectResponse
+     */
     public function verify(EmailVerificationRequest $request)
     {
         $request->fulfill();
@@ -22,6 +36,12 @@ class EmailVerificationController extends Controller
 
     // TODO:
     // [ ] - implement email send email verification option in user profile
+    /**
+     * Resend email verification
+     *
+     * @param Request $request
+     * @return  RedirectResponse
+     */
     public function send(Request $request)
     {
         // TODO: 
