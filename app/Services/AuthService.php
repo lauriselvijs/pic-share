@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Session\Session;
 
 class AuthService
@@ -16,12 +17,14 @@ class AuthService
     public function store(array $userData): User
     {
         // TODO: 
-        // [] - add agreement checked to user table as column
+        // [ ] - add agreement checked to user table as column
         // Hash password
         $userData['password'] = bcrypt($userData['password']);
 
         // Create user
         $user = User::create($userData);
+
+        event(new Registered($user));
 
         return $user;
     }

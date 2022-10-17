@@ -7,7 +7,7 @@
     </a>
     <div class='w-full bg-white shadow  sm:max-w-md'>
         <div class='p-6 space-y-4 sm:p-8'>
-            <h3 class='text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-2x'>
+            <h3 class='text-lg font-bold leading-tight tracking-tight text-black md:text-2x'>
                 {{ $heading }}
             </h3>
             {{ $slot }}

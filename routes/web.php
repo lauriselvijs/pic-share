@@ -1,10 +1,13 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\EmailVerificationController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,4 +65,11 @@ Route::group(['prefix' => 'password-reset', 'middleware' => 'guest', 'as' => 'pa
     Route::post('/forgot-password',  [PasswordResetController::class, 'email'])->name('email');
     Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('reset');
     Route::post('/reset-password',  [PasswordResetController::class, 'update'])->name('update');
+});
+
+// Email verification
+Route::group(['prefix' => 'email-verification', 'middleware' => 'auth', 'as' => 'verification.'], function () {
+    Route::get('/verify',  [EmailVerificationController::class, 'notice'])->name('notice');
+    Route::get('/verify/{id}/{hash}',  [EmailVerificationController::class, 'verify'])->name('verify');
+    Route::post('/notification',  [EmailVerificationController::class, 'send'])->middleware('throttle:6,1')->name('send');
 });
