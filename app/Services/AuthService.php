@@ -3,8 +3,11 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\RegisteredUserNotification;
 
 class AuthService
 {
@@ -23,6 +26,12 @@ class AuthService
 
         // Create user
         $user = User::create($userData);
+
+        // Notify users when user created
+        // TODO:
+        // [ ] - move to separate function (SRP)
+        $admins = Admin::all();
+        Notification::send($admins, new RegisteredUserNotification($user));
 
         event(new Registered($user));
 

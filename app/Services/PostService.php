@@ -10,7 +10,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 class PostService
 {
     // TODO:
-    // [] - returnWithAuthorNames and returnWithAuthorName replace with one function
+    // [ ] - returnWithAuthorNames and returnWithAuthorName replace with one function
     /**
      * Includes author name in posts.
      *
