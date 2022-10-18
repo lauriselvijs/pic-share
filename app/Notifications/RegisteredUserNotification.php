@@ -18,7 +18,7 @@ class RegisteredUserNotification extends Notification implements ShouldQueue
      */
     public function __construct()
     {
-        $this->connection = 'database';
+        $this->connection = 'redis';
         $this->queue = 'emails';
     }
 
