@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\UserRegisteredEvent;
+use App\Listeners\LogRegisteredUserListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +20,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        // If shouldDiscoverEvents true no need for registering event (for production run artisan command event:cache, if shouldDiscoverEvents true )
+        // UserRegisteredEvent::class => [
+        //     LogRegisteredUserListener::class
+        // ]
     ];
 
     /**
@@ -27,7 +33,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
     }
 
     /**
@@ -37,6 +42,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function shouldDiscoverEvents()
     {
-        return false;
+        return true;
     }
 }

@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Events\UserRegisteredEvent;
 use App\Models\User;
 use App\Models\Admin;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\RegisteredUserNotification;
+use App\Notifications\UserRegisteredNotification;
 
 class AuthService
 {
@@ -20,8 +21,8 @@ class AuthService
     public function store(array $userData): User
     {
         // TODO: 
-        // [ ] - add agreement checked to user table as column
-        // Hash password
+        // [ ] - Add agreement checked to user table as column.
+        // Hash password.
         $userData['password'] = bcrypt($userData['password']);
 
         // Create user
@@ -29,9 +30,15 @@ class AuthService
 
         // Notify users when user created
         // TODO:
-        // [ ] - move to separate function (SRP)
+        // [ ] - Move to separate function (SRP)
         $admins = Admin::all();
-        Notification::send($admins, new RegisteredUserNotification($user));
+        Notification::send($admins, new UserRegisteredNotification($user));
+
+        // Facade
+        // UserRegisteredEvent::dispatch($user);
+        // Helper function
+        // event(new UserRegisteredEvent($user));
+
 
         event(new Registered($user));
 

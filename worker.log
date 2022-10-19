@@ -1,0 +1,1650 @@
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   INFO  Processing jobs from the [default] queue.  
+
+
+   Error 
+
+  Class "Aws\Sqs\SqsClient" not found
+
+  at /home/lauris/Desktop/pic-share/vendor/laravel/framework/src/Illuminate/Queue/Connectors/SqsConnector.php:26
+     22▕             $config['credentials'] = Arr::only($config, ['key', 'secret', 'token']);
+     23▕         }
+     24▕ 
+     25▕         return new SqsQueue(
+  ➜  26▕             new SqsClient($config),
+     27▕             $config['queue'],
+     28▕             $config['prefix'] ?? '',
+     29▕             $config['suffix'] ?? '',
+     30▕             $config['after_commit'] ?? null
+
+      [2m+18 vendor frames [22m
+  19  /home/lauris/Desktop/pic-share/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()

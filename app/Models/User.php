@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Events\UserRegisteredEvent;
 use App\Models\Post;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -14,6 +16,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * Dispatch givin event
+     *
+     * @var array<string, string>
+     */
+    protected $dispatchesEvents  = ['created' => UserRegisteredEvent::class];
 
     /**
      * The attributes that are mass assignable.
