@@ -19,7 +19,16 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         // Remove failed jobs from DB every month
-        $schedule->command('queue:prune-failed')->monthly();
+        $schedule->command('queue:prune-failed')->name('deleted:jobs')
+            ->everyMonth()
+            ->appendOutputTo(storage_path('/logs/deleted_jobs.log'))
+            ->onOneServer()
+            ->runInBackground();
+
+        $schedule->command('model:prune')->daily()->name('pruned:users')
+            ->appendOutputTo(storage_path('/logs/pruned_users.log'))
+            ->onOneServer()
+            ->runInBackground();;
     }
 
     /**

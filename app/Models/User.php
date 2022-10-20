@@ -4,18 +4,20 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Events\UserRegisteredEvent;
 use App\Models\Post;
 use Laravel\Sanctum\HasApiTokens;
+use App\Events\UserRegisteredEvent;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Prunable;
 
     /**
      * Dispatch givin event
@@ -53,6 +55,17 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the prunable model query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function prunable()
+    {
+        return static::where('created_at', '<=', now()->subYear())
+            ->where('email_verified_at', '=', null);
+    }
 
     /**
      * Relationship to posts

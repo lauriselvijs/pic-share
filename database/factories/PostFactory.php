@@ -22,20 +22,13 @@ class PostFactory extends Factory
          *
          * @var array<string>
          */
-        $tags = ["History", "Forest", "Water", "Castle", "Sea"];
-
-        /**
-         * User ids
-         *
-         * @var array<int>
-         */
-        $user_id = User::pluck("id")->toArray();
+        $tags = ['History', 'Forest', 'Water', 'Castle', 'Sea'];
 
         return [
-            "title" =>  rtrim(fake()->sentence(3), "."),
-            "user_id" =>  fake()->randomElement($user_id),
-            "image" => fake()->imageUrl(),
-            "tags" => implode(", ", fake()->randomElements($tags, 3))
+            'title' =>  rtrim(fake()->sentence(3), '.'),
+            'user_id' =>  User::all()->random()->id,
+            'image' => fake()->imageUrl(),
+            'tags' => implode(', ', fake()->randomElements($tags, 3))
         ];
     }
 }

@@ -29,7 +29,7 @@ class LogRegisteredUserListener
     {
         Log::build([
             'driver' => 'single',
-            'path' => storage_path('logs/user_registered.log'),
+            'path' => storage_path('logs/registered_users.log'),
         ])->info('New user ' . $event->user->name . ' registered');
     }
 }
