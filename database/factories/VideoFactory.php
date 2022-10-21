@@ -29,7 +29,7 @@ class VideoFactory extends Factory
             'title' =>  rtrim(fake()->sentence(3), '.'),
             'user_id' =>  User::all()->random()->id,
             'thumbnail' =>  fake()->imageUrl(),
-            'video' => fake()->url(),
+            'path' => fake()->url(),
             'tags' => implode(', ', fake()->randomElements($tags, 3))
         ];
     }
