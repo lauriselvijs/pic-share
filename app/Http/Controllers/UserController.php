@@ -7,13 +7,16 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\PostService;
 use Illuminate\Contracts\View\View;
+use App\Contracts\CanGenerateProfilePic;
 
 class UserController extends Controller
 {
-    public function __construct(private Post $post, private PostService $postService)
+    public function __construct(private Post $post, private PostService $postService, private CanGenerateProfilePic $profilePicGenerator)
     {
         $this->post = $post;
         $this->postService = $postService;
+
+        $this->profilePicGenerator = $profilePicGenerator;
     }
 
     /**

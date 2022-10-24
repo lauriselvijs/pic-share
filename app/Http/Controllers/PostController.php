@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\CanCaptureScreenshot;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Services\PostService;

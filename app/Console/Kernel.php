@@ -25,7 +25,9 @@ class Kernel extends ConsoleKernel
             ->onOneServer()
             ->runInBackground();
 
-        $schedule->command('model:prune')->daily()->name('pruned:users')
+        // Delete user if email has not been verified for a year
+        $schedule->command('model:prune')->name('pruned:users')
+            ->daily()
             ->appendOutputTo(storage_path('/logs/pruned_users.log'))
             ->onOneServer()
             ->runInBackground();;

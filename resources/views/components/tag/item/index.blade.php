@@ -1,5 +1,8 @@
 @props(["tag"])
 
+{{-- // TODO:
+[ ] - move to post controller service classes --}}
+
 @php
 $requestUri = Request::getRequestUri()
 @endphp

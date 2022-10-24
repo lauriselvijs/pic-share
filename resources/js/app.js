@@ -5,7 +5,7 @@ import { MIME_TYPES, MODAL_WITH, FLASH_MSG_HIDE_DELAY } from "./const.js";
 window.$ = jQuery;
 
 //TODO:
-// [] -remove jQuery support
+// [ ] -remove jQuery support
 // jQuery
 // Dark mode
 $("#dark-mode-btn").on("click", function () {
@@ -27,7 +27,7 @@ $("#close-modal-btn").on("click", function () {
 });
 
 // TODO:
-// [] - access tailwind config and replace 1200 with theme.screens.md
+// [ ] - access tailwind config and replace 1200 with theme.screens.md
 // Close modal if screen resized
 $(window).on("resize", function () {
     if (document.body.offsetWidth > 1200) {

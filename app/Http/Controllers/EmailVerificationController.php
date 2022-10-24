@@ -34,8 +34,7 @@ class EmailVerificationController extends Controller
         return redirect()->route('posts.index')->with('message', __('email.verified'));
     }
 
-    // TODO:
-    // [ ] - implement email send email verification option in user profile
+
     /**
      * Resend email verification
      *
@@ -45,7 +44,7 @@ class EmailVerificationController extends Controller
     public function send(Request $request)
     {
         // TODO: 
-        // [ ] - move BS to service class
+        // [ ] - move BL to service class
         if (!$request->user()->hasVerifiedEmail()) {
             $request->user()->sendEmailVerificationNotification();
 

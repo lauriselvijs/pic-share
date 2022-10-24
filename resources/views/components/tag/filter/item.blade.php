@@ -1,5 +1,9 @@
 @props(["tag"])
 
+
+{{-- // TODO:
+[ ] - move to post controller service classes --}}
+
 @php
 $requestUri = urldecode(Request::getRequestUri());
 
@@ -8,9 +12,6 @@ $firstAndOnlyTagInQueryString = '?' . $tagQuery;
 $firstTagNotOnlyInQueryString = $firstAndOnlyTagInQueryString . '&';
 $nTagInQueryString = '&' . $tagQuery;
 @endphp
-
-{{-- // TODO:
-[] - move to php util functions --}}
 
 {{-- if tag exists in tag query --}}
 @if (str_contains($requestUri, $nTagInQueryString))

@@ -51,6 +51,10 @@ class PostService
         $imageName = Storage::disk('media')->put('images', $image);
         $imagePath = parse_url(Storage::disk('media')->url($imageName))['path'];
 
+        $imagePathTest = Storage::disk('media')->url($imageName);
+
+        dd($imagePathTest);
+
         return $imagePath;
     }
 

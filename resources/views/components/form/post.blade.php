@@ -25,7 +25,7 @@
 
     {{--
     TODO:
-    [] - add progress bar
+    [ ] - add progress bar
     --}}
     <div id='image-drop-box' class='w-full p-20 bg-sunset flex flex-col justify-center items-center gap-2'>
         <img class='w-6 h-6' src={{ asset('assets/icons/upload-icon.svg') }} alt='Upload'>

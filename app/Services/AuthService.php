@@ -34,6 +34,7 @@ class AuthService
         $admins = Admin::all();
         Notification::send($admins, new UserRegisteredNotification($user));
 
+        // Events
         // Facade
         // UserRegisteredEvent::dispatch($user);
         // Helper function
