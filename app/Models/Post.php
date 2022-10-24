@@ -29,7 +29,21 @@ class Post extends Model
      * 
      * @var int
      */
-    protected const POSTS_PER_PAGE = 9;
+    protected const PER_PAGE = 9;
+
+    /**
+     * Cache identifier for post
+     * 
+     * @var string
+     */
+    protected const CACHE_ID = 'posts';
+
+    /**
+     * Define how for how long keep cache in memory
+     * 
+     * @var int
+     */
+    protected const CACHE_TIME = 60 * 60 * 24;
 
     /**
      * Allow mass assignment to provided fields
@@ -99,10 +113,12 @@ class Post extends Model
      */
     public function paginate(array $filters): LengthAwarePaginator
     {
-        return $this->with('user:id,name')
-            ->latest()
-            ->filter($filters)
-            ->paginate(self::POSTS_PER_PAGE);
+        return cache()->remember(self::CACHE_ID, self::CACHE_TIME, function () use ($filters) {
+            return $this->with('user:id,name')
+                ->latest()
+                ->filter($filters)
+                ->paginate(self::PER_PAGE);
+        });
     }
 
     public function getPostsContains(string|int $userId)
@@ -130,8 +146,18 @@ class Post extends Model
      *
      * @return  int
      */
-    public function getPostsPerPage()
+    public function getPerPage(): int
     {
-        return self::POSTS_PER_PAGE;
+        return self::PER_PAGE;
+    }
+
+    /**
+     * Get posts cached Id
+     *
+     * @return string
+     */
+    public function getCacheId(): string
+    {
+        return self::CACHE_ID;
     }
 }
