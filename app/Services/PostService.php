@@ -48,12 +48,8 @@ class PostService
      */
     public function saveAndReturnPathOfImage(UploadedFile $image): string
     {
-        $imageName = Storage::disk('media')->put('images', $image);
-        $imagePath = parse_url(Storage::disk('media')->url($imageName))['path'];
-
-        $imagePathTest = Storage::disk('media')->url($imageName);
-
-        dd($imagePathTest);
+        $imageName = Storage::disk(config('constants.MEDIA_DISK'))->put('images', $image);
+        $imagePath = parse_url(Storage::disk(config('constants.MEDIA_DISK'))->url($imageName))['path'];
 
         return $imagePath;
     }
@@ -66,9 +62,10 @@ class PostService
      */
     public function deleteMediaFile(string $path): void
     {
-        $fileRelativePathInDisk = Helper::getFileRelativePathInDisk('media', $path);
 
-        Storage::disk('media')->delete($fileRelativePathInDisk);
+        $fileRelativePathInDisk = Helper::getFileRelativePathInDisk(config('constants.MEDIA_DISK'), $path);
+
+        Storage::disk(config('constants.MEDIA_DISK'))->delete($fileRelativePathInDisk);
     }
 
     /**
@@ -92,8 +89,8 @@ class PostService
      */
     public function store(array $postData): void
     {
-        $imagePath = $this->saveAndReturnPathOfImage($postData['image']);
-        $postData['image'] = $imagePath;
+        $imagePath = $this->saveAndReturnPathOfImage($postData[config('constants.POST_IMG')]);
+        $postData[config('constants.POST_IMG')] = $imagePath;
 
         Post::create($postData);
     }
@@ -107,9 +104,9 @@ class PostService
      */
     public function update(Post $post, array $postData)
     {
-        if ($postData['image']) {
-            $imagePath = $this->updatePathOfImage($postData['image'], $post->image);
-            $postData['image'] = $imagePath;
+        if ($postData[config('constants.POST_IMG')]) {
+            $imagePath = $this->updatePathOfImage($postData[config('constants.POST_IMG')], $post->image);
+            $postData[config('constants.POST_IMG')] = $imagePath;
         }
 
         $post->update($postData);
