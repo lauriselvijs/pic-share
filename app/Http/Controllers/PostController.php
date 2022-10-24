@@ -25,7 +25,7 @@ class PostController extends Controller
      */
     public function index(Request $request): View
     {
-        $posts = $this->post->paginate($request->only(Post::FILTERS));
+        $posts = $this->post->paginate($request->only($this->post->getFilters()));
 
         return view('posts.index', [
             'posts' => $this->postService->includeAuthorNamesInPosts($posts)

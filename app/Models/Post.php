@@ -21,7 +21,15 @@ class Post extends Model
      * @var array<string>
      * 
      */
-    public const FILTERS = ['tag', 'search'];
+    private const FILTERS = ['tag', 'search'];
+
+
+    /**
+     * How many posts per page
+     * 
+     * @var int
+     */
+    protected const POSTS_PER_PAGE = 9;
 
     /**
      * Allow mass assignment to provided fields
@@ -94,7 +102,7 @@ class Post extends Model
         return $this->with('user:id,name')
             ->latest()
             ->filter($filters)
-            ->paginate(9);
+            ->paginate(self::POSTS_PER_PAGE);
     }
 
     public function getPostsContains(string|int $userId)
@@ -105,5 +113,25 @@ class Post extends Model
     public function paginatePostsContains(string|int $userId, array $filters): LengthAwarePaginator
     {
         return $this->getPostsContains($userId)->paginate($filters);
+    }
+
+    /**
+     * Get values posts can be filtered by
+     *
+     * @return  array<string>
+     */
+    public function getFilters()
+    {
+        return self::FILTERS;
+    }
+
+    /**
+     * Get posts per page
+     *
+     * @return  int
+     */
+    public function getPostsPerPage()
+    {
+        return self::POSTS_PER_PAGE;
     }
 }
