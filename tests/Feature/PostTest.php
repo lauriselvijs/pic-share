@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function PHPUnit\Framework\assertNotNull;
 
-class StorePostTest extends TestCase
+class PostTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -29,6 +29,10 @@ class StorePostTest extends TestCase
 
         /** @var User */
         $user = User::factory()->createOne();
+
+        // If auth user needed multiple places in test (DRY)
+        // $this->actingAs($user);
+
 
         $response = $this->actingAs($user)->post(
             route('posts.store'),

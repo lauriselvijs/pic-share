@@ -15,7 +15,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function PHPUnit\Framework\assertNotNull;
 
-class SignUpTest extends TestCase
+class AuthTest extends TestCase
 {
     use RefreshDatabase;
 
