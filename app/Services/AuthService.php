@@ -38,9 +38,7 @@ class AuthService
         // Facade
         // UserRegisteredEvent::dispatch($user);
         // Helper function
-        // event(new UserRegisteredEvent($user));
-
-
+        event(new UserRegisteredEvent($user));
         event(new Registered($user));
 
         return $user;
