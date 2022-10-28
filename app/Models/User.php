@@ -20,11 +20,11 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Prunable;
 
     /**
-     * Dispatch givin event
+     * Dispatch givin event (should be avoided because of readability)
      *
      * @var array<string, string>
      */
-    protected $dispatchesEvents  = ['created' => UserRegisteredEvent::class];
+    // protected $dispatchesEvents  = ['created' => UserRegisteredEvent::class];
 
     /**
      * The attributes that are mass assignable.
