@@ -20,9 +20,15 @@ class PostTest extends TestCase
     {
         parent::setUp();
 
-        /** @var User */
+        /**
+         * Fixes typecasting error
+         * 
+         * @var User 
+         */
         $user = User::factory()->createOne();
         $this->actingAs($user);
+
+        // $this->actingAs(User::factory()->createOne());
     }
 
 
