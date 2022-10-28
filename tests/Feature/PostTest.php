@@ -16,6 +16,16 @@ class PostTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var User */
+        $user = User::factory()->createOne();
+        $this->actingAs($user);
+    }
+
+
     /**
      * 
      *
@@ -27,14 +37,10 @@ class PostTest extends TestCase
 
         $postImage = UploadedFile::fake()->image('post.jpg');
 
-        /** @var User */
-        $user = User::factory()->createOne();
+        // If auth user needed one place in test (DRY)
+        // $this->actingAs($user)->post();
 
-        // If auth user needed multiple places in test (DRY)
-        // $this->actingAs($user);
-
-
-        $response = $this->actingAs($user)->post(
+        $response = $this->post(
             route('posts.store'),
             [
                 'title' => 'Post',
