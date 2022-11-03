@@ -21,7 +21,7 @@ class Post extends Model
      * @var array<string>
      * 
      */
-    private const FILTERS = ['tag', 'search'];
+    public const FILTERS = ['tag', 'search'];
 
 
     /**
@@ -129,35 +129,5 @@ class Post extends Model
     public function paginatePostsContains(string|int $userId, array $filters): LengthAwarePaginator
     {
         return $this->getPostsContains($userId)->paginate($filters);
-    }
-
-    /**
-     * Get values posts can be filtered by
-     *
-     * @return  array<string>
-     */
-    public function getFilters()
-    {
-        return self::FILTERS;
-    }
-
-    /**
-     * Get posts per page
-     *
-     * @return  int
-     */
-    public function getPerPage(): int
-    {
-        return self::PER_PAGE;
-    }
-
-    /**
-     * Get posts cached Id
-     *
-     * @return string
-     */
-    public function getCacheId(): string
-    {
-        return self::CACHE_ID;
     }
 }
