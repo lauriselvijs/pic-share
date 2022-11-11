@@ -14,7 +14,7 @@ class PostObserver
      */
     public function created(Post $post)
     {
-        cache()->forget($post->getCacheId());
+        cache()->forget($post::CACHE_ID);
     }
 
     /**
@@ -25,7 +25,7 @@ class PostObserver
      */
     public function updated(Post $post)
     {
-        cache()->forget($post->getCacheId());
+        cache()->forget($post::CACHE_ID);
     }
 
     /**
@@ -36,7 +36,7 @@ class PostObserver
      */
     public function deleted(Post $post)
     {
-        cache()->forget($post->getCacheId());
+        cache()->forget($post::CACHE_ID);
     }
 
     /**
@@ -47,7 +47,7 @@ class PostObserver
      */
     public function restored(Post $post)
     {
-        cache()->forget($post->getCacheId());
+        cache()->forget($post::CACHE_ID);
     }
 
     /**
@@ -58,6 +58,6 @@ class PostObserver
      */
     public function forceDeleted(Post $post)
     {
-        cache()->forget($post->getCacheId());
+        cache()->forget($post::CACHE_ID);
     }
 }

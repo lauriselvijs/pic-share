@@ -36,7 +36,7 @@ class Post extends Model
      * 
      * @var string
      */
-    protected const CACHE_ID = 'posts';
+    public const CACHE_ID = 'posts';
 
     /**
      * Define how for how long keep cache in memory
