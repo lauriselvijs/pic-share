@@ -1,4 +1,4 @@
-FROM webdevops/php-nginx:8.1-alpine
+FROM webdevops/php-nginx:8.1
 
 # Copy Composer binary from the Composer official Docker image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -15,5 +15,19 @@ RUN php artisan config:cache
 RUN php artisan route:cache
 # Optimizing View loading
 RUN php artisan view:cache
+
+RUN php artisan optimize
+RUN php artisan migrate --force
+
+RUN apt-get clean
+RUN apt-get update
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
+RUN npm install
+
+RUN chown -R node:node /app/public/build
+
+RUN npm run build
 
 RUN chown -R application:application .
