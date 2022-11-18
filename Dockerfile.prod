@@ -11,13 +11,15 @@ COPY . .
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 # Optimizing Configuration loading
 RUN php artisan config:cache
-# Optimizing Route loading
-RUN php artisan route:cache
-# Optimizing View loading
-RUN php artisan view:cache
 
 RUN php artisan optimize
-RUN php artisan migrate --force
+# OR
+# Optimizing Route loading
+# RUN php artisan route:cache
+# Optimizing View loading
+# RUN php artisan view:cache
+
+# RUN php artisan migrate --force
 
 RUN apt-get clean
 RUN apt-get update
