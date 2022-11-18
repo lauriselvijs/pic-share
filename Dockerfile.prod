@@ -1,12 +1,19 @@
 FROM webdevops/php-nginx:8.1-alpine
-ENV WEB_DOCUMENT_ROOT=/app/public
-ENV PHP_DISMOD=bz2,calendar,exiif,ffi,intl,gettext,ldap,mysqli,imap,pdo_pgsql,pgsql,soap,sockets,sysvmsg,sysvsm,sysvshm,shmop,xsl,zip,gd,apcu,vips,yaml,imagick,mongodb,amqp
+
+# Copy Composer binary from the Composer official Docker image
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+ENV WEB_DOCUMENT_ROOT /app/public
+ENV APP_ENV production
 WORKDIR /app
-COPY composer.json .
-COPY composer.lock .
-RUN composer install --no-interaction --optimize-autoloader --no-dev
 COPY . .
-RUN php artisan optimize
-RUN php artisan horizon:publish
-# Ensure all of our files are owned by the same user and group.
+
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+# Optimizing Configuration loading
+RUN php artisan config:cache
+# Optimizing Route loading
+RUN php artisan route:cache
+# Optimizing View loading
+RUN php artisan view:cache
+
 RUN chown -R application:application .
