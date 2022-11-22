@@ -20,12 +20,12 @@ class Kernel extends ConsoleKernel
 
         // Remove failed jobs from DB every month
         $schedule->command('queue:prune-failed')->name('deleted:jobs')
-            ->everyMonth()
+            ->monthly()
             ->appendOutputTo(storage_path('/logs/deleted_jobs.log'))
             ->onOneServer()
             ->runInBackground();
 
-        // Delete all pruned models
+        // Delete all pruned models daily
         $schedule->command('model:prune')->name('pruned:models')
             ->daily()
             ->appendOutputTo(storage_path('/logs/pruned_users.log'))
