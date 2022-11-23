@@ -111,7 +111,7 @@ class PostService
      */
     public function update(Post $post, array $postData)
     {
-        if ($postData[self::IMAGE]) {
+        if (isset($postData[self::IMAGE]) && $postData[self::IMAGE]) {
             $imagePath = $this->updatePathOfImage($postData[self::IMAGE], $post->image);
             $postData[self::IMAGE] = $imagePath;
         }
