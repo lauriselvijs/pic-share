@@ -24,11 +24,14 @@ class PostFactory extends Factory
          */
         $tags = ['History', 'Forest', 'Water', 'Castle', 'Sea'];
 
+
         return [
             'title' =>  rtrim(fake()->sentence(3), '.'),
+            'slug' =>  fake()->slug(),
             'user_id' =>  User::all()->random()->id,
             'image' => fake()->imageUrl(),
-            'tags' => implode(', ', fake()->randomElements($tags, 3))
+            'tags' => implode(', ', fake()->randomElements($tags, 3)),
+            'price' => fake()->randomFloat(2, 0, 50)
         ];
     }
 }

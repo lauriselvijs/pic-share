@@ -3,9 +3,22 @@
 namespace App\Observers;
 
 use App\Models\Post;
+use Illuminate\Support\Str;
 
 class PostObserver
 {
+    /**
+     * Handle the User "creating" event.
+     *
+     * @param  User  $user
+     * @return void
+     */
+    public function creating(Post $post): void
+    {
+        $post->slug = Str::slug($post->title, '-');
+    }
+
+
     /**
      * Handle the Post "created" event.
      *
