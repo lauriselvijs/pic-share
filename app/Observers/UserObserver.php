@@ -3,7 +3,13 @@
 namespace App\Observers;
 
 use App\Models\User;
+use App\Models\Admin;
+use App\Services\Helper;
 use Illuminate\Support\Str;
+use App\Events\UserRegisteredEvent;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\UserRegisteredNotification;
 
 class UserObserver
 {
@@ -15,7 +21,7 @@ class UserObserver
      */
     public function creating(User $user): void
     {
-        $user->username = Str::of($user->name)->before(' ')->append('_')->append(Str::uuid())->lower();
+        $user->username = Helper::generateUsernameFor($user->name);
     }
 
 
@@ -27,7 +33,13 @@ class UserObserver
      */
     public function created(User $user)
     {
-        //
+        // Send verification email to user
+        event(new Registered($user));
+
+        $admins = Admin::all();
+        Notification::send($admins, new UserRegisteredNotification($user));
+
+        event(new UserRegisteredEvent($user));
     }
 
     /**

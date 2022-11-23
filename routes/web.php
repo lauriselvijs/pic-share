@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\EmailVerificationController;
 /*
@@ -51,8 +52,14 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
     Route::group(['middleware' => 'guest'], function () {
         Route::get('/sign-up',  [AuthController::class, 'create'])->name('create');
         Route::post('/sign-up',  [AuthController::class, 'store'])->name('store');
-        Route::get('/login', [AuthController::class, 'login'])->name('login');
-        Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
+
+        Route::group(['prefix' => 'login'], function () {
+            Route::get('/', [AuthController::class, 'login'])->name('login');
+            Route::post('/', [AuthController::class, 'authenticate'])->name('authenticate');
+        });
+
+        Route::get('/google', [GoogleLoginController::class, 'redirect'])->name('google-redirect');
+        Route::get('/google/callback', [GoogleLoginController::class, 'callback'])->name('google-callback');
     });
     Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 });

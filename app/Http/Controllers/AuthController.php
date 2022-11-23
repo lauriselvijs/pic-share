@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\AuthRequest;
-use App\Http\Requests\StoreAuthRequest;
 use App\Services\AuthService;
+use App\Http\Requests\AuthRequest;
+use Illuminate\Routing\Redirector;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\StoreAuthRequest;
 
 class AuthController extends Controller
 {
@@ -73,9 +75,9 @@ class AuthController extends Controller
      * Authenticate user
      *
      * @param AuthRequest $request
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Http\RedirectResponse
+     * @return Redirector|RedirectResponse
      */
-    public function authenticate(AuthRequest $request)
+    public function authenticate(AuthRequest $request): Redirector|RedirectResponse
     {
         if ($this->authService->authenticate($request->session(), $request->validated(), $request->has('remember'))) {
             return redirect()->route('posts.index')->with('message',  __('user.logged_in'));

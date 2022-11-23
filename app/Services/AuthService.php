@@ -28,19 +28,6 @@ class AuthService
         // Create user
         $user = User::create($userData);
 
-        // Notify users when user created
-        // TODO:
-        // [ ] - Move to separate function (SRP)
-        $admins = Admin::all();
-        Notification::send($admins, new UserRegisteredNotification($user));
-
-        // Events
-        // Facade
-        // UserRegisteredEvent::dispatch($user);
-        // Helper function
-        event(new UserRegisteredEvent($user));
-        event(new Registered($user));
-
         return $user;
     }
 
