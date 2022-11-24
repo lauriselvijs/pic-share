@@ -19,7 +19,7 @@ Payment
         </div>
         <div class='form-row text-base'>
             <label class='font-bold' for='card-element'>Credit or debit card</label>
-            <div id='card-element' class='form-control'> </div>
+            <div id='card-element' class='form-control pt-2'> </div>
             <!-- Used to display form errors. -->
             <div class='pt-4'>
                 <div id='card-errors' class='text-error' role='alert'></div>
