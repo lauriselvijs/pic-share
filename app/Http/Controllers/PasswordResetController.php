@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use App\Services\PasswordResetService;
 use App\Http\Requests\EmailPasswordResetRequest;
 use App\Http\Requests\UpdatePasswordResetRequest;
@@ -29,9 +30,9 @@ class PasswordResetController extends Controller
      * Sends email reset link
      *
      * @param EmailPasswordResetRequest $request
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function email(EmailPasswordResetRequest $request)
+    public function email(EmailPasswordResetRequest $request): RedirectResponse
     {
         $sent = $this->passwordResetService->email($request->validated());
 

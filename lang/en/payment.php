@@ -12,5 +12,5 @@ return [
     */
 
     'success' => ['msg_title' => 'Success!', 'msg_info' => 'You have successfully made the purchase!'],
-    'error' => 'Error making payment subscription. :error',
+    'error' => 'Error accrued when making payment. :error',
 ];

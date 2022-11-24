@@ -2,13 +2,8 @@
 
 namespace App\Services;
 
-use App\Events\UserRegisteredEvent;
 use App\Models\User;
-use App\Models\Admin;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Session\Session;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\UserRegisteredNotification;
 
 class AuthService
 {
