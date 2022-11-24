@@ -34,7 +34,7 @@ class PaymentController extends Controller
         $user = auth()->user();
         $paymentMethod = $request->input('payment_method');
         $user->createOrGetStripeCustomer();
-        // $user->addPaymentMethod($paymentMethod);
+        $user->addPaymentMethod($paymentMethod);
 
         try {
             $user->charge($post->price * 100, $paymentMethod);
