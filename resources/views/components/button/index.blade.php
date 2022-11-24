@@ -1,4 +1,4 @@
-@props(['type'])
+@props(['type',])
 
 <button type={{ $type }} {{ $attributes->merge(['class' => 'w-full text-white bg-black hover:bg-shadow focus:outline
     focus:outline-4

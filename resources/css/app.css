@@ -1,8 +1,4 @@
-@font-face {
-    font-family: PrimaryFont;
-    src: url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap");
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap");

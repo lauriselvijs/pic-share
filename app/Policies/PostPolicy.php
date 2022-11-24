@@ -103,4 +103,9 @@ class PostPolicy
     {
         //
     }
+
+    public function buy(User $user, Post $post)
+    {
+        return $user->id !== $post->user_id;
+    }
 }

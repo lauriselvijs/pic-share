@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Post;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Events\UserRegisteredEvent;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Prunable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Prunable, Billable;
 
     /**
      * Dispatch givin event (should be avoided because of readability)

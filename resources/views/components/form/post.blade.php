@@ -23,6 +23,14 @@
     </x-message.error>
     @enderror
 
+    <x-input label='Price (USD)' type='number' name='price' placeholder='$0.01' required=''
+        value="{{ $post ? $post->price : old('price') }}" />
+    @error('price')
+    <x-message.error>
+        {{ $message }}
+    </x-message.error>
+    @enderror
+
     {{--
     TODO:
     [ ] - add progress bar

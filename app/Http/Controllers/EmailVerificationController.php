@@ -44,7 +44,7 @@ class EmailVerificationController extends Controller
     public function send(Request $request)
     {
         // TODO: 
-        // [ ] - move BL to service class
+        // [ ] - move business logic to service class
         if (!$request->user()->hasVerifiedEmail()) {
             $request->user()->sendEmailVerificationNotification();
 

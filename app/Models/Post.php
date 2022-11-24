@@ -50,7 +50,7 @@ class Post extends Model
      *
      * @var array<string>
      */
-    protected $fillable = ['title', 'user_id', 'tags', 'image'];
+    protected $fillable = ['title', 'user_id', 'tags', 'image', 'price'];
 
     /**
      * Filter posts

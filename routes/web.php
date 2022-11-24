@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\EmailVerificationController;
@@ -78,4 +79,10 @@ Route::group(['prefix' => 'email-verification', 'middleware' => 'auth', 'as' => 
     Route::get('/verify',  [EmailVerificationController::class, 'notice'])->name('notice');
     Route::get('/verify/{id}/{hash}',  [EmailVerificationController::class, 'verify'])->name('verify');
     Route::post('/notification',  [EmailVerificationController::class, 'send'])->middleware('throttle:6,1')->name('send');
+});
+
+// Payments
+Route::group(['prefix' => 'payment', 'middleware' => 'auth', 'as' => 'payment.'], function () {
+    Route::get('/{post}', [PaymentController::class, 'charge'])->middleware('auth')->name('charge');
+    Route::post('/process-payment/{post}/', [PaymentController::class, 'process'])->middleware('auth')->name('process');
 });

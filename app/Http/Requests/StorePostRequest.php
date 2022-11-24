@@ -27,6 +27,7 @@ class StorePostRequest extends FormRequest
             'title' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png',
             'tags' => 'nullable|sometimes|string|filled',
+            'price' => 'required|numeric|between:0,199999.99|regex:/^\d+(\.\d{1,2})?$/',
         ];
     }
 }
