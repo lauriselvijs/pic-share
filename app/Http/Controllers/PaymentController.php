@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Services\PaymentService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class PaymentController extends Controller
 {
+
+    public function __construct(private PaymentService $paymentService)
+    {
+        $this->paymentService = $paymentService;
+    }
 
     /**
      * Redirects user to charging page
@@ -29,15 +36,20 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function process(Request $request, Post $post)
+    /**
+     * Process incoming payment
+     *
+     * @param Request $request
+     * @param Post $post
+     * @return RedirectResponse
+     */
+    public function process(Request $request, Post $post): RedirectResponse
     {
         $user = auth()->user();
         $paymentMethod = $request->input('payment_method');
-        $user->createOrGetStripeCustomer();
-        $user->addPaymentMethod($paymentMethod);
 
         try {
-            $user->charge($post->price * 100, $paymentMethod);
+            $this->paymentService->makePayment($user,  $paymentMethod, $post->price);
         } catch (Exception $error) {
             return back()->withErrors(['message' => __('payment.error', ['error' => $error->getMessage()])]);
         }
