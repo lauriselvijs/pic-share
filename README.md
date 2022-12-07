@@ -73,7 +73,8 @@ Follow steps in https://laravel.com/docs/9.x/installation#your-first-laravel-pro
 -   Move from jQuery to JS
 -   Add payment subscription
 -   Add dynamic search bar
--   Add webhooks
+-   Add broadcasting
+-   Add REST API
 
 ### Useful resources
 
