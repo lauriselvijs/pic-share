@@ -28,6 +28,8 @@ PicShare:
 -   Update existing image
 -   Search by title or tags
 -   Filter by tags
+-   Buy images
+-   Google Auth
 
 ### Screenshot
 
