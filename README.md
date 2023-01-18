@@ -28,6 +28,9 @@ PicShare:
 -   Update existing image
 -   Search by title or tags
 -   Filter by tags
+-   Buy images
+-   Google Auth
+-   Email verification
 
 ### Screenshot
 
@@ -66,10 +69,12 @@ Follow steps in https://laravel.com/docs/9.x/installation#your-first-laravel-pro
 ### Continued development
 
 -   Add dark theme
--   Add email verification
--   Add Google sign in
 -   Move from TailwindCSS to SCSS
 -   Move from jQuery to JS
+-   Add payment subscription
+-   Add dynamic search bar
+-   Add broadcasting
+-   Add REST API
 
 ### Useful resources
 
