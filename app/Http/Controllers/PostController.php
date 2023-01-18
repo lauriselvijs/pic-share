@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\CanCaptureScreenshot;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Services\PostService;
@@ -25,7 +24,8 @@ class PostController extends Controller
      */
     public function index(Request $request): View
     {
-        $posts = $this->post->paginate($request->only($this->post::FILTERS));
+
+        $posts = $this->post->paginate($request->query());
 
         return view('posts.index', [
             'posts' => $this->postService->includeAuthorNamesInPosts($posts)

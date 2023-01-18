@@ -1,8 +1,8 @@
 <!-- Hamburger modal -->
-<div id='modal-menu' aria-hidden='true'
-    class='hidden fixed top-0 right-0 left-0 z-50 bg-shadow bg-opacity-40 backdrop-blur-sm transition-all'>
+<div id='modal-bg' aria-hidden='true'
+    class='hidden fixed top-0 right-0 left-0 z-50 bg-shadow bg-opacity-40 backdrop-blur-sm'>
     <!-- Hamburger modal content -->
-    <div id='modal-content' class='bg-sunset rounded-br-lg shadow h-screen w-0'>
+    <div id='modal-content' class='bg-sunset rounded-br-lg shadow h-screen w-0 overflow-hidden transition-all'>
         <!-- Hamburger modal header -->
         <div class='flex justify-between gap-8 items-center p-6 rounded-t border-b border-white'>
             @auth

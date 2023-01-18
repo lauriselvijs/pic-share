@@ -1,80 +1,72 @@
 import "./bootstrap";
-import jQuery from "jquery";
-import { MIME_TYPES, MODAL_WITH, FLASH_MSG_HIDE_DELAY } from "./const.js";
+import { MIME_TYPES, FLASH_MSG_HIDE_DELAY, TABLET_WIDTH } from "./const.js";
 
-window.$ = jQuery;
+// Modal
 
-//TODO:
-// [ ] -remove jQuery support
-// jQuery
-// Dark mode
-$("#dark-mode-btn").on("click", function () {
-    $("#dark-mode-btn svg").toggle("fast");
-});
+const modalBg = document.getElementById("modal-bg");
+const modalContent = document.getElementById("modal-content");
+const openModalMenuBtn = document.getElementById("open-modal-btn");
+const closeModalBtn = document.getElementById("close-modal-btn");
 
 // Open modal
-$("#open-modal-menu-btn").on("click", function () {
-    $("#modal-menu").show(0, function () {
-        $("#modal-content").animate({ width: MODAL_WITH }, "fast");
-    });
+openModalMenuBtn.addEventListener("click", function () {
+    modalBg.style.display = "block";
+
+    setTimeout(() => {
+        modalContent.style.width = "50%";
+    }, 0);
 });
 
 // Close modal
-$("#close-modal-btn").on("click", function () {
-    $("#modal-content").animate({ width: 0 }, "fast", function () {
-        $("#modal-menu").hide();
-    });
+closeModalBtn.addEventListener("click", function () {
+    modalContent.style.width = "50%";
+    setTimeout(() => {
+        modalContent.style.width = "0%";
+        modalBg.style.display = "none";
+    }, 100);
 });
 
-// TODO:
-// [ ] - access tailwind config and replace 1200 with theme.screens.md
-// Close modal if screen resized
-$(window).on("resize", function () {
-    if (document.body.offsetWidth > 1200) {
-        $("#modal-content").animate({ width: 0 }, "fast", function () {
-            $("#modal-menu").hide();
-        });
+// Close modal if user is on desktop
+window.addEventListener("resize", function () {
+    if (document.body.offsetWidth > TABLET_WIDTH) {
+        modalBg.style.display = "none";
     }
 });
 
 // Flash msg
-$("#close-flash-msg-btn").on("click", function () {
-    $("#flash-msg").hide();
-});
+const flashMsg = document.getElementById("flash-msg");
+const flashMsgCloseBtn = document.getElementById("close-flash-msg-btn");
 
-if (document.body.contains(document.getElementById("flash-msg"))) {
+function onFlashMsgCloseBtnClick() {
+    flashMsg.style.display = "none";
+}
+
+if (flashMsg) {
+    flashMsgCloseBtn.addEventListener("click", onFlashMsgCloseBtnClick);
+
     setTimeout(() => {
-        $("#flash-msg").hide();
+        flashMsg.style.display = "none";
     }, FLASH_MSG_HIDE_DELAY);
 }
 
 // Upload files
 const dropBox = document.getElementById("image-drop-box");
 const dropBoxInput = document.getElementById("image-drop-box-input");
-const dropBoxUploadedFileNameElement = document.getElementById(
+const dropBoxUploadedFileName = document.getElementById(
     "image-drop-box-file-name"
 );
 
-dropBox && dropBox.addEventListener("dragover", dragOverDropBoxHandler);
-dropBox && dropBox.addEventListener("drop", dropOnDropBoxHandler);
-dropBoxInput && dropBoxInput.addEventListener("change", inputDropBoxHandler);
-dropBoxUploadedFileNameElement &&
-    dropBoxUploadedFileNameElement.addEventListener(
-        "click",
-        clickOnDropBoxUploadedFleNameElementHandler
-    );
-
-function clickOnDropBoxUploadedFleNameElementHandler() {
+function onDropBoxUploadedFleNameClick() {
     dropBoxInput.value = "";
-    dropBoxUploadedFileNameElement.textContent = "";
+    dropBoxUploadedFileName.textContent = "";
 }
 
-function inputDropBoxHandler() {
+function onDropBoxInputChange() {
     dropBoxUploadedFileNameElement.textContent =
         dropBoxInput.files.item(0).name;
 }
 
-function dropOnDropBoxHandler(event) {
+function onDropBoxDrop(event) {
     event.preventDefault();
     const droppedFile = event.dataTransfer.files[0];
     const droppedFiles = event.dataTransfer.files;
@@ -90,16 +82,73 @@ function dropOnDropBoxHandler(event) {
     }
 }
 
-function dragOverDropBoxHandler(event) {
+function onDropBoxDragOver(event) {
     event.preventDefault();
+}
+
+if (dropBox) {
+    dropBox.addEventListener("dragover", onDropBoxDragOver);
+    dropBox.addEventListener("drop", onDropBoxDrop);
+}
+
+if (dropBoxInput) {
+    dropBoxInput.addEventListener("change", onDropBoxInputChange);
+}
+
+if (dropBoxUploadedFileName) {
+    dropBoxUploadedFileName.addEventListener(
+        "click",
+        onDropBoxUploadedFleNameClick
+    );
 }
 
 /**
  * Returns true if array contains one element otherwise false
  *
- * @param {Array} elementArr - Array of elements to check
+ * @param {Array<any>} elementArr - Array of elements to check
  * @returns {boolean} Is array of one element
  */
 const arrContainsOneElement = (elementArr) => {
     return elementArr.length === 1;
 };
+
+// Clear search input
+const clearPostsSearchInputBtn = document.getElementById(
+    "clear-posts-search-input"
+);
+const postsSearchInput = document.getElementById("posts-search-input");
+
+if (postsSearchInput) {
+    toggleClearPostsSearchInputBtn(postsSearchInput, clearPostsSearchInputBtn);
+}
+
+function onClearPostsSearchInputBtnClick() {
+    postsSearchInput.value = "";
+    clearPostsSearchInputBtn.style.display = "none";
+}
+
+function onPostsSearchInput() {
+    toggleClearPostsSearchInputBtn(postsSearchInput, clearPostsSearchInputBtn);
+}
+
+clearPostsSearchInputBtn.addEventListener(
+    "click",
+    onClearPostsSearchInputBtnClick
+);
+postsSearchInput.addEventListener("input", onPostsSearchInput);
+
+/**
+ * Toggles the display of a clear button for a posts search input
+ * @param {HTMLInputElement} postsSearchInput - The input element for the posts search
+ * @param {HTMLButtonElement} clearPostsSearchInputBtn - The button element to clear the search input
+ */
+function toggleClearPostsSearchInputBtn(
+    postsSearchInput,
+    clearPostsSearchInputBtn
+) {
+    if (postsSearchInput.value === "") {
+        clearPostsSearchInputBtn.style.display = "none";
+    } else if (postsSearchInput.value !== "") {
+        clearPostsSearchInputBtn.style.display = "inline-block";
+    }
+}

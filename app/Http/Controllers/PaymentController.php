@@ -53,6 +53,7 @@ class PaymentController extends Controller
         } catch (Exception $error) {
             return back()->withErrors(['message' => __('payment.error', ['error' => $error->getMessage()])]);
         }
+
         return redirect()->route('posts.index')->with('message',  __('payment.success'));
     }
 }

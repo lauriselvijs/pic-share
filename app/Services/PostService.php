@@ -69,7 +69,6 @@ class PostService
      */
     public function deleteMediaFile(string $path): void
     {
-
         $fileRelativePathInDisk = Helper::getFileRelativePathInDisk(config('constants.MEDIA_DISK'), $path);
 
         Storage::disk(config('constants.MEDIA_DISK'))->delete($fileRelativePathInDisk);

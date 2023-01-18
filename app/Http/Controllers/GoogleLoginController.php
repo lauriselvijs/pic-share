@@ -45,6 +45,6 @@ class GoogleLoginController extends Controller
             return redirect()->route('verification.notice')->with('message',  __('user.created'));
         }
 
-        back()->with('message',  __('error.primary'));
+        return back()->with('message',  __('error.primary'));
     }
 }

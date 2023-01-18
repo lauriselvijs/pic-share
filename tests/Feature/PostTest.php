@@ -33,7 +33,7 @@ class PostTest extends TestCase
 
 
     /**
-     * 
+     * Check if user can store posts
      *
      * @return void
      */

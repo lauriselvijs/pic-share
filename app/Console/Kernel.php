@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
             ->daily()
             ->appendOutputTo(storage_path('/logs/pruned_users.log'))
             ->onOneServer()
-            ->runInBackground();;
+            ->runInBackground();
     }
 
     /**

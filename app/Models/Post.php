@@ -5,24 +5,31 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Activity;
+use Laravel\Scout\Searchable;
 use App\Models\ActivityStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    use HasFactory;
+    use Searchable, HasFactory;
 
     /**
-     * Query params used for post filtering
-     * 
-     * @var array<string>
-     * 
+     * Get the indexable data array for the model.
+     *
+     * @return array
      */
-    public const FILTERS = ['tag', 'search'];
-
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'tags' => $this->tags,
+        ];
+    }
 
     /**
      * How many posts per page
@@ -51,25 +58,6 @@ class Post extends Model
      * @var array<string>
      */
     protected $fillable = ['title', 'user_id', 'tags', 'image', 'price'];
-
-    /**
-     * Filter posts
-     *
-     * @param mixed $query
-     * @param array<string, array<string>> $filters
-     * @return void
-     */
-    public function scopeFilter(mixed $query, array $filters): void
-    {
-        if ($filters['tag'] ?? false) {
-            $query->where('tags', 'like', '%' . implode(', ', $filters['tag']) . '%');
-        }
-
-        if ($filters['search'] ?? false) {
-            $query->where('title', 'like', '%' . $filters['search'] . '%')
-                ->orWhere('tags', 'like', '%' . $filters['search'] . '%');
-        }
-    }
 
     /**
      * Relationship to user
@@ -113,21 +101,43 @@ class Post extends Model
      */
     public function paginate(array $filters): LengthAwarePaginator
     {
-        return cache()->remember(self::CACHE_ID, self::CACHE_TIME, function () use ($filters) {
+
+        // return cache()->remember(self::CACHE_ID, self::CACHE_TIME, function () use ($filters) {
+        // });
+
+        if (empty($filters['search'])) {
             return $this->with('user:id,name')
                 ->latest()
-                ->filter($filters)
                 ->paginate(self::PER_PAGE);
-        });
+        }
+
+        return self::search($filters['search'] ?? "")->query(function ($query) {
+            return $query->with('user:id,name')->latest();
+        })->paginate(self::PER_PAGE);
     }
 
-    public function getPostsContains(string|int $userId)
+
+    /**
+     * Get all user posts
+     *
+     * @param string|integer $userId
+     * @return Builder
+     */
+    public function getPostsThatContains(string|int $userId): Builder
     {
         return $this->where('user_id', $userId);
     }
 
+
+    /**
+     * Paginate specific user posts
+     *
+     * @param string|integer $userId
+     * @param array $filters
+     * @return LengthAwarePaginator
+     */
     public function paginatePostsContains(string|int $userId, array $filters): LengthAwarePaginator
     {
-        return $this->getPostsContains($userId)->paginate($filters);
+        return $this->getPostsThatContains($userId)->paginate($filters);
     }
 }
