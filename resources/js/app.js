@@ -2,7 +2,6 @@ import "./bootstrap";
 import { MIME_TYPES, FLASH_MSG_HIDE_DELAY, TABLET_WIDTH } from "./const.js";
 
 // Modal
-
 const modalBg = document.getElementById("modal-bg");
 const modalContent = document.getElementById("modal-content");
 const openModalMenuBtn = document.getElementById("open-modal-btn");
@@ -10,20 +9,25 @@ const closeModalBtn = document.getElementById("close-modal-btn");
 
 // Open modal
 openModalMenuBtn.addEventListener("click", function () {
-    modalBg.style.display = "block";
+    modalBg.classList.add("block");
+    modalBg.classList.remove("hidden");
 
     setTimeout(() => {
-        modalContent.style.width = "50%";
+        modalContent.classList.add("w-1/2");
     }, 0);
 });
 
-// Close modal
+// Set modal content to 0%
 closeModalBtn.addEventListener("click", function () {
-    modalContent.style.width = "50%";
-    setTimeout(() => {
-        modalContent.style.width = "0%";
-        modalBg.style.display = "none";
-    }, 100);
+    modalContent.classList.remove("w-1/2");
+});
+
+// Close modal when transition ended
+modalContent.addEventListener("transitionend", function () {
+    if (!modalContent.classList.contains("w-1/2")) {
+        modalBg.classList.add("hidden");
+        modalBg.classList.remove("block");
+    }
 });
 
 // Close modal if user is on desktop
