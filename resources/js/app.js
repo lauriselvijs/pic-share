@@ -66,8 +66,7 @@ function onDropBoxUploadedFleNameClick() {
 }
 
 function onDropBoxInputChange() {
-    dropBoxUploadedFileNameElement.textContent =
-        dropBoxInput.files.item(0).name;
+    dropBoxUploadedFileName.textContent = dropBoxInput.files.item(0).name;
 }
 
 function onDropBoxDrop(event) {
@@ -81,7 +80,7 @@ function onDropBoxDrop(event) {
         arrContainsOneElement(droppedFiles)
     ) {
         dropBoxInput.files = droppedFiles;
-        dropBoxUploadedFileNameElement.textContent = droppedFile.name;
+        dropBoxUploadedFileName.textContent = droppedFile.name;
         console.log(dropBoxInput.files);
     }
 }
@@ -135,11 +134,16 @@ function onPostsSearchInput() {
     toggleClearPostsSearchInputBtn(postsSearchInput, clearPostsSearchInputBtn);
 }
 
-clearPostsSearchInputBtn.addEventListener(
-    "click",
-    onClearPostsSearchInputBtnClick
-);
-postsSearchInput.addEventListener("input", onPostsSearchInput);
+if (clearPostsSearchInputBtn) {
+    clearPostsSearchInputBtn.addEventListener(
+        "click",
+        onClearPostsSearchInputBtnClick
+    );
+}
+
+if (postsSearchInput) {
+    postsSearchInput.addEventListener("input", onPostsSearchInput);
+}
 
 /**
  * Toggles the display of a clear button for a posts search input

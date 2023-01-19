@@ -10,7 +10,7 @@
     <title>PicShare - @yield('title')</title>
 </head>
 
-<body class="min-h-screen w-fit flex flex-col">
+<body class="min-h-screen flex flex-col">
     @include('partials._header')
     <main class='relative flex-1 flex flex-col'>
         <x-message.flash />

@@ -6,12 +6,14 @@ use App\Models\User;
 use App\Models\Comment;
 use App\Models\Activity;
 use Laravel\Scout\Searchable;
+use Laravel\Scout\Builder as LaravelScoutBuilder;
 use App\Models\ActivityStatus;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 
 class Post extends Model
 {
@@ -36,21 +38,21 @@ class Post extends Model
      * 
      * @var int
      */
-    protected const PER_PAGE = 9;
+    public final const PER_PAGE = 9;
 
     /**
      * Cache identifier for post
      * 
      * @var string
      */
-    public const CACHE_ID = 'posts';
+    public final const CACHE_KEY = 'posts';
 
     /**
      * Define how for how long keep cache in memory
      * 
      * @var int
      */
-    protected const CACHE_TIME = 60 * 60 * 24;
+    protected final const CACHE_TIME = 60 * 60 * 24;
 
     /**
      * Allow mass assignment to provided fields
@@ -94,50 +96,58 @@ class Post extends Model
     }
 
     /**
-     * Returns all post records paginated
+     * Returns posts ordered by latest, paginated and with author
      *
-     * @param array<string, array<string>> $filters
      * @return LengthAwarePaginator
      */
-    public function paginate(array $filters): LengthAwarePaginator
+    public function getWithAuthorPaginated(): LengthAwarePaginator
     {
-
-        // return cache()->remember(self::CACHE_ID, self::CACHE_TIME, function () use ($filters) {
-        // });
-
-        if (empty($filters['search'])) {
-            return $this->with('user:id,name')
-                ->latest()
-                ->paginate(self::PER_PAGE);
-        }
-
-        return self::search($filters['search'] ?? "")->query(function ($query) {
-            return $query->with('user:id,name')->latest();
-        })->paginate(self::PER_PAGE);
+        return cache()->remember(self::CACHE_KEY, self::CACHE_TIME, function () {
+            return $this->with('user:id,name')->latest()->paginate($this->post::PER_PAGE);
+        });
     }
 
-
     /**
-     * Get all user posts
+     * Search posts and return them with post author, paginated and ordered by latest
      *
-     * @param string|integer $userId
-     * @return Builder
+     * @param string $param
+     * @return LengthAwarePaginator result ordered by latest post and paginated
      */
-    public function getPostsThatContains(string|int $userId): Builder
+    public function getSearchResultsWithAuthorPaginated(string $param): LengthAwarePaginator
     {
-        return $this->where('user_id', $userId);
+        return (static::search($param)->query(function ($query) {
+            return $query
+                ->with('user:id,name')
+                ->latest();
+        }))->paginate(self::PER_PAGE);
     }
 
-
     /**
-     * Paginate specific user posts
+     * Get posts of specific user paginate and order by latest
      *
-     * @param string|integer $userId
-     * @param array $filters
+     * @param string|int $userId
      * @return LengthAwarePaginator
      */
-    public function paginatePostsContains(string|int $userId, array $filters): LengthAwarePaginator
+    public function getOfUserPaginated(string|int $userId): LengthAwarePaginator
     {
-        return $this->getPostsThatContains($userId)->paginate($filters);
+        return cache()->remember($userId, self::CACHE_TIME, function () use ($userId) {
+            return $this->where('user_id', $userId)->latest()->paginate(self::PER_PAGE);
+        });
+    }
+
+    /**
+     * Search in specific user posts, paginate and order by latest
+     *
+     * @param string|integer $userId
+     * @param string $param
+     * @return LengthAwarePaginator
+     */
+    public function getSearchResultsOfUserPaginate(string|int $userId, string $param): LengthAwarePaginator
+    {
+        return (static::search($param)->query(function ($query) use ($userId) {
+            return $query
+                ->where('user_id', $userId)
+                ->latest();
+        }))->paginate(self::PER_PAGE);
     }
 }
