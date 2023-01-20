@@ -96,58 +96,45 @@ class Post extends Model
     }
 
     /**
-     * Returns posts ordered by latest, paginated and with author
-     *
-     * @return LengthAwarePaginator
-     */
-    public function getWithAuthorPaginated(): LengthAwarePaginator
-    {
-        return cache()->remember(self::CACHE_KEY, self::CACHE_TIME, function () {
-            return $this->with('user:id,name')->latest()->paginate($this->post::PER_PAGE);
-        });
-    }
-
-    /**
      * Search posts and return them with post author, paginated and ordered by latest
      *
-     * @param string $param
+     * @param string|null $param
      * @return LengthAwarePaginator result ordered by latest post and paginated
      */
-    public function getSearchResultsWithAuthorPaginated(string $param): LengthAwarePaginator
+    public function getSearchResultsWithAuthorPaginated(string|null $param = ''): LengthAwarePaginator
     {
-        return (static::search($param)->query(function ($query) {
-            return $query
-                ->with('user:id,name')
-                ->latest();
-        }))->paginate(self::PER_PAGE);
-    }
+        $query = $this->with('user:id,name')->latest();
 
-    /**
-     * Get posts of specific user paginate and order by latest
-     *
-     * @param string|int $userId
-     * @return LengthAwarePaginator
-     */
-    public function getOfUserPaginated(string|int $userId): LengthAwarePaginator
-    {
-        return cache()->remember($userId, self::CACHE_TIME, function () use ($userId) {
-            return $this->where('user_id', $userId)->latest()->paginate(self::PER_PAGE);
+        if (!empty($param)) {
+            return ($this->search($param)->query(function () use ($query) {
+                return $query;
+            }))->paginate(self::PER_PAGE);;
+        }
+
+        return cache()->remember(self::CACHE_KEY, self::CACHE_TIME, function () use ($query) {
+            return $query->paginate(self::PER_PAGE);
         });
     }
 
     /**
      * Search in specific user posts, paginate and order by latest
      *
-     * @param string|integer $userId
+     * @param string|int $userId
      * @param string $param
      * @return LengthAwarePaginator
      */
-    public function getSearchResultsOfUserPaginate(string|int $userId, string $param): LengthAwarePaginator
+    public function getSearchResultsOfUserPaginated(string|int $userId, string|null $param = ''): LengthAwarePaginator
     {
-        return (static::search($param)->query(function ($query) use ($userId) {
-            return $query
-                ->where('user_id', $userId)
-                ->latest();
-        }))->paginate(self::PER_PAGE);
+        $query = $this->where('user_id', $userId)->latest();
+
+        if (!empty($param)) {
+            return ($this->search($param)->query(function () use ($query) {
+                return $query;
+            }))->paginate(self::PER_PAGE);
+        }
+
+        return cache()->remember($userId, self::CACHE_TIME, function () use ($query) {
+            return $query->paginate(self::PER_PAGE);
+        });
     }
 }
