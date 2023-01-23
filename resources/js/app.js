@@ -1,52 +1,14 @@
 import algoliasearch from "algoliasearch/lite";
 
 import "./bootstrap";
-import { MIME_TYPES, FLASH_MSG_HIDE_DELAY, TABLET_WIDTH } from "./const.js";
+import {
+    MIME_TYPES,
+    FLASH_MSG_HIDE_DELAY,
+    ALGOLIA_APP_ID,
+    ALGOLIA_SEARCH_KEY,
+} from "./const";
 
-// Modal
-const modalBg = document.getElementById("modal-bg");
-const modalContent = document.getElementById("modal-content");
-const openModalMenuBtn = document.getElementById("open-modal-btn");
-const closeModalBtn = document.getElementById("close-modal-btn");
-
-// Open modal
-openModalMenuBtn.addEventListener("click", function () {
-    modalBg.classList.remove("hidden");
-    modalBg.classList.add("block");
-
-    setTimeout(() => {
-        modalContent.classList.remove("w-0");
-        modalContent.classList.add("w-1/2");
-    }, 0);
-});
-
-// Set modal content to 0%
-closeModalBtn.addEventListener("click", function () {
-    modalContent.classList.remove("w-1/2");
-    modalContent.classList.add("w-0");
-});
-
-// Close modal when transition ended
-modalContent.addEventListener("transitionend", function () {
-    if (!modalContent.classList.contains("w-1/2")) {
-        modalBg.classList.remove("block");
-        modalBg.classList.add("hidden");
-    }
-});
-
-// Close modal if user is on desktop
-window.addEventListener("resize", function () {
-    if (
-        document.body.offsetWidth > TABLET_WIDTH &&
-        modalBg.classList.contains("block")
-    ) {
-        modalBg.classList.remove("block");
-        modalBg.classList.add("hidden");
-
-        modalContent.classList.remove("w-1/2");
-        modalContent.classList.add("w-0");
-    }
-});
+import "./Modal";
 
 // Flash msg
 const flashMsg = document.getElementById("flash-msg");
@@ -129,10 +91,8 @@ const arrContainsOneElement = (elementArr) => {
 // Search
 
 // Algolia
-const searchClient = algoliasearch(
-    "V0JNB87K21",
-    "638aaa2479ee3749d04994d8093caa67"
-);
+const searchClient = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY);
+
 const POST_SEARCH_SUGGESTION_LIST_ITEM_ID = "post-search-suggestion-list-item";
 const postSearchContainer = document.getElementById("post-search-container");
 const clearPostsSearchInputBtn = document.getElementById(
