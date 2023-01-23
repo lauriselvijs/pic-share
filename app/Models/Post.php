@@ -120,7 +120,7 @@ class Post extends Model
      * Search in specific user posts, paginate and order by latest
      *
      * @param string|int $userId
-     * @param string $param
+     * @param string|null $param
      * @return LengthAwarePaginator
      */
     public function getSearchResultsOfUserPaginated(string|int $userId, string|null $param = ''): LengthAwarePaginator

@@ -1,3 +1,5 @@
+import algoliasearch from "algoliasearch/lite";
+
 import "./bootstrap";
 import { MIME_TYPES, FLASH_MSG_HIDE_DELAY, TABLET_WIDTH } from "./const.js";
 
@@ -9,10 +11,11 @@ const closeModalBtn = document.getElementById("close-modal-btn");
 
 // Open modal
 openModalMenuBtn.addEventListener("click", function () {
-    modalBg.classList.add("block");
     modalBg.classList.remove("hidden");
+    modalBg.classList.add("block");
 
     setTimeout(() => {
+        modalContent.classList.remove("w-0");
         modalContent.classList.add("w-1/2");
     }, 0);
 });
@@ -20,20 +23,28 @@ openModalMenuBtn.addEventListener("click", function () {
 // Set modal content to 0%
 closeModalBtn.addEventListener("click", function () {
     modalContent.classList.remove("w-1/2");
+    modalContent.classList.add("w-0");
 });
 
 // Close modal when transition ended
 modalContent.addEventListener("transitionend", function () {
     if (!modalContent.classList.contains("w-1/2")) {
-        modalBg.classList.add("hidden");
         modalBg.classList.remove("block");
+        modalBg.classList.add("hidden");
     }
 });
 
 // Close modal if user is on desktop
 window.addEventListener("resize", function () {
-    if (document.body.offsetWidth > TABLET_WIDTH) {
-        modalBg.style.display = "none";
+    if (
+        document.body.offsetWidth > TABLET_WIDTH &&
+        modalBg.classList.contains("block")
+    ) {
+        modalBg.classList.remove("block");
+        modalBg.classList.add("hidden");
+
+        modalContent.classList.remove("w-1/2");
+        modalContent.classList.add("w-0");
     }
 });
 
@@ -115,40 +126,160 @@ const arrContainsOneElement = (elementArr) => {
     return elementArr.length === 1;
 };
 
-// Clear search input
+// Search
+
+// Algolia
+const searchClient = algoliasearch(
+    "V0JNB87K21",
+    "638aaa2479ee3749d04994d8093caa67"
+);
+const POST_SEARCH_SUGGESTION_LIST_ITEM_ID = "post-search-suggestion-list-item";
+const postSearchContainer = document.getElementById("post-search-container");
 const clearPostsSearchInputBtn = document.getElementById(
     "clear-posts-search-input"
 );
 const postsSearchInput = document.getElementById("posts-search-input");
-
-if (postsSearchInput) {
-    toggleClearPostsSearchInputBtn(postsSearchInput, clearPostsSearchInputBtn);
-}
+const postSearchSuggestionBox = document.getElementById(
+    "post-search-suggestion-box"
+);
+const postSearchSuggestionListItem = document.getElementById(
+    POST_SEARCH_SUGGESTION_LIST_ITEM_ID
+);
+const postSearchSuggestionBoxList = document.getElementById(
+    "post-search-suggestion-box-list"
+);
+const postSearchForm = document.getElementById("posts-search-form");
 
 function onClearPostsSearchInputBtnClick() {
     postsSearchInput.value = "";
     clearPostsSearchInputBtn.style.display = "none";
+    postSearchSuggestionBox.style.display = "none";
 }
 
-function onPostsSearchInput() {
-    toggleClearPostsSearchInputBtn(postsSearchInput, clearPostsSearchInputBtn);
-}
-
-if (clearPostsSearchInputBtn) {
-    clearPostsSearchInputBtn.addEventListener(
-        "click",
-        onClearPostsSearchInputBtnClick
-    );
-}
+const posts = [
+    { title: "Post 1", slug: "post-1" },
+    { title: "Post 2", slug: "post-2" },
+    { title: "Post 3", slug: "post-3" },
+];
 
 if (postsSearchInput) {
-    postsSearchInput.addEventListener("input", onPostsSearchInput);
+    if (postsSearchInput.value) {
+        toggleClearPostsSearchInputBtn(
+            postsSearchInput,
+            clearPostsSearchInputBtn
+        );
+    }
+}
+
+async function onPostsSearchInput(event) {
+    const retrievedPosts = await searchPosts(event.target.value);
+
+    const postsSearchInput = event.target.value;
+    const retrievedPostsLength = retrievedPosts.length;
+
+    toggleClearPostsSearchInputBtn(postsSearchInput, clearPostsSearchInputBtn);
+    resetPostSearchSuggestionBox(postSearchSuggestionBoxList);
+    togglePostSearchSuggestionBox(
+        postsSearchInput,
+        retrievedPostsLength,
+        postSearchSuggestionBox
+    );
+    displayPostSearchSuggestion(retrievedPosts, postSearchSuggestionListItem);
+}
+
+function onDocumentClick(event) {
+    if (!postSearchContainer.contains(event.target)) {
+        postSearchSuggestionBox.style.display = "none";
+    }
+}
+
+async function onPostsSearchInputFocus(event) {
+    if (event.target.value) {
+        const retrievedPosts = await searchPosts(event.target.value);
+
+        postSearchSuggestionBox.style.display = "block";
+
+        const postsSearchInput = event.target.value;
+        const retrievedPostsLength = retrievedPosts.length;
+
+        resetPostSearchSuggestionBox(postSearchSuggestionBoxList);
+        togglePostSearchSuggestionBox(
+            postsSearchInput,
+            retrievedPostsLength,
+            postSearchSuggestionBox
+        );
+        displayPostSearchSuggestion(
+            retrievedPosts,
+            postSearchSuggestionListItem
+        );
+    }
+}
+
+function onPostSearchSuggestionBoxListClick(event) {
+    postsSearchInput.value = event.srcElement.innerText;
+    postSearchForm.submit();
+}
+
+clearPostsSearchInputBtn?.addEventListener(
+    "click",
+    onClearPostsSearchInputBtnClick
+);
+postsSearchInput?.addEventListener("input", onPostsSearchInput);
+postsSearchInput?.addEventListener("focus", onPostsSearchInputFocus);
+postSearchSuggestionBoxList?.addEventListener(
+    "click",
+    onPostSearchSuggestionBoxListClick
+);
+
+document.addEventListener("click", onDocumentClick);
+
+function resetPostSearchSuggestionBox(postSearchSuggestionBoxList) {
+    while (postSearchSuggestionBoxList.children.length > 1) {
+        postSearchSuggestionBoxList.removeChild(
+            postSearchSuggestionBoxList.lastChild
+        );
+    }
+
+    postSearchSuggestionBoxList.firstChild.id =
+        POST_SEARCH_SUGGESTION_LIST_ITEM_ID;
+    postSearchSuggestionBoxList.firstChild.textContent = "";
+}
+
+function togglePostSearchSuggestionBox(
+    postsSearchInput,
+    retrievedPostsLength,
+    searchSuggestionBox
+) {
+    if (!postsSearchInput || retrievedPostsLength === 0) {
+        searchSuggestionBox.style.display = "none";
+    } else if (postsSearchInput && retrievedPostsLength !== 0) {
+        searchSuggestionBox.style.display = "block";
+    }
+}
+
+function displayPostSearchSuggestion(posts, searchPostSuggestionListItem) {
+    posts.forEach(({ title, slug }, index) => {
+        if (index === 0) {
+            searchPostSuggestionListItem.id = slug;
+            searchPostSuggestionListItem.textContent = title;
+        } else if (index > 0) {
+            const prevListItem = document.getElementById(posts[index - 1].slug);
+
+            const newPostSearchSuggestionListItem =
+                postSearchSuggestionListItem.cloneNode(true);
+            newPostSearchSuggestionListItem.id = slug;
+            newPostSearchSuggestionListItem.textContent = title;
+
+            prevListItem.after(newPostSearchSuggestionListItem);
+        }
+    });
 }
 
 /**
  * Toggles the display of a clear button for a posts search input
  * @param {HTMLInputElement} postsSearchInput - The input element for the posts search
  * @param {HTMLButtonElement} clearPostsSearchInputBtn - The button element to clear the search input
+ * @return {void}
  */
 function toggleClearPostsSearchInputBtn(
     postsSearchInput,
@@ -158,5 +289,23 @@ function toggleClearPostsSearchInputBtn(
         clearPostsSearchInputBtn.style.display = "none";
     } else if (postsSearchInput.value !== "") {
         clearPostsSearchInputBtn.style.display = "inline-block";
+    }
+}
+
+/**
+ * Search post records
+ *
+ * @param {string} param
+ * @returns { Promise<Array<any> | undefined>}
+ */
+async function searchPosts(param) {
+    const index = searchClient.initIndex("posts");
+
+    try {
+        const { hits = [] } = await index.search(param);
+
+        return hits;
+    } catch (error) {
+        console.log(error);
     }
 }

@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "laravel/pic-share",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Share images",
     "keywords": [
         "framework",
         "laravel"
