@@ -30,6 +30,7 @@ PicShare:
 -   Buy images
 -   Google Auth
 -   Email verification
+-   Dynamic search bar
 
 ### Screenshot
 
