@@ -14,7 +14,6 @@
     - [Built with](#built-with)
     - [Continued development](#continued-development)
     - [Useful resources](#useful-resources)
-  - [Author](#author)
 
 ## Overview
 
@@ -31,6 +30,7 @@ PicShare:
 -   Buy images
 -   Google Auth
 -   Email verification
+-   Dynamic search bar
 
 ### Screenshot
 
@@ -87,7 +87,3 @@ Follow steps in https://laravel.com/docs/9.x/installation#your-first-laravel-pro
 -   [TailwindCSS Docs](https://tailwindcss.com/docs/installation) - Documentation for TailwindCSS
 -   [jQuery Docs](https://api.jquery.com/) - jQuery documentation
 -   [MySQL Docs](https://www.mysql.com/) - MySQL documentation
-
-## Author
-
--   Website - [Lauris](https://b2cf56-portfolio.netlify.app/projects)
