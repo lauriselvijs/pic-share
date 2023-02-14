@@ -4,11 +4,9 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Admin;
 use App\Events\UserRegisteredEvent;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\UserRegisteredNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -21,10 +19,8 @@ class AuthTest extends TestCase
 
     /**
      * Tests if user can visit signup page and see create an account text
-     *
-     * @return void
      */
-    public function test_visit_signup_page_and_see_create_an_account_text()
+    public function test_visit_signup_page_and_see_create_an_account_text(): void
     {
         $response = $this->get(route('auth.create'));
 
@@ -34,10 +30,8 @@ class AuthTest extends TestCase
 
     /**
      * Tests creating new user.
-     *
-     * @return void
      */
-    public function test_create_new_user()
+    public function test_create_new_user(): void
     {
         // Create user and check if redirected to email verification page
         Event::fake([UserRegisteredEvent::class, Registered::class]);

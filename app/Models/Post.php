@@ -6,14 +6,11 @@ use App\Models\User;
 use App\Models\Comment;
 use App\Models\Activity;
 use Laravel\Scout\Searchable;
-use Laravel\Scout\Builder as LaravelScoutBuilder;
 use App\Models\ActivityStatus;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Builder;
 
 class Post extends Model
 {
@@ -104,6 +101,8 @@ class Post extends Model
     public function getSearchResultsWithAuthorPaginated(string|null $param = ''): LengthAwarePaginator
     {
         $query = $this->with('user:id,name')->latest();
+
+
 
         if (!empty($param)) {
             return ($this->search($param)->query(function () use ($query) {

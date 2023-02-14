@@ -7,7 +7,6 @@ use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function PHPUnit\Framework\assertNotNull;
@@ -20,24 +19,14 @@ class PostTest extends TestCase
     {
         parent::setUp();
 
-        /**
-         * Fixes typecasting error
-         * 
-         * @var User 
-         */
-        $user = User::factory()->createOne();
-        $this->actingAs($user);
-
-        // $this->actingAs(User::factory()->createOne());
+        $this->actingAs(User::factory()->createOne());
     }
 
 
     /**
      * Check if user can store posts
-     *
-     * @return void
      */
-    public function test_authorized_user_stores_post()
+    public function test_authorized_user_stores_post(): void
     {
         Storage::fake(config('constants.MEDIA_DISK'));
 
