@@ -21,7 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Prunable, Billable;
 
     /**
-     * Dispatch givin event (should be avoided because of readability)
+     * Dispatch given event (should be avoided because of readability)
      *
      * @var array<string, string>
      */

@@ -105,7 +105,7 @@ class PostController extends Controller
      * @param Post $post
      * @return \Illuminate\Routing\Redirector
      */
-    public function delete(Post $post)
+    public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
 

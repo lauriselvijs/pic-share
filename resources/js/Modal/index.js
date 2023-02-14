@@ -3,7 +3,7 @@ import ModalView from "./ModalView";
 import ModalController from "./ModalController";
 
 // TODO:
-// [ ] - Move to ts
+// [ ] - Add to typescript
 const modal = new Modal();
 const modalView = new ModalView(modal);
 const modalController = new ModalController(modal, modalView);

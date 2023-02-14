@@ -1,5 +1,5 @@
 <header
-    class='h-20 md:h-10 px-6 md:px-40 bg-black text-base font-normal text-white flex sm:gap-8 gap-4 md:justify-end items-center transition-all'
+    class='h-20 md:h-10 px-6 md:px-40 bg-black text-base font-normal text-white flex sm:gap-8 gap-4 md:justify-end items-center transition-all overflow-auto'
     x-data='{ openHamburgerMenuModal: false }'>
     @include('partials.button._modal-open')
     @include('partials._modal')

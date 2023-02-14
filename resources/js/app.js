@@ -1,13 +1,12 @@
 import algoliasearch from "algoliasearch/lite";
-
 import "./bootstrap";
+
 import {
     MIME_TYPES,
     FLASH_MSG_HIDE_DELAY,
     ALGOLIA_APP_ID,
     ALGOLIA_SEARCH_KEY,
 } from "./const";
-
 import "./Modal";
 
 // Flash msg
@@ -115,12 +114,6 @@ function onClearPostsSearchInputBtnClick() {
     clearPostsSearchInputBtn.style.display = "none";
     postSearchSuggestionBox.style.display = "none";
 }
-
-const posts = [
-    { title: "Post 1", slug: "post-1" },
-    { title: "Post 2", slug: "post-2" },
-    { title: "Post 3", slug: "post-3" },
-];
 
 if (postsSearchInput) {
     if (postsSearchInput.value) {

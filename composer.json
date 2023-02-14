@@ -4,7 +4,9 @@
     "description": "Share images",
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "share",
+        "images"
     ],
     "license": "MIT",
     "require": {

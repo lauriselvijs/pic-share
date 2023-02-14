@@ -6,19 +6,19 @@
 
 <div class='flex flex-col gap-2 md:px-40 pt-0 pb-24 bg-shadow text-white text-left'>
     <img class='h-auto w-full md:scale-75 scale-100' src={{ asset($post->image) }} alt='User posted image'>
-    <div class='px-6'>
-        <h2 class='text-2xl font-bold py-4 leading-snug'>
+    <div class='px-6 flex flex-col justify-center items-center  sm:block text-center sm:text-left'>
+        <h2 class='text-2xl font-bold py-4 leading-snug sm:text-left'>
             {{ $post->title }}
         </h2>
 
         <x-tag :tagsCsv='$post->tags' />
-        <p class='text-base font-bold py-4'>
+        <p class='text-base font-bold py-4 '>
             {{ $post->author }}
         </p>
         <h2 class='text-2xl font-bold py-4 tracking-wide'>
             ${{ $post->price }}
         </h2>
-        <div class='flex md:justify-between md:flex-row flex-col md:gap-8 gap-8 pt-8'>
+        <div class='flex sm:justify-between justify-center flex-wrap md:gap-8 gap-8 pt-8'>
             {{--
             TODO:
             [ ] - replace with one payment button --}}
@@ -62,7 +62,7 @@
                 </a>
                 @endcan
                 @can('delete', $post)
-                <form action={{ route('posts.delete', $post->id) }} method='POST'>
+                <form action={{ route('posts.destroy', $post->id) }} method='POST'>
                     @csrf
                     @method('DELETE')
                     <x-button.tertiary type='submit'>

@@ -1,6 +1,5 @@
 <?php
 
-use App\Jobs\TestJob;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
@@ -25,28 +24,14 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-// TODO:
-// [ ] - Create resources for CRUD operations (see https://laravel.com/docs/9.x/controllers#resource-controllers).
 // Posts
-Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
-    Route::group(['middleware' => 'auth'], function () {
-        Route::get('/create', [PostController::class, 'create'])->name('create');
-        Route::get('/{post}/edit', [PostController::class, 'edit'])->name('edit');
-        Route::delete('/{post}', [PostController::class, 'delete'])->name('delete');
-        Route::put('/{post}', [PostController::class, 'update'])->name('update');
-        Route::post('/', [PostController::class, 'store'])->name('store');
-    });
-    Route::get('/{post}', [PostController::class, 'show'])->name('show');
-    Route::get('/', [PostController::class, 'index'])->name('index');
-});
-
+Route::middleware('auth')->resource('posts', PostController::class)->except('show', 'index');
+Route::resource('posts', PostController::class)->only('show', 'index');
 
 // Users
 Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
     Route::get('/{user}/posts', [UserController::class, 'posts'])->middleware('auth')->name('posts');
 });
-
-
 
 // Authentication
 Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
@@ -64,7 +49,6 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
     });
     Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 });
-
 
 // Password reset
 Route::group(['prefix' => 'password-reset', 'middleware' => 'guest', 'as' => 'password.'], function () {

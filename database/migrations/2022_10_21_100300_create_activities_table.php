@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->foreignId('post_id')->constrained();
+            $table->foreignIdFor(Post::class)->constrained();
             $table->timestamps();
         });
     }
