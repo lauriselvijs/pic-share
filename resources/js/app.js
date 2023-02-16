@@ -1,3 +1,4 @@
+import "bootstrap-icons/font/bootstrap-icons.css";
 import algoliasearch from "algoliasearch/lite";
 import "./bootstrap";
 
@@ -141,7 +142,7 @@ async function onPostsSearchInput(event) {
 }
 
 function onDocumentClick(event) {
-    if (!postSearchContainer.contains(event.target)) {
+    if (postSearchContainer && !postSearchContainer.contains(event.target)) {
         postSearchSuggestionBox.style.display = "none";
     }
 }

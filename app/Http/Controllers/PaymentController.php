@@ -20,14 +20,12 @@ class PaymentController extends Controller
     /**
      * Redirects user to charging page
      *
-     * @param Post $post
-     * @return View
      */
-    public function charge(Post $post): View
+    public function charge(Request $request, Post $post): View
     {
         $this->authorize('buy', $post);
 
-        $user = auth()->user();
+        $user = $request->user();
 
         return view('payment.index', [
             'user' => $user,
@@ -39,13 +37,10 @@ class PaymentController extends Controller
     /**
      * Process incoming payment
      *
-     * @param Request $request
-     * @param Post $post
-     * @return RedirectResponse
      */
     public function process(Request $request, Post $post): RedirectResponse
     {
-        $user = auth()->user();
+        $user = $request->user();
         $paymentMethod = $request->input('payment_method');
 
         try {

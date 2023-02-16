@@ -4,7 +4,8 @@
     <!-- Hamburger modal content -->
     <div id='modal-content' class='bg-sunset rounded-br-lg shadow h-screen w-0 overflow-hidden transition-all'>
         <!-- Hamburger modal header -->
-        <div class='flex justify-between gap-8 items-center p-6 rounded-t border-b border-white overflow-auto'>
+        <div class='flex justify-between gap-8 items-center p-6 rounded-t border-b border-white overflow-auto
+        '>
             @auth
             <h3 class='text-xl font-bold text-black'>{{ auth()->user()->name }}</h3>
             @else

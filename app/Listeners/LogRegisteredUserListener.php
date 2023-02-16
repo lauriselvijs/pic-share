@@ -7,8 +7,23 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class LogRegisteredUserListener
+class LogRegisteredUserListener implements ShouldQueue
 {
+
+    /**
+     * The name of the connection the job should be sent to.
+     *
+     * @var string|null
+     */
+    public $connection = 'redis';
+
+    /**
+     * The name of the queue the job should be sent to.
+     *
+     * @var string|null
+     */
+    public $queue = 'logs';
+
     /**
      * Create the event listener.
      *
@@ -16,7 +31,6 @@ class LogRegisteredUserListener
      */
     public function __construct()
     {
-        //
     }
 
     /**

@@ -14,19 +14,40 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        // Remove failed jobs from DB every month
-        $schedule->command('queue:prune-failed')->name('deleted:jobs')
-            ->monthly()
-            ->appendOutputTo(storage_path('/logs/deleted_jobs.log'))
-            ->onOneServer()
-            ->runInBackground();
+        if (config('app.server_type') == 'default') {
 
-        // Delete all pruned models daily
-        $schedule->command('model:prune')->name('pruned:models')
-            ->daily()
-            ->appendOutputTo(storage_path('/logs/pruned_users.log'))
-            ->onOneServer()
-            ->runInBackground();
+            // Remove failed jobs from DB every month
+            $schedule->command('queue:prune-failed')->name('deleted:jobs')
+                ->monthly()
+                ->appendOutputTo(storage_path('/logs/deleted_jobs.log'))
+                ->onOneServer()
+                ->runInBackground();
+
+            // Delete all pruned models daily
+            $schedule->command('model:prune')->name('pruned:models')
+                ->daily()
+                ->appendOutputTo(storage_path('/logs/pruned_users.log'))
+                ->onOneServer()
+                ->runInBackground();
+
+            // Back up
+            $schedule->command('backup:run')->name('run:backup')
+                ->daily()
+                ->onOneServer()
+                ->runInBackground();
+            $schedule->command('backup:clean')->name('cleaned:backup')
+                ->daily()
+                ->onOneServer()
+                ->runInBackground();
+        }
+
+        if (config('app.server_type') == 'monitor') {
+            $schedule->command('backup:monitor')->name('monitored:backup')
+                ->daily()
+                ->at('03:00')
+                ->onOneServer()
+                ->runInBackground();
+        }
     }
 
     /**

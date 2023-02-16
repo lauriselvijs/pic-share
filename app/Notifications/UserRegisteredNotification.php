@@ -21,9 +21,9 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
     {
         $this->notifiable = $notifiable;
 
-        if (env('APP_ENV') == 'production') {
+        if (config('app.env') == 'production') {
             $this->connection = 'database';
-        } else if (env('APP_ENV') == 'local') {
+        } else if (config('app.env') == 'local') {
             $this->connection = 'redis';
             $this->queue = 'emails';
         }
@@ -61,7 +61,8 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->line('User ' . $notifiable->name .
                 ' with email ' . $notifiable->email .
-                ' has sign up to PicShare');
+                ' has sign up to PicShare')
+            ->line('To add new post ' . $notifiable->name . ' please verify this email');
     }
 
     /**

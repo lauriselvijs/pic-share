@@ -19,54 +19,57 @@ use App\Http\Controllers\EmailVerificationController;
 |
 */
 
-// Home page
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::middleware(['throttle:global'])->group(function () {
 
-// Posts
-Route::middleware('auth')->resource('posts', PostController::class)->except('show', 'index');
-Route::resource('posts', PostController::class)->only('show', 'index');
+    // Home page
+    Route::get('/', function () {
+        return view('home');
+    })->name('home');
 
-// Users
-Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
-    Route::get('/{user}/posts', [UserController::class, 'posts'])->middleware('auth')->name('posts');
-});
+    // Posts
+    Route::resource('posts', PostController::class)->except('show', 'index')->middleware(['auth', 'email.verified']);
+    Route::resource('posts', PostController::class)->only('show', 'index');
 
-// Authentication
-Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
-    Route::group(['middleware' => 'guest'], function () {
-        Route::get('/sign-up',  [AuthController::class, 'create'])->name('create');
-        Route::post('/sign-up',  [AuthController::class, 'store'])->name('store');
-
-        Route::group(['prefix' => 'login'], function () {
-            Route::get('/', [AuthController::class, 'login'])->name('login');
-            Route::post('/', [AuthController::class, 'authenticate'])->name('authenticate');
-        });
-
-        Route::get('/google', [GoogleLoginController::class, 'redirect'])->name('google-redirect');
-        Route::get('/google/callback', [GoogleLoginController::class, 'callback'])->name('google-callback');
+    // Users
+    Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
+        Route::get('/{user}/posts', [UserController::class, 'posts'])->middleware('auth')->name('posts');
     });
-    Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth')->name('logout');
-});
 
-// Password reset
-Route::group(['prefix' => 'password-reset', 'middleware' => 'guest', 'as' => 'password.'], function () {
-    Route::get('/forgot-password',  [PasswordResetController::class, 'request'])->name('request');
-    Route::post('/forgot-password',  [PasswordResetController::class, 'email'])->name('email');
-    Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('reset');
-    Route::post('/reset-password',  [PasswordResetController::class, 'update'])->name('update');
-});
+    // Authentication
+    Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+        Route::group(['middleware' => ['guest']], function () {
+            Route::get('/sign-up',  [AuthController::class, 'create'])->name('create');
+            Route::post('/sign-up',  [AuthController::class, 'store'])->name('store');
 
-// Email verification
-Route::group(['prefix' => 'email-verification', 'middleware' => 'auth', 'as' => 'verification.'], function () {
-    Route::get('/verify',  [EmailVerificationController::class, 'notice'])->name('notice');
-    Route::get('/verify/{id}/{hash}',  [EmailVerificationController::class, 'verify'])->name('verify');
-    Route::post('/notification',  [EmailVerificationController::class, 'send'])->middleware('throttle:6,1')->name('send');
-});
+            Route::group(['prefix' => 'login'], function () {
+                Route::get('/', [AuthController::class, 'login'])->name('login');
+                Route::post('/', [AuthController::class, 'authenticate'])->name('authenticate');
+            });
 
-// Payments
-Route::group(['prefix' => 'payment', 'middleware' => 'auth', 'as' => 'payment.'], function () {
-    Route::get('/{post}', [PaymentController::class, 'charge'])->middleware('auth')->name('charge');
-    Route::post('/process-payment/{post}/', [PaymentController::class, 'process'])->middleware('auth')->name('process');
+            Route::get('/google', [GoogleLoginController::class, 'redirect'])->name('google-redirect');
+            Route::get('/google/callback', [GoogleLoginController::class, 'callback'])->name('google-callback');
+        });
+        Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+    });
+
+    // Password reset
+    Route::group(['prefix' => 'password-reset', 'middleware' => 'guest', 'as' => 'password.'], function () {
+        Route::get('/forgot-password',  [PasswordResetController::class, 'request'])->name('request');
+        Route::post('/forgot-password',  [PasswordResetController::class, 'email'])->name('email');
+        Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('reset');
+        Route::post('/reset-password',  [PasswordResetController::class, 'update'])->name('update');
+    });
+
+    // Email verification
+    Route::group(['prefix' => 'email-verification', 'middleware' => 'auth', 'as' => 'verification.'], function () {
+        Route::get('/verify',  [EmailVerificationController::class, 'notice'])->name('notice');
+        Route::get('/verify/{id}/{hash}',  [EmailVerificationController::class, 'verify'])->name('verify');
+        Route::post('/notification',  [EmailVerificationController::class, 'send'])->middleware('throttle:6,1')->name('send');
+    });
+
+    // Payments
+    Route::group(['prefix' => 'payment', 'middleware' => 'auth', 'as' => 'payment.'], function () {
+        Route::get('/{post}', [PaymentController::class, 'charge'])->middleware('auth')->name('charge');
+        Route::post('/process-payment/{post}/', [PaymentController::class, 'process'])->middleware('auth')->name('process');
+    });
 });

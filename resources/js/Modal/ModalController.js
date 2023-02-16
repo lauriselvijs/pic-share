@@ -19,14 +19,12 @@ class ModalController {
             this.renderView();
         });
         this.#view.closeModalBtn?.addEventListener("click", () => {
-            this.#modal.startTransition();
+            this.#modal.startCloseTransition();
             this.renderView();
         });
         this.#view.modalContent?.addEventListener("transitionend", () => {
-            // TODO:
-            // [ ] - Move to view
-            if (!this.#view.modalContent.classList.contains("w-1/2")) {
-                this.#modal.endTransition();
+            if (!this.#view.isModalContentExpanded) {
+                this.#modal.endCloseTransition();
                 this.#modal.close();
                 this.renderView();
             }

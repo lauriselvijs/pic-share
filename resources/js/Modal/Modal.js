@@ -1,10 +1,10 @@
 class Modal {
     #isOpen;
-    #isTransition;
+    #isClosing;
 
     constructor() {
         this.#isOpen = false;
-        this.#isTransition = false;
+        this.#isClosing = false;
     }
 
     open() {
@@ -15,20 +15,20 @@ class Modal {
         this.#isOpen = false;
     }
 
-    startTransition() {
-        this.#isTransition = true;
+    startCloseTransition() {
+        this.#isClosing = true;
     }
 
-    endTransition() {
-        this.#isTransition = false;
+    endCloseTransition() {
+        this.#isClosing = false;
     }
 
     get isOpen() {
         return this.#isOpen;
     }
 
-    get isTransition() {
-        return this.#isTransition;
+    get isClosing() {
+        return this.#isClosing;
     }
 }
 

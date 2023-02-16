@@ -6,6 +6,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Server type
+    |--------------------------------------------------------------------------
+    |
+    | This value used when you need to set up dedicated server for specific task
+    | like backups
+    |
+    */
+
+    'server_type' => env('SERVER_TYPE', 'default'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |
@@ -196,6 +208,8 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ProfilePicServiceProvider::class,
+        App\Providers\DropboxServiceProvider::class,
+
     ],
 
     /*

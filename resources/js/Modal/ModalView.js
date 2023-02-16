@@ -14,7 +14,7 @@ class ModalView {
     }
 
     render() {
-        if (this.#modal.isOpen && !this.#modal.isTransition) {
+        if (this.#modal.isOpen && !this.#modal.isClosing) {
             this.#modalBg.classList.remove("hidden");
             this.#modalBg.classList.add("block");
 
@@ -24,12 +24,12 @@ class ModalView {
             }, 0);
         }
 
-        if (this.#modal.isTransition) {
+        if (this.#modal.isOpen && this.#modal.isClosing) {
             this.#modalContent.classList.remove("w-1/2");
             this.#modalContent.classList.add("w-0");
         }
 
-        if (!this.#modal.isOpen && !this.#modal.isTransition) {
+        if (!this.#modal.isOpen) {
             this.#modalBg.classList.remove("block");
             this.#modalBg.classList.add("hidden");
 
@@ -52,6 +52,10 @@ class ModalView {
 
     get closeModalBtn() {
         return this.#closeModalBtn;
+    }
+
+    get isModalContentExpanded() {
+        return this.#modalContent.classList.contains("w-1/2");
     }
 }
 
