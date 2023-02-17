@@ -31,6 +31,9 @@ class LogRegisteredUserListener implements ShouldQueue
      */
     public function __construct()
     {
+        if (config('app.env') == 'production') {
+            $this->connection = 'database';
+        }
     }
 
     /**

@@ -36,7 +36,7 @@
     [ ] - add progress bar
     --}}
     <div id='image-drop-box' class='w-full p-20 bg-sunset flex flex-col justify-center items-center gap-2'>
-        <img class='w-6 h-6' src={{ asset('assets/icons/upload-icon.svg') }} alt='Upload'>
+        <img role="img" class='w-6 h-6' src={{ asset('assets/icons/upload-icon.svg') }} alt='Upload'>
         <p class='text-xs whitespace-nowrap font-medium text-black'>Drag picture to this
             drop
             zone.
@@ -45,7 +45,7 @@
             class='text-sm font-medium text-white bg-black px-2.5 py-2.5 text-center hover:bg-shadow cursor-pointer'>Upload
             your image</label>
         <input hidden id='image-drop-box-input' name='image' type='file' accept='image/png, image/jpeg'>
-        <span id="image-drop-box-file-name" title='Click to remove'
+        <span id="image-drop-box-file-name" title='Click to remove' aria-lable="Click to remove"
             class='text-base font-medium text-black cursor-pointer'></span>
         @error('image')
         <x-message.error class='whitespace-nowrap'>
