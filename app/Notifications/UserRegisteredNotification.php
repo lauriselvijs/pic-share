@@ -21,12 +21,8 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
     {
         $this->notifiable = $notifiable;
 
-        if (config('app.env') == 'production') {
-            $this->connection = 'database';
-        } else if (config('app.env') == 'local') {
-            $this->connection = 'redis';
-            $this->queue = 'emails';
-        }
+        $this->connection = 'redis';
+        $this->queue = 'emails';
     }
 
     /**
