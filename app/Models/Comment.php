@@ -10,7 +10,7 @@ class Comment extends Model
     use HasFactory;
 
     /**
-     * Get the parent commentable model (post or video).
+     * Get the parent commentable model.
      */
     public function commentable()
     {

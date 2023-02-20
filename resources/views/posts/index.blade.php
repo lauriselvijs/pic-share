@@ -16,7 +16,7 @@ Posts
     <x-card.post :post='$post' />
     @endforeach
 </div>
-<div class='bg-sunset sm:px-48 sm:pt-0 px-8 py-8'>
+<div class='bg-sunset sm:px-48 sm:py-4 px-8 py-8'>
     {{ $posts->links() }}
 </div>
 @endunless

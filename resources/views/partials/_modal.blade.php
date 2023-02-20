@@ -17,10 +17,8 @@
         </div>
         <!-- Hamburger modal body -->
         <nav class='p-6'>
-            <x-nav.ul hoverLinkColor='text-shadow' class='text-black'>
-                <x-slot name='addListItem'>
-                </x-slot>
-            </x-nav.ul>
+            <x-nav hoverLinkColor='text-shadow' class='text-black'>
+            </x-nav>
         </nav>
     </div>
 </div>

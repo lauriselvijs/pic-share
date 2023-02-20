@@ -17,11 +17,11 @@ Verify Email
     <div class="flex flex-col items-center justify-center bg-white">
         <div class="max-w-xl px-5 text-center space-y-12">
             <h2 class="mb-2 text-4xl font-bold text-black">Check your inbox to verify your email</h2>
-            <p class="mb-2 text-lg text-black">We are glad, that you’re with us. <span class="font-bold text-black">To
+            <p class="mb-2 text-lg text-black">We are glad, that you’re with us. <strong class="text-black">To
                     start adding posts you should verify
-                    your email adress.</span> We’ve sent you a verification link
+                    your email adress.</strong> We’ve sent you a verification link
                 to
-                the email address <span class="font-bold text-black">{{ auth()->user()->email }}</span>.</p>
+                the email address <strong class="text-black">{{ auth()->user()->email }}</strong>.</p>
         </div>
     </div>
     <x-form :action='route("verification.send")' method='POST'>

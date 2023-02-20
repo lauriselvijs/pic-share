@@ -26,10 +26,10 @@ class PaymentController extends Controller
         $this->authorize('buy', $post);
 
         $user = $request->user();
+        $user->name = $this->paymentService->normalizeName($request->user()->name);
 
         return view('payment.index', [
             'user' => $user,
-            'intent' => $user->createSetupIntent(),
             'post' => $post,
         ]);
     }
@@ -41,10 +41,10 @@ class PaymentController extends Controller
     public function process(Request $request, Post $post): RedirectResponse
     {
         $user = $request->user();
-        $paymentMethod = $request->input('payment_method');
+        $paymentMethodId = $request->input('payment_method_id');
 
         try {
-            $this->paymentService->makePayment($user,  $paymentMethod, $post->price);
+            $this->paymentService->makePayment($user,  $post->price, $paymentMethodId);
         } catch (Exception $error) {
             return back()->withErrors(['message' => __('payment.error', ['error' => $error->getMessage()])]);
         }

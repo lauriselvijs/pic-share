@@ -11,7 +11,6 @@ class AuthService
      * Store new user in database
      *
      * @param array<string, mixed> $userData
-     * @return User
      */
     public function store(array $userData): User
     {
@@ -28,9 +27,6 @@ class AuthService
 
     /**
      * Invalidate current session and regenerate CSRF token
-     *
-     * @param Session $session
-     * @return void
      */
     public function invalidate(Session $session): void
     {
@@ -40,11 +36,6 @@ class AuthService
 
     /**
      * Auth user
-     *
-     * @param Session $session
-     * @param array<string, string> $userData
-     * @param mixed $remember
-     * @return bool
      */
     public function authenticate(Session $session, array $credentials, bool $remember): bool
     {

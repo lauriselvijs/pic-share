@@ -8,6 +8,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\EmailVerificationController;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,8 +48,8 @@ Route::middleware(['throttle:global'])->group(function () {
                 Route::post('/', [AuthController::class, 'authenticate'])->name('authenticate');
             });
 
-            Route::get('/google', [GoogleLoginController::class, 'redirect'])->name('google-redirect');
-            Route::get('/google/callback', [GoogleLoginController::class, 'callback'])->name('google-callback');
+            Route::get('/google', [GoogleLoginController::class, 'redirect'])->name('google_redirect');
+            Route::get('/google/callback', [GoogleLoginController::class, 'callback'])->name('google_callback');
         });
         Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth')->name('logout');
     });
@@ -72,4 +74,9 @@ Route::middleware(['throttle:global'])->group(function () {
         Route::get('/{post}', [PaymentController::class, 'charge'])->middleware('auth')->name('charge');
         Route::post('/process-payment/{post}/', [PaymentController::class, 'process'])->middleware('auth')->name('process');
     });
+});
+
+
+Route::get('/billing-portal', function (Request $request) {
+    return $request->user()->redirectToBillingPortal();
 });

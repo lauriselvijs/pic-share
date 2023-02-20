@@ -15,11 +15,11 @@ Payment
         </div>
         <div class='flex flex-col'>
             <label class='text-base font-bold' for='card-holder-name'>Card Holder Name</label>
-            <input class='bg-sunset text-shadow' id='card-holder-name' type='text' value='{{$user->name}}' disabled>
+            <input class='bg-sunset text-shadow uppercase' id='card-holder-name' type='text' value='{{$user->name}}'>
         </div>
         <div class='form-row text-base'>
             <label class='font-bold' for='card-element'>Credit or debit card</label>
-            <div id='card-element' class='form-control pt-2'> </div>
+            <div id='card-element-container' class='pt-2'> </div>
             <!-- Used to display form errors. -->
             <div class='pt-4'>
                 <div id='card-errors' class='text-error' role='alert'></div>
@@ -39,8 +39,8 @@ Payment
             <button
                 class='flex justify-center w-full text-white bg-black hover:bg-shadow focus:outline
                 focus:outline-4
-                focus:outline-white font-medium text-base px-5 py-2.5 text-center active:bg-black disabled:hover:bg-black'
-                type='button' id='card-button' data-secret='{{ $intent->client_secret }}'>
+                focus:outline-white font-medium text-base px-5 py-2.5 text-center active:bg-black disabled:hover:bg-black disabled:opacity-20'
+                type='button' id='card-button'>
                 <svg id='pay-btn-spinner' class='fill-sunset animate-spin hidden' xmlns='http://www.w3.org/2000/svg'
                     width='32' height='32' viewBox='0 0 512 512'>
                     <path
@@ -51,84 +51,4 @@ Payment
         </div>
     </form>
 </div>
-
-<script src='https://js.stripe.com/v3/'></script>
-<script>
-    const stripe = Stripe('{{ env('STRIPE_KEY') }}');
-    const elements = stripe.elements();
-    const style = {
-        base: {
-            color: '#43374f',
-            fontFamily: '"Quicksand", Arial, sans-serif',
-            fontSmoothing: 'antialiased',
-            fontSize: '16px',
-            '::placeholder': {
-                color: '#43374f',
-            },
-            },
-        invalid: {
-            color: '#d30124',
-            iconColor: '#d30124',
-        },
-};
-
-    const card = elements.create('card', { hidePostalCode: true, style: style });
-    card.mount('#card-element');
-
-card.addEventListener('change', function (event) {
-    const displayError = document.getElementById('card-errors');
-    if (event.error) {
-        displayError.textContent = event.error.message;
-    } else {
-        displayError.textContent = '';
-    }
-});
-
-const cardHolderName = document.getElementById('card-holder-name');
-const cardButton = document.getElementById('card-button');
-
-const cardButtonSpinner = document.getElementById('pay-btn-spinner');
-const cardButtonText = document.getElementById('pay-btn-text');
-
-const clientSecret = cardButton.dataset.secret;
-
-cardButton.addEventListener('click', async (e) => {
-    const { setupIntent, error } = await stripe.confirmCardSetup(clientSecret, {
-        payment_method: {
-            card: card,
-            billing_details: { name: cardHolderName.value },
-        },
-    });
-
-    cardButton.disabled = true;
-    cardButtonText.style.display = 'none';
-    cardButtonSpinner.style.display = 'block';
-
-    if (error) {
-        const errorElement = document.getElementById('card-errors');
-        errorElement.textContent = error.message;
-        cardButton.disabled = false;
-        cardButtonText.style.display = 'block';
-        cardButtonSpinner.style.display = 'none';
-
-    } else {
-        cardButton.disabled = false;
-        cardButtonText.style.display = 'block';
-        cardButtonSpinner.style.display = 'none';
-        
-        paymentMethodHandler(setupIntent.payment_method);
-    }
-});
-
-function paymentMethodHandler(payment_method) {
-    const form = document.getElementById('payment-form');
-    const hiddenInput = document.createElement('input');
-    hiddenInput.setAttribute('type', 'hidden');
-    hiddenInput.setAttribute('name', 'payment_method');
-    hiddenInput.setAttribute('value', payment_method);
-    form.appendChild(hiddenInput);
-    form.submit();
-}
-</script>
-
 @endsection

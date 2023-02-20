@@ -8,6 +8,7 @@ use App\Services\PostService;
 use Illuminate\Contracts\View\View;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Http\RedirectResponse;
 
 class PostController extends Controller
 {
@@ -19,8 +20,6 @@ class PostController extends Controller
     }
     /**
      * Return all posts
-     *
-     * @return View
      */
     public function index(Request $request): View
     {
@@ -34,9 +33,6 @@ class PostController extends Controller
 
     /**
      * Show single post
-     *
-     * @param Post $post
-     * @return View
      */
     public function show(Post $post): View
     {
@@ -51,8 +47,6 @@ class PostController extends Controller
 
     /**
      * Show create post form
-     *
-     * @return View
      */
     public function create(): View
     {
@@ -61,11 +55,8 @@ class PostController extends Controller
 
     /**
      * Store new post in DB
-     *
-     * @param StorePostRequest $request
-     * @return \Illuminate\Routing\Redirector
      */
-    public function store(StorePostRequest $request)
+    public function store(StorePostRequest $request): RedirectResponse
     {
         $this->postService->store([...$request->validated(), 'user_id' => auth()->id()]);
 
@@ -74,11 +65,8 @@ class PostController extends Controller
 
     /**
      * Show edit post form
-     *
-     * @param Post $post
-     * @return \Illuminate\Routing\Redirector
      */
-    public function edit(Post $post)
+    public function edit(Post $post): View
     {
         $this->authorize('edit', $post);
 
@@ -87,12 +75,8 @@ class PostController extends Controller
 
     /**
      * Update existing post
-     *
-     * @param Post $post
-     * @param UpdatePostRequest $request
-     * @return \Illuminate\Routing\Redirector
      */
-    public function update(Post $post, UpdatePostRequest $request)
+    public function update(Post $post, UpdatePostRequest $request): RedirectResponse
     {
         $this->postService->update($post, $request->validated());
 
@@ -101,11 +85,8 @@ class PostController extends Controller
 
     /**
      * Remove post from DB
-     *
-     * @param Post $post
-     * @return \Illuminate\Routing\Redirector
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post): RedirectResponse
     {
         $this->authorize('delete', $post);
 

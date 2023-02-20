@@ -39,7 +39,9 @@ class GoogleLoginController extends Controller
             auth()->login($findUser);
 
             return redirect()->route('posts.index')->with('message',  __('user.logged_in'));
-        } else if (!$findUser) {
+        }
+
+        if (!$findUser) {
             auth()->login($this->googleLoginService->createUser($user));
 
             return redirect()->route('verification.notice')->with('message',  __('user.created'));

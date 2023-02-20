@@ -10,15 +10,9 @@
                 alt='logo'></a>
         <a href={{ route('home')}}><span class='hover:text-sunset cursor-pointer'>PicShare</span></a>
     </div>
-    <nav class='md:flex md:order-2 hidden '>
-        <x-nav.ul hoverLinkColor='text-sunset' class='text-white'>
-            <x-slot name='addListItem'>
-                @auth
-                <li>Welcome {{ auth()->user()->name }}</li>
-                @endauth
-            </x-slot>
-        </x-nav.ul>
-    </nav>
+    <div class='md:flex md:order-2 hidden'>
+        <x-nav hoverLinkColor='text-sunset' class='text-white' />
+    </div>
     {{--
     TODO:
     [ ] - implement darkmode
