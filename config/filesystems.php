@@ -73,7 +73,6 @@ return [
 
         'dropbox-backups' => [
             'driver' => 'dropbox',
-            'authorization_token' => env('DROPBOX_ACCESS_TOKEN'),
             'root' => "backups"
         ],
 
