@@ -57,8 +57,7 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->line('User ' . $notifiable->name .
                 ' with email ' . $notifiable->email .
-                ' has sign up to PicShare')
-            ->line('To add new post ' . $notifiable->name . ' please verify this email');
+                ' has sign up to PicShare');
     }
 
     /**
