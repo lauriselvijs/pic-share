@@ -19,7 +19,6 @@ class PaymentController extends Controller
 
     /**
      * Redirects user to charging page
-     *
      */
     public function charge(Request $request, Post $post): View
     {
@@ -36,7 +35,6 @@ class PaymentController extends Controller
 
     /**
      * Process incoming payment
-     *
      */
     public function process(Request $request, Post $post): RedirectResponse
     {

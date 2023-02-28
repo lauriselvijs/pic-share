@@ -6,6 +6,10 @@ use App\Models\User;
 
 class PaymentService
 {
+
+    /**
+     * Remove special characters from name
+     */
     public function normalizeName(string $name): string
     {
         return iconv('UTF-8', 'ASCII//TRANSLIT', $name);

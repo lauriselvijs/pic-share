@@ -60,8 +60,6 @@ class Post extends Model
 
     /**
      * Relationship to user
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -94,15 +92,10 @@ class Post extends Model
 
     /**
      * Search posts and return them with post author, paginated and ordered by latest
-     *
-     * @param string|null $param
-     * @return LengthAwarePaginator result ordered by latest post and paginated
      */
-    public function getSearchResultsWithAuthorPaginated(string|null $param = ''): LengthAwarePaginator
+    public function getSearchResultsWithAuthorPaginated(?string $param = ''): LengthAwarePaginator
     {
         $query = $this->with('user:id,name')->latest();
-
-
 
         if (!empty($param)) {
             return ($this->search($param)->query(function () use ($query) {
@@ -117,12 +110,8 @@ class Post extends Model
 
     /**
      * Search in specific user posts, paginate and order by latest
-     *
-     * @param string|int $userId
-     * @param string|null $param
-     * @return LengthAwarePaginator
      */
-    public function getSearchResultsOfUserPaginated(string|int $userId, string|null $param = ''): LengthAwarePaginator
+    public function getSearchResultsOfUserPaginated(string|int $userId, ?string $param = ''): LengthAwarePaginator
     {
         $query = $this->where('user_id', $userId)->latest();
 

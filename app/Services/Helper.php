@@ -9,10 +9,6 @@ class Helper
 {
     /**
      * Returns path of file relative to disk
-     *
-     * @param string $disk disk name
-     * @param string $path path of file that starts with disk name
-     * @return string file relative path in disk
      */
     public static function getFileRelativePathInDisk(string $disk, string $path): string
     {
@@ -23,9 +19,6 @@ class Helper
 
     /**
      * Generates unique username for given users name
-     *
-     * @param string $name name of user
-     * @return string generated username
      */
     public static function generateUsernameFor(string $name): string
     {

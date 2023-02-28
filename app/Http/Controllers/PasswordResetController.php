@@ -6,31 +6,25 @@ use Illuminate\Http\RedirectResponse;
 use App\Services\PasswordResetService;
 use App\Http\Requests\EmailPasswordResetRequest;
 use App\Http\Requests\UpdatePasswordResetRequest;
+use Illuminate\Contracts\View\View;
 
 class PasswordResetController extends Controller
 {
-
     public function __construct(private PasswordResetService $passwordResetService)
     {
         $this->passwordResetService = $passwordResetService;
     }
 
-
     /**
      * Returns forget password form
-     *
-     * @return \Illuminate\Contracts\View\View
      */
-    public function request()
+    public function request(): View
     {
         return view('password-reset.forgot-password');
     }
 
     /**
      * Sends email reset link
-     *
-     * @param EmailPasswordResetRequest $request
-     * @return RedirectResponse
      */
     public function email(EmailPasswordResetRequest $request): RedirectResponse
     {
@@ -45,22 +39,16 @@ class PasswordResetController extends Controller
 
     /**
      * Returns reset from
-     *
-     * @param string $token
-     * @return \Illuminate\Contracts\View\View
      */
-    public function reset($token)
+    public function reset(string $token): View
     {
         return view('password-reset.reset-password', ['token' => $token]);
     }
 
     /**
      * Resets password
-     *
-     * @param UpdatePasswordResetRequest $request
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function update(UpdatePasswordResetRequest $request)
+    public function update(UpdatePasswordResetRequest $request): RedirectResponse
     {
         $request->validated();
 

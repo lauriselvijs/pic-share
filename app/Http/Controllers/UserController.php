@@ -11,6 +11,7 @@ use App\Contracts\CanGenerateProfilePic;
 
 class UserController extends Controller
 {
+
     public function __construct(private Post $post, private PostService $postService, private CanGenerateProfilePic $profilePicGenerator)
     {
         $this->post = $post;
@@ -21,10 +22,6 @@ class UserController extends Controller
 
     /**
      * Get all user posts
-     *
-     * @param Request $request
-     * @param User $user
-     * @return View
      */
     public function posts(Request $request, User $user): View
     {

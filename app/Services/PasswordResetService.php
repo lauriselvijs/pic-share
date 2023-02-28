@@ -9,16 +9,15 @@ use Illuminate\Auth\Events\PasswordReset;
 
 class PasswordResetService
 {
-
     /**
      * Sends reset password link to given email.
      *
-     * @param array $email
-     * @return array<string, string>
+     * @param array<string, string> $email
+     * @return array<string, string>|bool
      */
-    public function email(array $email): array|bool
+    public function email(array $credentials): array|bool
     {
-        $status = Password::sendResetLink($email);
+        $status = Password::sendResetLink($credentials);
 
         if ($status === Password::RESET_LINK_SENT) {
             return true;
@@ -31,7 +30,6 @@ class PasswordResetService
      * Updates user password.
      *
      * @param array<string, mixed> $credentials
-     * @return array|boolean
      */
     public function update(array $credentials): array|bool
     {

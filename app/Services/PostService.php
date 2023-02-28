@@ -20,9 +20,6 @@ class PostService
     // [ ] - returnWithAuthorNames and returnWithAuthorName replace with one function
     /**
      * Includes author name in posts.
-     *
-     * @param LengthAwarePaginator $posts
-     * @return LengthAwarePaginator
      */
     public function includeAuthorNamesInPosts(LengthAwarePaginator $posts): LengthAwarePaginator
     {
@@ -35,9 +32,6 @@ class PostService
 
     /**
      * Includes author name in post.
-     *
-     * @param Post $post
-     * @return Post
      */
     public function includeAuthorNameInPost(Post $post): Post
     {
@@ -49,9 +43,6 @@ class PostService
 
     /**
      * Returns path of stored image.
-     *
-     * @param UploadedFile $image
-     * @return string
      */
     public function saveAndReturnPathOfImage(UploadedFile $image): string
     {
@@ -63,9 +54,6 @@ class PostService
 
     /**
      * Delete givin media file at a given path.
-     *
-     * @param string $path File path to delete
-     * @return void
      */
     public function deleteMediaFile(string $path): void
     {
@@ -76,10 +64,6 @@ class PostService
 
     /**
      * Update existing image with new one and return new image path.
-     *
-     * @param UploadedFile|null $newImage
-     * @param string $oldImagePath
-     * @return string|bool
      */
     public function updatePathOfImage(UploadedFile $newImage, string $oldImagePath): string
     {
@@ -91,7 +75,6 @@ class PostService
      * Store post in database.
      *
      * @param array<string, int|string|UploadedFile> $postData
-     * @return void
      */
     public function store(array $postData): void
     {
@@ -103,10 +86,6 @@ class PostService
 
     /**
      * Update post.
-     *
-     * @param Post $post
-     * @param array $postData
-     * @return void
      */
     public function update(Post $post, array $postData)
     {
@@ -120,11 +99,8 @@ class PostService
 
     /**
      * Deletes given post.
-     *
-     * @param Post $post
-     * @return void
      */
-    public function delete(Post $post)
+    public function delete(Post $post): void
     {
         $this->deleteMediaFile($post->image);
 

@@ -12,8 +12,6 @@ class GoogleLoginService
 
     /**
      * Returns Google user info
-     *
-     * @return SocialiteUser
      */
     public function getUser(): SocialiteUser
     {
@@ -25,11 +23,8 @@ class GoogleLoginService
 
     /**
      * Find user in DB
-     *
-     * @param string $userId
-     * @return User|null
      */
-    public function findUser(string $userId): User|null
+    public function findUser(string $userId): ?User
     {
         $findUser = User::where('google_id', $userId)->first();
 
@@ -38,9 +33,6 @@ class GoogleLoginService
 
     /**
      * Create new user
-     *
-     * @param SocialiteUser $user
-     * @return User
      */
     public function createUser(SocialiteUser $user): User
     {

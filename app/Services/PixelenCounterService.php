@@ -10,9 +10,6 @@ class PixelenCounterService implements CanGenerateProfilePic
 
     /**
      * Generates user profile picture using PixelenCounter service
-     *
-     * @param boolean $colored
-     * @return string
      */
     public function generate(bool $colored = true): string
     {

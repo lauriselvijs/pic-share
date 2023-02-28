@@ -15,6 +15,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -60,10 +61,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Get the prunable model query.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function prunable()
+    public function prunable(): Builder
     {
         return static::where('created_at', '<=', now()->subYear())
             ->where('email_verified_at', '=', null);
@@ -71,8 +70,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Relationship to posts
-     *
-     * @return HasMany
      */
     public function posts(): HasMany
     {

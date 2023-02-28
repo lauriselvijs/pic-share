@@ -18,6 +18,7 @@ class PostController extends Controller
         $this->post = $post;
         $this->postService = $postService;
     }
+
     /**
      * Return all posts
      */
