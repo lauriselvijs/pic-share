@@ -17,5 +17,20 @@
         "postcss": "^8.4.16",
         "tailwindcss": "^3.1.8",
         "vite": "^4.0.4"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "dependencies": {
+        "vite-plugin-top-level-await": "^1.3.0"
     }
 }
