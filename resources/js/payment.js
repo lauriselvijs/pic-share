@@ -81,8 +81,6 @@ cardHolderName?.addEventListener("input", onUserNameInput);
 function onUserNameInput(event) {
     const name = event.target.value;
 
-    console.log(name.toUpperCase());
-
     if (/[\u0080-\uFFFF]/.test(name.toUpperCase().normalize())) {
         cardButton.disabled = true;
         errorElement.textContent = "Name must be in ASCII format";

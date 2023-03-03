@@ -32,18 +32,18 @@ class Kernel extends ConsoleKernel
 
             // Back up
             $schedule->command('backup:run')->name('run:backup')
-                ->daily()
+                ->monthly()
                 ->onOneServer()
                 ->runInBackground();
             $schedule->command('backup:clean')->name('cleaned:backup')
-                ->daily()
+                ->monthly()
                 ->onOneServer()
                 ->runInBackground();
         }
 
         if (config('app.server_type') == 'monitor') {
             $schedule->command('backup:monitor')->name('monitored:backup')
-                ->daily()
+                ->monthly()
                 ->at('03:00')
                 ->onOneServer()
                 ->runInBackground();
