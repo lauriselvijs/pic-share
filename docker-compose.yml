@@ -7,6 +7,8 @@ services:
             dockerfile: Dockerfile
             args:
                 WWWGROUP: "${WWWGROUP}"
+                POSTGRES_VERSION: 15
+                NODE_VERSION: 18
         image: sail-8.2/app
         extra_hosts:
             - "host.docker.internal:host-gateway"
@@ -23,31 +25,57 @@ services:
         networks:
             - sail
         depends_on:
-            - mysql
+            # - mysql
+            - pgsql
             - redis
             # - selenium
-    mysql:
-        image: "mysql/mysql-server:8.0"
+    # mysql:
+    #     image: "mysql/mysql-server:8.0"
+    #     ports:
+    #         - "${FORWARD_DB_PORT:-3306}:3306"
+    #     environment:
+    #         MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+    #         MYSQL_ROOT_HOST: "%"
+    #         MYSQL_DATABASE: "${DB_DATABASE}"
+    #         MYSQL_USER: "${DB_USERNAME}"
+    #         MYSQL_PASSWORD: "${DB_PASSWORD}"
+    #         MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    #     volumes:
+    #         - "sail-mysql:/var/lib/mysql"
+    #         - "./vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh"
+    #     networks:
+    #         - sail
+    #     healthcheck:
+    #         test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+    #         retries: 3
+    #         timeout: 5s
+    pgsql:
+        image: postgres:15
         ports:
-            - "${FORWARD_DB_PORT:-3306}:3306"
+            - "${FORWARD_DB_PORT:-5432}:5432"
         environment:
-            MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
-            MYSQL_ROOT_HOST: "%"
-            MYSQL_DATABASE: "${DB_DATABASE}"
-            MYSQL_USER: "${DB_USERNAME}"
-            MYSQL_PASSWORD: "${DB_PASSWORD}"
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            PGPASSWORD: "${DB_PASSWORD:-secret}"
+            POSTGRES_DB: "${DB_DATABASE}"
+            POSTGRES_USER: "${DB_USERNAME}"
+            POSTGRES_PASSWORD: "${DB_PASSWORD:-secret}"
         volumes:
-            - "sail-mysql:/var/lib/mysql"
-            - "./vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh"
+            - "sailpostgresql:/var/lib/postgresql/data"
+            - "./vendor/laravel/sail/database/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql"
         networks:
             - sail
         healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
-            retries: 3
-            timeout: 5s
+            test:
+                [
+                    "CMD",
+                    "pg_isready",
+                    "-q",
+                    "-d",
+                    "${DB_DATABASE}",
+                    "-U",
+                    "${DB_USERNAME}",
+                ]
     redis:
-        image: "redis:alpine"
+        image: "redis:7-alpine"
         ports:
             - "${FORWARD_REDIS_PORT:-6379}:6379"
         volumes:
@@ -69,7 +97,9 @@ networks:
     sail:
         driver: bridge
 volumes:
-    sail-mysql:
+    sailpostgresql:
         driver: local
     sailredis:
         driver: local
+    # sail-mysql:
+    #     driver: local
