@@ -37,7 +37,7 @@ class DropboxServiceProvider extends ServiceProvider
                     'client_id' => config('services.dropbox.app_key'),
                     'grant_type' => 'refresh_token',
                 ])
-                ->json()['access_token'];
+                ->json('access_token');
         });
 
         Storage::extend('dropbox', function (Application $app, array $config) use ($newToken) {

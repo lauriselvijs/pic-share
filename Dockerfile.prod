@@ -1,0 +1,34 @@
+ARG PHP=8.2
+
+FROM webdevops/php-nginx:$PHP
+
+ENV WEB_DOCUMENT_ROOT=/app/public
+
+ARG NODE_VERSION=18
+
+WORKDIR /app
+
+RUN apt-get clean
+RUN apt-get update
+RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
+RUN apt-get install -y nodejs
+COPY package*.json ./
+COPY vite.config.js .
+RUN npm ci --include=dev
+
+COPY composer.*  ./
+
+RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
+
+COPY . .
+
+RUN composer dump-autoload
+
+RUN npm run build
+
+COPY docker/php /opt/docker
+
+# Ensure all of our files are owned by the same user and group.
+RUN chown -R application:application .
+
+

@@ -6,6 +6,8 @@
 /storage/*.key
 /vendor
 .env
+.env.example
+.env.production
 .env.backup
 .env.dusk.local
 Homestead.json

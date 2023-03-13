@@ -1,0 +1,50 @@
+version: "3"
+services:
+  app:
+    image: pic-share:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        NODE_VERSION: 18
+        PHP: 8.2
+    env_file: .env.production
+    volumes:
+      - ./storage:/app/storage
+    ports:
+      - "80:80"
+    networks:
+      - app
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  mysql:
+    image: "mysql/mysql-server:8.0"
+    env_file: .env.production
+    volumes:
+      - "data.mysql:/var/lib/mysql"
+    networks:
+      - app
+    healthcheck:
+      test:
+        ["CMD", "mysqladmin", "ping", "-u${DB_USERNAME}", "-p${DB_PASSWORD}"]
+      retries: 3
+      timeout: 5s
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - "data.redis:/data"
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+volumes:
+  data.redis:
+    driver: local
+  data.mysql:
+    driver: local
+networks:
+  app:
+    driver: bridge
