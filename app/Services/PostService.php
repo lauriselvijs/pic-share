@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Contracts\CanManipulateFiles;
 use App\Models\Post;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -9,6 +10,11 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PostService
 {
+    public function __construct(private CanManipulateFiles $fileManipulator)
+    {
+        $this->fileManipulator = $fileManipulator;
+    }
+
     /**
      * Post table image path column name
      * 
@@ -46,6 +52,10 @@ class PostService
      */
     public function saveAndReturnPathOfImage(UploadedFile $image): string
     {
+
+        $this->fileManipulator->saveAndReturnPathOfFile($image);
+
+
         $imageName = Storage::disk(config('constants.MEDIA_DISK'))->put('images', $image);
         $imagePath = parse_url(Storage::disk(config('constants.MEDIA_DISK'))->url($imageName))['path'];
 

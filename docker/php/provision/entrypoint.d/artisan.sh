@@ -1,4 +1,5 @@
 #!/bin/bash
+/usr/local/bin/composer run-script post-autoload-dump
 /usr/local/bin/php /app/artisan cache:clear
 /usr/local/bin/php /app/artisan optimize
 /usr/local/bin/php /app/artisan event:cache

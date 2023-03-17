@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::factory(10)->create();
 
-        Post::factory(10)->create();
+        Post::factory(20)->create();
         Video::factory(10)->create();
 
         Activity::factory(10)->create();

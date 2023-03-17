@@ -22,7 +22,7 @@ class GoogleLoginController extends Controller
      */
     public function redirect(): RedirectResponse
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->with(["prompt" => "select_account"])->redirect();
     }
 
     /**
@@ -32,7 +32,13 @@ class GoogleLoginController extends Controller
      */
     public function callback(): Redirector|RedirectResponse
     {
-        $user = $this->googleLoginService->getUser();
+        try {
+            $user = $this->googleLoginService->getUser();
+        } catch (\Exception $error) {
+            dd($error);
+            return redirect()->route('home')->with('message',  __('error.primary'));
+        }
+
         $findUser = $this->googleLoginService->findUser($user->id);
 
         if ($findUser) {
@@ -42,11 +48,13 @@ class GoogleLoginController extends Controller
         }
 
         if (!$findUser) {
-            auth()->login($this->googleLoginService->createUser($user));
+            $this->googleLoginService->createAndAuthUser($user);
 
-            return redirect()->route('verification.notice')->with('message',  __('user.created'));
+            return redirect()->route('posts.index')->with('message',  __('user.created'));
         }
 
         return back()->with('message',  __('error.primary'));
+
+        return redirect()->route('posts.index')->with('message',  __('user.logged_in'));
     }
 }

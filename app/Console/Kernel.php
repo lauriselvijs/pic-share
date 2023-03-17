@@ -39,6 +39,12 @@ class Kernel extends ConsoleKernel
                 ->monthly()
                 ->onOneServer()
                 ->runInBackground();
+
+            // Prune stale cache tags
+            $schedule->command('cache:prune-stale-tags')->name('pruned-stale-tags:cache')
+                ->hourly()
+                ->onOneServer()
+                ->runInBackground();
         }
 
         if (config('app.server_type') == 'monitor') {

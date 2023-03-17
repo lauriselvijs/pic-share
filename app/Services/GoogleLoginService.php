@@ -9,7 +9,6 @@ use Laravel\Socialite\Contracts\User as SocialiteUser;
 
 class GoogleLoginService
 {
-
     /**
      * Returns Google user info
      */
@@ -20,29 +19,28 @@ class GoogleLoginService
         return $user;
     }
 
-
     /**
      * Find user in DB
      */
     public function findUser(string $userId): ?User
     {
-        $findUser = User::where('google_id', $userId)->first();
+        $user = User::where('google_id', $userId)->first();
 
-        return $findUser;
+        return $user;
     }
 
     /**
-     * Create new user
+     * Create and authenticate new user
      */
-    public function createUser(SocialiteUser $user): User
+    public function createAndAuthUser(SocialiteUser $user): void
     {
-        $newUser = User::create([
-            'name' => $user->name,
-            'email' => $user->email,
-            'google_id' => $user->id,
+        $newUser = User::updateOrCreate([
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'google_id' => $user->getId(),
             'password' => bcrypt(Str::random(10))
         ]);
 
-        return $newUser;
+        auth()->login($newUser);
     }
 }

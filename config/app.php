@@ -209,6 +209,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ProfilePicServiceProvider::class,
         App\Providers\DropboxServiceProvider::class,
+        App\Providers\FileServiceProvider::class,
 
     ],
 
@@ -225,7 +226,6 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'Redis' => Illuminate\Support\Facades\Redis::class,
     ])->toArray(),
 
 ];

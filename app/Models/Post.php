@@ -45,6 +45,13 @@ class Post extends Model
     public final const CACHE_KEY = 'posts';
 
     /**
+     * Cache tag for post group
+     * 
+     * @var string
+     */
+    public final const CACHE_PAGINATION_TAG = 'posts_paginated';
+
+    /**
      * Define how for how long keep cache in memory
      * 
      * @var int
@@ -91,9 +98,27 @@ class Post extends Model
     }
 
     /**
+     * Get cache key for current page
+     *
+     */
+    public function getCacheKeyForCurrentPage(string $page): string
+    {
+        return self::CACHE_KEY . '_page_' . $page;
+    }
+
+    /**
+     * Get cache key for current page for given user
+     *
+     */
+    public function getCacheKeyForCurrentPageWithGivenUser(string|int $userId, string $page): string
+    {
+        return $userId . '_page_' . $page;
+    }
+
+    /**
      * Search posts and return them with post author, paginated and ordered by latest
      */
-    public function getSearchResultsWithAuthorPaginated(?string $param = ''): LengthAwarePaginator
+    public function getSearchResultsWithAuthorPaginated(?string $param = null, ?string $page = null): LengthAwarePaginator
     {
         $query = $this->with('user:id,name')->latest();
 
@@ -103,7 +128,7 @@ class Post extends Model
             }))->paginate(self::PER_PAGE);;
         }
 
-        return cache()->remember(self::CACHE_KEY, self::CACHE_TIME, function () use ($query) {
+        return cache()->tags([self::CACHE_PAGINATION_TAG])->remember($this->getCacheKeyForCurrentPage($page ?? "1"), self::CACHE_TIME, function () use ($query) {
             return $query->paginate(self::PER_PAGE);
         });
     }
@@ -111,7 +136,7 @@ class Post extends Model
     /**
      * Search in specific user posts, paginate and order by latest
      */
-    public function getSearchResultsOfUserPaginated(string|int $userId, ?string $param = ''): LengthAwarePaginator
+    public function getSearchResultsOfUserPaginated(string|int $userId, ?string $param = null, ?string $page = null): LengthAwarePaginator
     {
         $query = $this->where('user_id', $userId)->latest();
 
@@ -121,7 +146,7 @@ class Post extends Model
             }))->paginate(self::PER_PAGE);
         }
 
-        return cache()->remember($userId, self::CACHE_TIME, function () use ($query) {
+        return cache()->tag([$userId])->remember($this->getCacheKeyForCurrentPageWithGivenUser($userId, ($page ?? "1")), self::CACHE_TIME, function () use ($query) {
             return $query->paginate(self::PER_PAGE);
         });
     }

@@ -18,11 +18,9 @@ RUN npm ci --include=dev
 
 COPY composer.*  ./
 
-RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
+RUN composer install --no-interaction --no-dev --no-scripts
 
 COPY . .
-
-RUN composer dump-autoload
 
 RUN npm run build
 

@@ -26,7 +26,9 @@ class UserController extends Controller
     public function posts(Request $request, User $user): View
     {
         $search = $request->query("search");
-        $posts = $this->post->getSearchResultsOfUserPaginated($user->id, $search);
+        $page = $request->query('page');
+
+        $posts = $this->post->getSearchResultsOfUserPaginated($user->id, $search, $page);
 
 
         return view('posts.index', [

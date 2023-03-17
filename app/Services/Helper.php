@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Helper
 {
     /**
-     * Returns path of file relative to disk
+     * Returns path of file in disk
      */
     public static function getFileRelativePathInDisk(string $disk, string $path): string
     {
@@ -22,6 +22,6 @@ class Helper
      */
     public static function generateUsernameFor(string $name): string
     {
-        return Str::of($name)->before(' ')->append('_')->append(Str::uuid())->lower();
+        return Str::of($name)->replace(' ', '.')->ascii()->append('#')->append(Str::uuid())->lower();
     }
 }

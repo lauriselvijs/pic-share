@@ -47,8 +47,8 @@ class RouteServiceProvider extends ServiceProvider
 
         RateLimiter::for('global', function (Request $request) {
             return $request->user()?->id
-                ? Limit::perMinute(60)->by($request->user()?->id)
-                : Limit::perMinute(10)->by($request->session()->getId());
+                ? Limit::perMinute(100)->by($request->user()?->id)
+                : Limit::perMinute(20)->by($request->session()->getId());
         });
     }
 }

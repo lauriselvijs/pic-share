@@ -24,8 +24,10 @@ class PostController extends Controller
      */
     public function index(Request $request): View
     {
-        $search = $request->query("search");
-        $posts = $this->post->getSearchResultsWithAuthorPaginated($search);
+        $search = $request->query('search');
+        $page = $request->query('page');
+
+        $posts = $this->post->getSearchResultsWithAuthorPaginated($search, $page);
 
         return view('posts.index', [
             'posts' => $this->postService->includeAuthorNamesInPosts($posts)

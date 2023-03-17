@@ -76,6 +76,12 @@ return [
             'root' => "backups"
         ],
 
+
+        'dropbox-files' => [
+            'driver' => 'dropbox',
+            'root' => "files"
+        ],
+
     ],
 
     /*
