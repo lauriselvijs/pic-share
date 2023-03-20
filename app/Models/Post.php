@@ -19,9 +19,9 @@ class Post extends Model
     /**
      * Get the indexable data array for the model.
      *
-     * @return array
+     * @return array<string, mix>
      */
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         return [
             'title' => $this->title,
@@ -56,7 +56,7 @@ class Post extends Model
      * 
      * @var int
      */
-    protected final const CACHE_TIME = 60 * 60 * 24;
+    public final const CACHE_TIME = 60 * 60 * 24;
 
     /**
      * Allow mass assignment to provided fields

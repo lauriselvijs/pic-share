@@ -46,15 +46,13 @@ class PostService
         return $post;
     }
 
-
     /**
      * Returns path of stored image.
      */
     public function saveAndReturnPathOfImage(UploadedFile $image): string
     {
 
-        $this->fileManipulator->saveAndReturnPathOfFile($image);
-
+        // $this->fileManipulator->storeFileAndReturnPath($image);
 
         $imageName = Storage::disk(config('constants.MEDIA_DISK'))->put('images', $image);
         $imagePath = parse_url(Storage::disk(config('constants.MEDIA_DISK'))->url($imageName))['path'];
