@@ -30,11 +30,13 @@ jobs:
 
       - name: Run
         run: |
-          ./vendor/bin/sail up
+          ./vendor/bin/sail up -d
 
       - name: Set up scheduler
         run: |
           ./vendor/bin/sail php artisan schedule:work
+        with:
+          wait-for: http://0.0.0.0:80
 
       - name: Set up Horizon
         run: |
