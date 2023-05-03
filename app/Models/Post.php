@@ -146,6 +146,7 @@ class Post extends Model
             }))->paginate(self::PER_PAGE);
         }
 
+        // REVIEW: Check if cache works for multiple pages
         return cache()->tag([$userId])->remember($this->getCacheKeyForCurrentPageWithGivenUser($userId, ($page ?? "1")), self::CACHE_TIME, function () use ($query) {
             return $query->paginate(self::PER_PAGE);
         });

@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    image: pic-share:latest
+    image: pic-share:production
     build:
       context: .
       dockerfile: Dockerfile.prod
@@ -13,6 +13,7 @@ services:
       - ./storage:/app/storage
     ports:
       - "80:80"
+      - "443:443"
     networks:
       - app
     depends_on:
@@ -20,30 +21,33 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    restart: always
   mysql:
     image: "mysql/mysql-server:8.0"
     env_file: .env.production
     volumes:
-      - "data.mysql:/var/lib/mysql"
+      - "prod.mysql:/var/lib/mysql"
     networks:
       - app
     healthcheck:
       test:
         ["CMD", "mysqladmin", "ping", "-u${DB_USERNAME}", "-p${DB_PASSWORD}"]
-      retries: 3
+      retries: 10
       timeout: 5s
+    restart: always
   redis:
     image: redis:7-alpine
     volumes:
-      - "data.redis:/data"
+      - "prod.redis:/data"
     networks:
       - app
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
+    restart: always
 volumes:
-  data.redis:
+  prod.redis:
     driver: local
-  data.mysql:
+  prod.mysql:
     driver: local
 networks:
   app:
