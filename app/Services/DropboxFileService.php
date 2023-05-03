@@ -9,44 +9,44 @@ use Illuminate\Support\Facades\Storage;
 // REVIEW: check if everything works before implementing
 class DropboxFileService implements CanManipulateFiles
 {
-
     /**
-     * How long keep link active
+     * Name of disk that will be used
      * 
-     * @var int
+     * @var string
      */
-    protected final const TEMPORARY_URL_ACTIVE_DEFAULT_TIME = 60 * 5;
+    protected final const STORAGE_DISK_NAME = 'dropbox-files';
 
-    public function storeFileAndReturnPath(UploadedFile $file): string
+
+    public function store(UploadedFile $file): string
     {
-        $fileName = Storage::disk('dropbox-files')->putFile('/', $file);
-        $filePath = Storage::disk('dropbox-files')->path($fileName);
+        // $fileName = Storage::disk('dropbox-files')->putFile('/', $file);
+        // $filePath = Storage::disk('dropbox-files')->path($fileName);
 
-        return $filePath;
+        $path = Storage::disk(self::STORAGE_DISK_NAME)->putFile('/', $file);
+
+        return $path;
     }
 
-    public function getTemporaryUrlForFile(string $filePath, int $secondsActive = self::TEMPORARY_URL_ACTIVE_DEFAULT_TIME): string
+    public function generateTemporaryUrl(string $path, ?int $secondsActive = self::TEMPORARY_URL_ACTIVE_DEFAULT_TIME): string
     {
-        $url = Storage::disk('dropbox-files')->temporaryUrl(
-            $filePath,
-            now()->seconds($secondsActive)
+        $url = Storage::disk(self::STORAGE_DISK_NAME)->temporaryUrl(
+            $path,
+            now()->addSeconds($secondsActive)
         );
 
         return $url;
     }
 
-    public function deleteFile(string $path): void
+    public function delete(string $path): void
     {
-        $fileRelativePathInDisk = Storage::disk('dropbox-files')->path($path);
-
-        Storage::disk('dropbox-files')->delete($fileRelativePathInDisk);
+        Storage::disk(self::STORAGE_DISK_NAME)->delete(Storage::disk(self::STORAGE_DISK_NAME)->path($path));
     }
 
-    public function storeFileAndUpdatePath(UploadedFile $newImage, string $oldImagePath): string
+    public function update(UploadedFile $file, string $oldPath): string
     {
-        $this->deleteFile($oldImagePath);
-        $filePath = $this->saveFileAndReturnPath($newImage);
+        $this->delete($oldPath);
+        $path = $this->saveFileAndReturnPath($file);
 
-        return $filePath;
+        return $path;
     }
 }

@@ -31,6 +31,7 @@ class PostService
     {
         $posts->map(function ($post) {
             $post->author = $post->user->name;
+            $post->image = $this->fileManipulator->generateTemporaryUrl($post->image);
         });
 
         return $posts;

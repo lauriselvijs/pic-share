@@ -1,0 +1,41 @@
+name: Main
+
+on:
+  push:
+    branches: [1.x]
+  pull_request:
+    branches: [1.x]
+
+env:
+  TEST_TAG: pic-share:test
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up
+        run: docker run --rm \
+          -u "$(id -u):$(id -g)" \
+          -v "$(pwd):/var/www/html" \
+          -w /var/www/html \
+          laravelsail/php82-composer:latest \
+          composer install --ignore-platform-reqs
+
+      - name: Run
+        run: ./vendor/bin/sail up
+
+      - name: Set up scheduler
+        run: ./vendor/bin/sail php artisan schedule:work
+
+      - name: Set up Horizon
+        run: ./vendor/bin/sail php artisan horizon
+
+      - name: Feature test
+        run: ./vendor/bin/sail test
+
+      - name: E2E test
+        run: ./vendor/bin/sail dusk

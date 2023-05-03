@@ -32,18 +32,15 @@ class PostTest extends TestCase
 
         $postImage = UploadedFile::fake()->image('post.jpg');
 
-        // If auth user needed one place in test (DRY)
-        // $this->actingAs($user)->post();
-
         $response = $this->post(
             route('posts.store'),
             [
                 'title' => 'Post',
                 'image' => $postImage,
                 'tags' => 'post, test',
+                'price' => 23.45
             ]
         );
-
 
         Storage::disk(config('constants.MEDIA_DISK'))->assertExists('images/' . $postImage->hashName());
 
