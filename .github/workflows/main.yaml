@@ -29,19 +29,25 @@ jobs:
           composer install --ignore-platform-reqs
 
       - name: Run
-        run: ./vendor/bin/sail up
+        run: |
+          ./vendor/bin/sail up
 
       - name: Set up scheduler
-        run: ./vendor/bin/sail php artisan schedule:work
+        run: |
+          ./vendor/bin/sail php artisan schedule:work
 
       - name: Set up Horizon
-        run: ./vendor/bin/sail php artisan horizon
+        run: |
+          ./vendor/bin/sail php artisan horizon
 
       - name: Set up front end
-        run: ./vendor/bin/sail npm run dev
+        run: |
+          ./vendor/bin/sail npm run dev
 
       - name: Feature test
-        run: ./vendor/bin/sail test --coverage
+        run: |
+          ./vendor/bin/sail test --coverage
 
       - name: E2E test
-        run: ./vendor/bin/sail dusk
+        run: |
+          ./vendor/bin/sail dusk
