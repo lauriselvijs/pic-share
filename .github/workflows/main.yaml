@@ -30,7 +30,7 @@ jobs:
 
       - name: Run
         run: |
-          ./vendor/bin/sail up -d \
+          ./vendor/bin/sail up \
           && echo "Waiting for App to launch on 80..."
 
           while ! nc -z 0.0.0.0 80; do
