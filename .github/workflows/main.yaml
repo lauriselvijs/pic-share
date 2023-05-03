@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [1.x]
 
-env:
-  TEST_TAG: pic-share:test
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,6 +13,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: "Create env files"
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env \
+          echo "${{ secrets.ENV_DUSK }}" > .env.dusk.local
 
       - name: Set up
         run: |
@@ -35,8 +37,11 @@ jobs:
       - name: Set up Horizon
         run: ./vendor/bin/sail php artisan horizon
 
+      - name: Set up front end
+        run: ./vendor/bin/sail npm run dev
+
       - name: Feature test
-        run: ./vendor/bin/sail test
+        run: ./vendor/bin/sail test --coverage
 
       - name: E2E test
         run: ./vendor/bin/sail dusk

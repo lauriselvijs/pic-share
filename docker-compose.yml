@@ -12,9 +12,9 @@ services:
         image: sail-8.2/app
         extra_hosts:
             - "host.docker.internal:host-gateway"
-        ports:
-            - "${APP_PORT:-80}:80"
-            - "${VITE_PORT:-5173}:${VITE_PORT:-5173}"
+        # ports:
+        #     - "${APP_PORT:-80}:80"
+        #     - "${VITE_PORT:-5173}:${VITE_PORT:-5173}"
         environment:
             WWWUSER: "${WWWUSER}"
             LARAVEL_SAIL: 1
@@ -86,9 +86,9 @@ services:
             test: ["CMD", "redis-cli", "ping"]
     selenium:
         image: "selenium/standalone-chrome"
-        ports:
-            - "${FORWARD_SELENIUM_PORT:-4444}:4444"
-            - "${FORWARD_SELENIUM_HEADFUL_PORT:-7900}:7900"
+        # ports:
+        #     - "${FORWARD_SELENIUM_PORT:-4444}:4444"
+        #     - "${FORWARD_SELENIUM_HEADFUL_PORT:-7900}:7900"
         volumes:
             - "/dev/shm:/dev/shm"
         networks:
