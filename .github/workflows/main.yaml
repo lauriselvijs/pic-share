@@ -33,7 +33,7 @@ jobs:
           ./vendor/bin/sail up -d
 
       - name: Wait for server to start
-        uses: iFaxity/wait-on-action
+        uses: iFaxity/wait-on-action@v1
         with:
           resource: http://0.0.0.0:80
 
