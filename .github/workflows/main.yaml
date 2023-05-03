@@ -32,11 +32,14 @@ jobs:
         run: |
           ./vendor/bin/sail up -d
 
+      - name: Wait for server to start
+        uses: iFaxity/wait-on-action
+        with:
+          resource: http://0.0.0.0:80
+
       - name: Set up scheduler
         run: |
           ./vendor/bin/sail php artisan schedule:work
-        with:
-          wait-for: http://0.0.0.0:80
 
       - name: Set up Horizon
         run: |
