@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"Tests\\Feature\\AuthTest::test_visit_signup_page_and_see_create_an_account_text":14.997,"Tests\\Feature\\AuthTest::test_create_new_user":11.32,"Tests\\Feature\\PostTest::test_authorized_user_stores_post":8.71}}
