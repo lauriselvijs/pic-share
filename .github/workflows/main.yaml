@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: "Create env files"
+      - name: Create env files
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env \
           && echo "${{ secrets.ENV_DUSK }}" > .env.dusk.local
@@ -34,8 +34,8 @@ jobs:
 
       - name: Run
         run: |
-          ./vendor/bin/sail up -d \
-          && echo "Waiting for App to launch on port 80..."
+          ./vendor/bin/sail up \
+          & echo "Waiting for App to launch on port 80..."
 
           while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do 
             sleep 1 && echo -n .;
