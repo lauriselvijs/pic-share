@@ -59,7 +59,7 @@ jobs:
           echo "Waiting for App to start on port 80..."
 
           while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do
-            sleep 1 && echo "Waiting...";
+            sleep 10 && docker container ls --all;
           done;
 
           echo "App started"
