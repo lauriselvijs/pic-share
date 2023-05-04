@@ -66,9 +66,9 @@ jobs:
           echo "App started"
           exit;
 
-      - name: Build front end
+      - name: Install front end
         run: |
-          ./vendor/bin/sail npm run build \
+          ./vendor/bin/sail npm install \
           && exit;
       # - name: Set up scheduler
       #   run: |
