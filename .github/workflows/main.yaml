@@ -34,7 +34,7 @@ jobs:
           & echo "Waiting for App to launch on 80..."
 
           while ! curl --output /dev/null --silent --head --fail http://localhost:80; do 
-            sleep 1 && echo -n .;
+            sleep 5 && netstat -nlp;
           done;
 
           echo "App launched"
