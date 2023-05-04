@@ -49,16 +49,11 @@ jobs:
           ./vendor/bin/sail up -d \
           && exit;
 
-      # - name: Docker images
-      #   run: |
-      #     docker image ls --all \
-      #     && docker container ls --all
-
       - name: Wait for app to start
         run: |
           echo "Waiting for App to start on port 80..."
 
-          sleep 120
+          sleep 60
           # while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do
           #   sleep 10 && docker container ls --all;
           # done;
@@ -68,15 +63,8 @@ jobs:
 
       - name: Install front end
         run: |
-          ./vendor/bin/sail npm install \
+          ./vendor/bin/sail npm install
           && exit;
-      # - name: Set up scheduler
-      #   run: |
-      #     ./vendor/bin/sail php artisan schedule:work
-
-      # - name: Set up Horizon
-      #   run: |
-      #     ./vendor/bin/sail php artisan horizon
 
       - name: Build front end
         run: |
@@ -85,12 +73,8 @@ jobs:
 
       - name: Feature test
         run: |
-          ls --all \
-          && ./vendor/bin/sail test --coverage
+          ./vendor/bin/sail test --coverage
 
-      # - name: E2E test
-      #   run: |
-      #     ./vendor/bin/sail npm run dev \
-      #     & ./vendor/bin/sail php artisan schedule:work \
-      #     & ./vendor/bin/sail php artisan horizon \
-      #     & ./vendor/bin/sail dusk
+      - name: E2E test
+        run: |
+          ./vendor/bin/sail dusk

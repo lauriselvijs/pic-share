@@ -16,4 +16,4 @@ else
     exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 fi
 
-# npm install && npm run dev & /usr/bin/php /var/www/html/artisan schedule:work & /usr/bin/php /var/www/html/artisan horizon
+# /usr/bin/php /var/www/html/artisan schedule:work
