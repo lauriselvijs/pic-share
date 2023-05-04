@@ -32,17 +32,22 @@ jobs:
         run: |
           ./vendor/bin/sail build --no-cache
 
+      # - name: Run
+      #   run: |
+      #     ./vendor/bin/sail up -d \
+      #     && echo "Waiting for App to launch on port 80..."
+
+      #     while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do
+      #       sleep 1 && echo "Waiting for app to start...";
+      #     done;
+
+      #     echo "App launched"
+      #     exit;
+
       - name: Run
         run: |
           ./vendor/bin/sail up -d \
-          && echo "Waiting for App to launch on port 80..."
-
-          while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do 
-            sleep 1 && echo Waiting...;
-          done;
-
-          echo "App launched"
-          exit;
+          && exit;
 
       - name: Set up scheduler
         run: |
