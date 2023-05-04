@@ -59,13 +59,17 @@ jobs:
 
       # - name: Set up front end
       #   run: |
-      #     ./vendor/bin/sail npm run dev
+      #     ./vendor/bin/sail npm run build
+      #     && exit;
 
       - name: Feature test
         run: |
-          ./vendor/bin/sail test --coverage
+          ls \
+          ./vendor/bin/sail test --coverage \
           && exit;
 
       # - name: E2E test
       #   run: |
-      #     ./vendor/bin/sail dusk
+      #     ./vendor/bin/sail php artisan schedule:work \
+      #     & ./vendor/bin/sail php artisan horizon \
+      #     & ./vendor/bin/sail dusk
