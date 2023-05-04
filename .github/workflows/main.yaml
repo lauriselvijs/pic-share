@@ -78,6 +78,11 @@ jobs:
       #   run: |
       #     ./vendor/bin/sail php artisan horizon
 
+      - name: Build front end
+        run: |
+          ./vendor/bin/sail npm run build \
+          && exit;
+
       - name: Feature test
         run: |
           ls --all \
