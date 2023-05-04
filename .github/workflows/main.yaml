@@ -64,7 +64,7 @@ jobs:
 
       - name: Feature test
         run: |
-          ls \
+          ls --all \
           && ./vendor/bin/sail test --coverage
 
       # - name: E2E test

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 # /usr/bin/php /var/www/html/artisan schedule:work
-# /usr/bin/php /var/www/html/artisan horrizon
-# echo "App started"
+# /usr/bin/php /var/www/html/artisan horizon
 
 if [ ! -z "$WWWUSER" ]; then
     usermod -u $WWWUSER sail
