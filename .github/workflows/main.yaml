@@ -30,19 +30,15 @@ jobs:
 
       - name: Run
         run: |
-          ./vendor/bin/sail up \
-          && echo "Waiting for App to launch on 80..."
+          ./vendor/bin/sail up -d \
+          & echo "Waiting for App to launch on 80..."
 
-          while ! nc -z 0.0.0.0 80; do
-            sleep 0.1
-          done
+          while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do 
+            sleep 1 && echo -n .;
+          done;
 
           echo "App launched"
-
-      # - name: Wait for server to start
-      #   uses: iFaxity/wait-on-action@v1
-      #   with:
-      #     resource: http://0.0.0.0:80
+          exit;
 
       - name: Set up scheduler
         run: |
