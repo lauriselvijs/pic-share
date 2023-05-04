@@ -63,7 +63,7 @@ jobs:
 
       - name: Install front end
         run: |
-          ./vendor/bin/sail npm install
+          ./vendor/bin/sail npm install \
           && exit;
 
       - name: Build front end
