@@ -30,10 +30,10 @@ jobs:
 
       - name: Run
         run: |
-          ./vendor/bin/sail up \
+          ./vendor/bin/sail up -d \
           & echo "Waiting for App to launch on 80..."
 
-          while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do 
+          while ! curl --output /dev/null --silent --head --fail http://127.0.0.1:80; do 
             sleep 1 && echo -n .;
           done;
 
