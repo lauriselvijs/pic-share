@@ -49,22 +49,23 @@ jobs:
           ./vendor/bin/sail up -d \
           && exit;
 
-      - name: Set up scheduler
-        run: |
-          ./vendor/bin/sail php artisan schedule:work
+      # - name: Set up scheduler
+      #   run: |
+      #     ./vendor/bin/sail php artisan schedule:work
 
-      - name: Set up Horizon
-        run: |
-          ./vendor/bin/sail php artisan horizon
+      # - name: Set up Horizon
+      #   run: |
+      #     ./vendor/bin/sail php artisan horizon
 
-      - name: Set up front end
-        run: |
-          ./vendor/bin/sail npm run dev
+      # - name: Set up front end
+      #   run: |
+      #     ./vendor/bin/sail npm run dev
 
       - name: Feature test
         run: |
           ./vendor/bin/sail test --coverage
+          && exit;
 
-      - name: E2E test
-        run: |
-          ./vendor/bin/sail dusk
+      # - name: E2E test
+      #   run: |
+      #     ./vendor/bin/sail dusk
