@@ -28,13 +28,17 @@ jobs:
           laravelsail/php82-composer:latest \
           composer install --ignore-platform-reqs
 
+      - name: Build
+        run: |
+          ./vendor/bin/sail build --no-cache
+
       - name: Run
         run: |
-          ./vendor/bin/sail up \
-          & echo "Waiting for App to launch on 80..."
+          ./vendor/bin/sail up -d \
+          && echo "Waiting for App to launch on port 80..."
 
-          while ! curl --output /dev/null --silent --head --fail http://localhost:80; do 
-            sleep 5 && netstat -nlp;
+          while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do 
+            sleep 1 && echo -n .;
           done;
 
           echo "App launched"
