@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [1.x]
 
+env:
+  TEST_DB: testing
+  TEST_URL: http://laravel.test
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,7 +21,9 @@ jobs:
       - name: Create env files
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env \
-          && echo "${{ secrets.ENV_DUSK }}" > .env.dusk.local
+          && cp .env .env.dusk.local \
+          && sed -i "s/APP_URL=.*/APP_URL=${{ env.TEST_URL} }/g" .env.dusk.local \
+          && sed -i "s/DB_DATABASE=.*/DB_DATABASE=${{ env.TEST_DB }}/g" .env.dusk.local
 
       - name: Set up
         run: |
