@@ -1,5 +1,3 @@
 <?php
 
-return [
-    'MEDIA_DISK' => 'media',
-];
+return [];

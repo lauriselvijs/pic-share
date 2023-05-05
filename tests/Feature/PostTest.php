@@ -28,7 +28,7 @@ class PostTest extends TestCase
      */
     public function test_authorized_user_stores_post(): void
     {
-        Storage::fake(config('constants.MEDIA_DISK'));
+        Storage::fake('posts');
 
         $postImage = UploadedFile::fake()->image('post.jpg');
 
@@ -42,7 +42,7 @@ class PostTest extends TestCase
             ]
         );
 
-        Storage::disk(config('constants.MEDIA_DISK'))->assertExists('images/' . $postImage->hashName());
+        Storage::disk('posts')->assertExists($postImage->hashName());
 
         $response->assertRedirect(route('posts.index'));
 

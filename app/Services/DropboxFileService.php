@@ -18,7 +18,6 @@ class DropboxFileService implements CanManipulateFiles
      */
     protected final const STORAGE_DISK_NAME = 'dropbox-files';
 
-
     /**
      * Link expiration time is 4 hours (https://www.dropbox.com/developers/documentation/http/documentation#files-get_temporary_link)
      * 
