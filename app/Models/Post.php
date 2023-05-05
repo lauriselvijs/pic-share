@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\CanManipulateFiles;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Activity;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Post extends Model
 {
@@ -125,7 +127,7 @@ class Post extends Model
         if (!empty($param)) {
             return ($this->search($param)->query(function () use ($query) {
                 return $query;
-            }))->paginate(self::PER_PAGE);;
+            }))->paginate(self::PER_PAGE);
         }
 
         return cache()->tags([self::CACHE_PAGINATION_TAG])->remember($this->getCacheKeyForCurrentPage($page ?? "1"), self::CACHE_TIME, function () use ($query) {
@@ -147,7 +149,7 @@ class Post extends Model
         }
 
         // REVIEW: Check if cache works for multiple pages
-        return cache()->tag([$userId])->remember($this->getCacheKeyForCurrentPageWithGivenUser($userId, ($page ?? "1")), self::CACHE_TIME, function () use ($query) {
+        return cache()->tags([$userId])->remember($this->getCacheKeyForCurrentPageWithGivenUser($userId, ($page ?? "1")), self::CACHE_TIME, function () use ($query) {
             return $query->paginate(self::PER_PAGE);
         });
     }

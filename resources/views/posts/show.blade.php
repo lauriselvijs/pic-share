@@ -5,7 +5,7 @@
 @section('content')
 
 <div class='flex flex-col gap-2 md:px-40 pt-0 pb-24 bg-shadow text-white text-left'>
-    <img class='h-auto w-full md:scale-75 scale-100' src={{ asset($post->image) }} alt='User posted image'>
+    <img loading="lazy" class='h-auto w-full md:scale-75 scale-100' src={{ $post->image }} alt='User posted image'>
     <div class='px-6 flex flex-col justify-center items-center  sm:block text-center sm:text-left'>
         <h2 class='text-2xl font-bold py-4 leading-snug sm:text-left'>
             {{ $post->title }}

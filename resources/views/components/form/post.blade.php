@@ -53,8 +53,13 @@
         </x-message.error>
         @enderror
 
+        {{--
+        TODO:
+        [ ] - change dynamicly image so its dependent on image that is uploaded
+        [ ] - add loading bar when uploading image
+        --}}
         @if ($post)
-        <img class='h-full w-full' src={{ asset($post->image) }} alt='User image'>
+        <img class='h-full w-full' src={{ $post->image }} alt='User image'>
         @endif
 
     </div>

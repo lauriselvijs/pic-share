@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Contracts\CanManipulateFiles;
 use App\Models\Post;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PostService
@@ -20,31 +19,35 @@ class PostService
      * 
      * @var string
      */
-    private const IMAGE = 'image';
+    private const IMAGE_COLUMN_NAME = 'image';
 
-    // TODO:
-    // [ ] - returnWithAuthorNames and returnWithAuthorName replace with one function
     /**
-     * Includes author name in posts.
+     * Includes author names and generates temporary url for posted images in post (all posts).
      */
-    public function includeAuthorNamesInPosts(LengthAwarePaginator $posts): LengthAwarePaginator
+    public function includeAuthorNamesAndGenImgUrlFor(LengthAwarePaginator $posts): LengthAwarePaginator
     {
         $posts->map(function ($post) {
             $post->author = $post->user->name;
-            // $post->image = $this->fileManipulator->generateTemporaryUrl($post->image);
+            $post->image = $this->generateTempUrlForImg($post->image);;
         });
 
         return $posts;
     }
 
     /**
-     * Includes author name in post.
+     * Includes author name and generates temporary url for posted image in post (single post).
      */
-    public function includeAuthorNameInPost(Post $post): Post
+    public function includeAuthorNameAndGenImgUrlFor(Post $post): Post
     {
         $post->author = $post->user->name;
+        $post->image = $this->generateTempUrlForImg($post->image);
 
         return $post;
+    }
+
+    public function generateTempUrlForImg(string $imagePath): string
+    {
+        return $this->fileManipulator->generateTemporaryUrl($imagePath);
     }
 
     /**
@@ -52,11 +55,7 @@ class PostService
      */
     public function saveAndReturnPathOfImage(UploadedFile $image): string
     {
-
-        // $this->fileManipulator->storeFileAndReturnPath($image);
-
-        $imageName = Storage::disk(config('constants.MEDIA_DISK'))->put('images', $image);
-        $imagePath = parse_url(Storage::disk(config('constants.MEDIA_DISK'))->url($imageName))['path'];
+        $imagePath = $this->fileManipulator->store($image);
 
         return $imagePath;
     }
@@ -66,9 +65,7 @@ class PostService
      */
     public function deleteMediaFile(string $path): void
     {
-        $fileRelativePathInDisk = Helper::getFileRelativePathInDisk(config('constants.MEDIA_DISK'), $path);
-
-        Storage::disk(config('constants.MEDIA_DISK'))->delete($fileRelativePathInDisk);
+        $this->fileManipulator->delete($path);
     }
 
     /**
@@ -76,8 +73,9 @@ class PostService
      */
     public function updatePathOfImage(UploadedFile $newImage, string $oldImagePath): string
     {
-        $this->deleteMediaFile($oldImagePath);
-        return $this->saveAndReturnPathOfImage($newImage);
+        $pathOfNewImage = $this->fileManipulator->update($newImage, $oldImagePath);
+
+        return $pathOfNewImage;
     }
 
     /**
@@ -87,8 +85,8 @@ class PostService
      */
     public function store(array $postData): void
     {
-        $imagePath = $this->saveAndReturnPathOfImage($postData[self::IMAGE]);
-        $postData[self::IMAGE] = $imagePath;
+        $imagePath = $this->saveAndReturnPathOfImage($postData[self::IMAGE_COLUMN_NAME]);
+        $postData[self::IMAGE_COLUMN_NAME] = $imagePath;
 
         Post::create($postData);
     }
@@ -98,9 +96,9 @@ class PostService
      */
     public function update(Post $post, array $postData)
     {
-        if (isset($postData[self::IMAGE]) && $postData[self::IMAGE]) {
-            $imagePath = $this->updatePathOfImage($postData[self::IMAGE], $post->image);
-            $postData[self::IMAGE] = $imagePath;
+        if (isset($postData[self::IMAGE_COLUMN_NAME]) && $postData[self::IMAGE_COLUMN_NAME]) {
+            $imagePath = $this->updatePathOfImage($postData[self::IMAGE_COLUMN_NAME], $post->image);
+            $postData[self::IMAGE_COLUMN_NAME] = $imagePath;
         }
 
         $post->update($postData);

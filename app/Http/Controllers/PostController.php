@@ -30,7 +30,7 @@ class PostController extends Controller
         $posts = $this->post->getSearchResultsWithAuthorPaginated($search, $page);
 
         return view('posts.index', [
-            'posts' => $this->postService->includeAuthorNamesInPosts($posts)
+            'posts' => $this->postService->includeAuthorNamesAndGenImgUrlFor($posts)
         ]);
     }
 
@@ -42,11 +42,10 @@ class PostController extends Controller
         return view(
             'posts.show',
             [
-                'post' =>  $this->postService->includeAuthorNameInPost($post)
+                'post' =>  $this->postService->includeAuthorNameAndGenImgUrlFor($post)
             ]
         );
     }
-
 
     /**
      * Show create post form
@@ -72,6 +71,8 @@ class PostController extends Controller
     public function edit(Post $post): View
     {
         $this->authorize('edit', $post);
+
+        $post->image = $this->postService->generateTempUrlForImg($post->image);
 
         return view('posts.edit', ['post' => $post]);
     }

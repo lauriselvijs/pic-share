@@ -6,46 +6,54 @@ use App\Contracts\CanManipulateFiles;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
-// REVIEW: check if everything works before implementing
+/**
+ * This class provides file manipulation functionality specifically for the Dropbox file storage service.
+ */
 class DropboxFileService implements CanManipulateFiles
 {
     /**
-     * Name of disk that will be used
+     * The name of the storage disk that will be used.
      * 
      * @var string
      */
     protected final const STORAGE_DISK_NAME = 'dropbox-files';
 
 
+    /**
+     * Link expiration time is 4 hours (https://www.dropbox.com/developers/documentation/http/documentation#files-get_temporary_link)
+     * 
+     * @var int
+     */
+    protected final const URL_EXPIRATION_TIME = 60 * 60 * 4;
+
+
     public function store(UploadedFile $file): string
     {
-        // $fileName = Storage::disk('dropbox-files')->putFile('/', $file);
-        // $filePath = Storage::disk('dropbox-files')->path($fileName);
-
         $path = Storage::disk(self::STORAGE_DISK_NAME)->putFile('/', $file);
 
         return $path;
     }
 
-    public function generateTemporaryUrl(string $path, ?int $secondsActive = self::TEMPORARY_URL_ACTIVE_DEFAULT_TIME): string
+    public function generateTemporaryUrl(string $path): string
     {
-        $url = Storage::disk(self::STORAGE_DISK_NAME)->temporaryUrl(
-            $path,
-            now()->addSeconds($secondsActive)
-        );
-
-        return $url;
+        try {
+            return cache()->remember(($path), self::URL_EXPIRATION_TIME, function () use ($path) {
+                return Storage::disk(self::STORAGE_DISK_NAME)->url(config('filesystems.disks.dropbox-files.root') . '/' . $path);
+            });
+        } catch (\Throwable $th) {
+            return $path;
+        }
     }
 
     public function delete(string $path): void
     {
-        Storage::disk(self::STORAGE_DISK_NAME)->delete(Storage::disk(self::STORAGE_DISK_NAME)->path($path));
+        Storage::disk(self::STORAGE_DISK_NAME)->delete($path);
     }
 
     public function update(UploadedFile $file, string $oldPath): string
     {
         $this->delete($oldPath);
-        $path = $this->saveFileAndReturnPath($file);
+        $path = $this->store($file);
 
         return $path;
     }

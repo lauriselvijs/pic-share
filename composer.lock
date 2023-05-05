@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee0ca78618a60b993e05f7166763f455",
+    "content-hash": "ae89127850eee23b9904a2094b481f05",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -3694,24 +3694,25 @@
         },
         {
             "name": "spatie/flysystem-dropbox",
-            "version": "2.0.6",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/flysystem-dropbox.git",
-                "reference": "60ac0f929da31aa1321b4b2ac2ca0ba961e4664a"
+                "reference": "01b530218caa99b546f993490e54cd13b67604ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/flysystem-dropbox/zipball/60ac0f929da31aa1321b4b2ac2ca0ba961e4664a",
-                "reference": "60ac0f929da31aa1321b4b2ac2ca0ba961e4664a",
+                "url": "https://api.github.com/repos/spatie/flysystem-dropbox/zipball/01b530218caa99b546f993490e54cd13b67604ff",
+                "reference": "01b530218caa99b546f993490e54cd13b67604ff",
                 "shasum": ""
             },
             "require": {
-                "league/flysystem": "^2.0.4 || ^3.0.0",
+                "league/flysystem": "^3.7.0",
                 "php": "^8.0",
                 "spatie/dropbox-api": "^1.17.1"
             },
             "require-dev": {
+                "pestphp/pest": "^1.22",
                 "phpspec/prophecy-phpunit": "^2.0.1",
                 "phpunit/phpunit": "^9.5.4"
             },
@@ -3745,7 +3746,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/flysystem-dropbox/issues",
-                "source": "https://github.com/spatie/flysystem-dropbox/tree/2.0.6"
+                "source": "https://github.com/spatie/flysystem-dropbox/tree/3.0.0"
             },
             "funding": [
                 {
@@ -3757,7 +3758,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-09T16:01:40+00:00"
+            "time": "2023-03-13T12:19:03+00:00"
         },
         {
             "name": "spatie/laravel-backup",
