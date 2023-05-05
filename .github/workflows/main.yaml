@@ -22,7 +22,7 @@ jobs:
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env \
           && cp .env .env.dusk.local \
-          && sed -i "s/APP_URL=.*/APP_URL=${{ env.TEST_URL} }/g" .env.dusk.local \
+          && sed -i "s/APP_URL=.*/APP_URL=${{ env.TEST_URL }}/g" .env.dusk.local \
           && sed -i "s/DB_DATABASE=.*/DB_DATABASE=${{ env.TEST_DB }}/g" .env.dusk.local
 
       - name: Set up
@@ -41,7 +41,7 @@ jobs:
       - name: Run
         run: |
           ./vendor/bin/sail up -d \
-          && exit;
+          && exit
 
       - name: Wait for app to start
         run: |
@@ -49,7 +49,7 @@ jobs:
 
           sleep 60
           # while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do
-          #   sleep 10 && docker container ls --all;
+          #   sleep 1 && echo -n '.';
           # done;
 
           echo "App started"
@@ -57,13 +57,11 @@ jobs:
 
       - name: Install front end
         run: |
-          ./vendor/bin/sail npm install \
-          && exit;
+          ./vendor/bin/sail npm ci --include=dev
 
       # - name: Build front end
       #   run: |
-      #     ./vendor/bin/sail npm run build \
-      #     && exit;
+      #     ./vendor/bin/sail npm run build
 
       # - name: Feature test
       #   run: |

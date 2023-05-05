@@ -13,12 +13,21 @@ chmod -R ugo+rw /.composer
 if [ $# -gt 0 ]; then
     exec gosu $WWWUSER "$@"
 else
-     if [ "$RUN_SCHEDULE_WORK_AND_HORIZON" = true ]; then
+    if [ "$RUN_SCHEDULE_WORK_AND_HORIZON" = true ] && [ "$SETUP_FRONTEND" = true ]; then
+        npm install &&
+        npm run dev &
         /usr/bin/php /var/www/html/artisan schedule:work &
         /usr/bin/php /var/www/html/artisan horizon &
+        exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+    elif [ "$RUN_SCHEDULE_WORK_AND_HORIZON" = true ]; then
+        /usr/bin/php /var/www/html/artisan schedule:work &
+        /usr/bin/php /var/www/html/artisan horizon &
+        exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+    elif [ "$SETUP_FRONTEND" = true ]; then
+        npm install &&
+        npm run dev &
         exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
     else
         exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
     fi
 fi
-
