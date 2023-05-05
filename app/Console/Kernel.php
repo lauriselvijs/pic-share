@@ -30,15 +30,17 @@ class Kernel extends ConsoleKernel
                 ->onOneServer()
                 ->runInBackground();
 
-            // Back up
-            $schedule->command('backup:run')->name('run:backup')
-                ->monthly()
-                ->onOneServer()
-                ->runInBackground();
-            $schedule->command('backup:clean')->name('cleaned:backup')
-                ->monthly()
-                ->onOneServer()
-                ->runInBackground();
+            if (config('app.env') == 'production') {
+                // Back up
+                $schedule->command('backup:run')->name('run:backup')
+                    ->monthly()
+                    ->onOneServer()
+                    ->runInBackground();
+                $schedule->command('backup:clean')->name('cleaned:backup')
+                    ->monthly()
+                    ->onOneServer()
+                    ->runInBackground();
+            }
 
             // Prune stale cache tags
             $schedule->command('cache:prune-stale-tags')->name('pruned-stale-tags:cache')
