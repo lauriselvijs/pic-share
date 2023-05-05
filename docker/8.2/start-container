@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# /usr/bin/php /var/www/html/artisan schedule:work & /usr/bin/php /var/www/html/artisan horizon 
-
 if [ ! -z "$WWWUSER" ]; then
     usermod -u $WWWUSER sail
 fi
@@ -15,5 +13,12 @@ chmod -R ugo+rw /.composer
 if [ $# -gt 0 ]; then
     exec gosu $WWWUSER "$@"
 else
-    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+     if [ "$RUN_SCHEDULE_WORK_AND_HORIZON" = true ]; then
+        /usr/bin/php /var/www/html/artisan schedule:work &
+        /usr/bin/php /var/www/html/artisan horizon &
+        exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+    else
+        exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+    fi
 fi
+

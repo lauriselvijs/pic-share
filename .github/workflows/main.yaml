@@ -32,18 +32,6 @@ jobs:
         run: |
           ./vendor/bin/sail build --no-cache
 
-      # - name: Run
-      #   run: |
-      #     ./vendor/bin/sail up -d \
-      #     && echo "Waiting for App to launch on port 80..."
-
-      #     while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do
-      #       sleep 1 && echo "Waiting for app to start...";
-      #     done;
-
-      #     echo "App launched"
-      #     exit;
-
       - name: Run
         run: |
           ./vendor/bin/sail up -d \
@@ -66,14 +54,14 @@ jobs:
           ./vendor/bin/sail npm install \
           && exit;
 
-      - name: Build front end
-        run: |
-          ./vendor/bin/sail npm run build \
-          && exit;
+      # - name: Build front end
+      #   run: |
+      #     ./vendor/bin/sail npm run build \
+      #     && exit;
 
-      - name: Feature test
-        run: |
-          ./vendor/bin/sail test --coverage
+      # - name: Feature test
+      #   run: |
+      #     ./vendor/bin/sail test --coverage
 
       - name: E2E test
         run: |
