@@ -28,7 +28,7 @@ class PostTest extends TestCase
      */
     public function test_authorized_user_stores_post(): void
     {
-        Storage::fake('posts');
+        Storage::fake('dropbox-files');
 
         $postImage = UploadedFile::fake()->image('post.jpg');
 
@@ -42,7 +42,7 @@ class PostTest extends TestCase
             ]
         );
 
-        Storage::disk('posts')->assertExists($postImage->hashName());
+        Storage::disk('dropbox-files')->assertExists($postImage->hashName());
 
         $response->assertRedirect(route('posts.index'));
 
