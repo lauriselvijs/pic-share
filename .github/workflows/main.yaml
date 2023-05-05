@@ -59,13 +59,13 @@ jobs:
         run: |
           ./vendor/bin/sail npm ci --include=dev
 
-      # - name: Build front end
-      #   run: |
-      #     ./vendor/bin/sail npm run build
+      - name: Build front end
+        run: |
+          ./vendor/bin/sail npm run build
 
-      # - name: Feature test
-      #   run: |
-      #     ./vendor/bin/sail test --coverage
+      - name: Feature test
+        run: |
+          ./vendor/bin/sail test --coverage
 
       - name: E2E test
         run: |
