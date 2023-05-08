@@ -1,3 +1,5 @@
 <?php
 
-return [];
+return [
+    'storage_disk_name' => 'dropbox-files'
+];

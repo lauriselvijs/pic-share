@@ -10,6 +10,13 @@ use Illuminate\Http\UploadedFile;
 interface CanManipulateFiles
 {
     /**
+     * The name of the storage disk that will be used.
+     * 
+     * @var string
+     */
+    const STORAGE_DISK_NAME = 'dropbox-files';
+
+    /**
      * Stores an uploaded file.
      * 
      * @param UploadedFile $file The file to be stored.

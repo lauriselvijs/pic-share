@@ -64,10 +64,10 @@ return [
             'throw' => false,
         ],
 
-        'media' => [
+        'files' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/media'),
-            'url' => env('APP_URL') . '/media',
+            'root' => storage_path('app/public/files'),
+            'url' => env('APP_URL') . '/files',
             'visibility' => 'public',
             'throw' => false,
         ],

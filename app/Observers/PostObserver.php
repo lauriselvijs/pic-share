@@ -32,6 +32,17 @@ class PostObserver
     }
 
     /**
+     * Handle the Post "updating" event.
+     *
+     * @param  \App\Models\Post  $post
+     * @return void
+     */
+    public function updating(Post $post)
+    {
+        cache()->flush($post->image);
+    }
+
+    /**
      * Handle the Post "updated" event.
      *
      * @param  \App\Models\Post  $post

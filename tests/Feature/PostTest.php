@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Contracts\CanManipulateFiles;
 use App\Models\Post;
 use Tests\TestCase;
 use App\Models\User;
@@ -28,7 +29,7 @@ class PostTest extends TestCase
      */
     public function test_authorized_user_stores_post(): void
     {
-        Storage::fake('dropbox-files');
+        Storage::fake(config('constants.storage_disk_name'));
 
         $postImage = UploadedFile::fake()->image('post.jpg');
 
@@ -42,7 +43,7 @@ class PostTest extends TestCase
             ]
         );
 
-        Storage::disk('dropbox-files')->assertExists($postImage->hashName());
+        Storage::disk(config('constants.storage_disk_name'))->assertExists($postImage->hashName());
 
         $response->assertRedirect(route('posts.index'));
 
