@@ -8,7 +8,7 @@ services:
       args:
         NODE_VERSION: 18
         PHP: 8.2
-    env_file: .env.production
+    env_file: .env.production.local
     volumes:
       - ./storage:/app/storage
     ports:
@@ -24,7 +24,7 @@ services:
     restart: always
   mysql:
     image: "mysql/mysql-server:8.0"
-    env_file: .env.production
+    env_file: .env.production.local
     volumes:
       - "prod.mysql:/var/lib/mysql"
     networks:

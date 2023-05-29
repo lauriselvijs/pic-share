@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Contracts\CanManipulateFiles;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Activity;
@@ -12,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Post extends Model
 {
@@ -30,6 +28,14 @@ class Post extends Model
             'slug' => $this->slug,
             'tags' => $this->tags,
         ];
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
     }
 
     /**

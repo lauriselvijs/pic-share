@@ -8,7 +8,7 @@ Edit Post
     <x-slot name='heading'>
         Edit post info
     </x-slot>
-    <x-form.post :action="route('posts.update', $post->id)" :post='$post' />
+    <x-form.post :action="route('posts.update', $post->slug)" :post='$post' />
 </x-card.logo>
 
 @endsection

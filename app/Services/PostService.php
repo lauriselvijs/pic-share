@@ -39,6 +39,7 @@ class PostService
      */
     public function includeAuthorNameAndGenImgUrlFor(Post $post): Post
     {
+
         $post->author = $post->user->name;
         $post->image = $this->generateTempUrlForImg($post->image);
 

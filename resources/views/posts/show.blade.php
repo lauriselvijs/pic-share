@@ -5,7 +5,8 @@
 @section('content')
 
 <div class='flex flex-col gap-2 md:px-40 pt-0 pb-24 bg-shadow text-white text-left'>
-    <img loading="lazy" class='h-auto w-full md:scale-75 scale-100' src={{ $post->image }} alt='User posted image'>
+    <img decoding="async" loading="lazy" loading="lazy" class='h-auto w-full md:scale-75 scale-100' src={{ $post->image
+    }} alt='User posted image' title="Post" alt="Post">
     <div class='px-6 flex flex-col justify-center items-center  sm:block text-center sm:text-left'>
         <h2 class='text-2xl font-bold py-4 leading-snug sm:text-left'>
             {{ $post->title }}
@@ -23,7 +24,7 @@
             TODO:
             [ ] - replace with one payment button --}}
             @can('buy', $post)
-            <a href={{ route('payment.charge', [$post->id])}}>
+            <a href={{ route('payment.charge', $post->slug)}}>
                 <x-button.tertiary type='submit'>
                     <svg xmlns="http://www.w3.org/2000/svg" width='16' height='16' viewBox="0 0 576 512">
                         <path
@@ -35,7 +36,7 @@
             @endcan
 
             @guest
-            <a href={{ route('payment.charge', [$post->id])}}>
+            <a href={{ route('payment.charge', $post->slug)}}>
                 <x-button.tertiary type='submit'>
                     <svg xmlns="http://www.w3.org/2000/svg" width='16' height='16' viewBox="0 0 576 512">
                         <path
@@ -51,7 +52,7 @@
             @auth
             <div class='flex gap-8'>
                 @can('update', $post)
-                <a href={{ route('posts.edit', $post->id) }}>
+                <a href={{ route('posts.edit', $post->slug) }}>
                     <x-button.tertiary type='button'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'>
                             <path
@@ -62,7 +63,7 @@
                 </a>
                 @endcan
                 @can('delete', $post)
-                <form action={{ route('posts.destroy', $post->id) }} method='POST'>
+                <form action={{ route('posts.destroy', $post->slug) }} method='POST'>
                     @csrf
                     @method('DELETE')
                     <x-button.tertiary type='submit'>

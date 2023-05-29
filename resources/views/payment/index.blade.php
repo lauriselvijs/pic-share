@@ -5,7 +5,7 @@ Payment
 @section('content')
 
 <div class='flex flex-1 flex-col justify-center items-center bg-shadow p-8'>
-    <form action="{{route('payment.process', [$post->id])}}" method='POST' id='payment-form'
+    <form action="{{route('payment.process', $post->slug)}}" method='POST' id='payment-form'
         class='flex flex-col gap-4 p-4 w-3/4 md:w-1/4 shadow-lg shadow-black bg-sunset backdrop-blur-md'>
         @csrf
         <h2 class='text-2xl font-bold uppercase text-error'>Only for Testing!</h2>

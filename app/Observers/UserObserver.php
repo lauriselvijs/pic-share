@@ -5,14 +5,20 @@ namespace App\Observers;
 use App\Models\User;
 use App\Models\Admin;
 use App\Services\Helper;
-use Illuminate\Support\Str;
 use App\Events\UserRegisteredEvent;
+use App\Models\Post;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\UserRegisteredNotification;
 
 class UserObserver
 {
+    public function __construct(private Post $post)
+    {
+        $this->post = $post;
+    }
+
+
     /**
      * Handle the User "creating" event.
      *
@@ -62,7 +68,8 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-        //
+        cache()->tags($user->id)->flush();
+        cache()->tags($this->post::CACHE_PAGINATION_TAG)->flush();
     }
 
     /**
@@ -73,7 +80,8 @@ class UserObserver
      */
     public function restored(User $user)
     {
-        //
+        cache()->tags($user->id)->flush();
+        cache()->tags($this->post::CACHE_PAGINATION_TAG)->flush();
     }
 
     /**
@@ -84,6 +92,7 @@ class UserObserver
      */
     public function forceDeleted(User $user)
     {
-        //
+        cache()->tags($user->id)->flush();
+        cache()->tags($this->post::CACHE_PAGINATION_TAG)->flush();
     }
 }

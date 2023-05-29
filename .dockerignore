@@ -7,7 +7,7 @@
 /vendor
 .env
 .env.example
-.env.production
+.env.production.local
 .env.backup
 .env.dusk.local
 Homestead.json
