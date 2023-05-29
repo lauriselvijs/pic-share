@@ -29,9 +29,7 @@ class CommentFactory extends Factory
             Video::class,
         ]);
 
-
         return [
-            'commentable_id' => $commentable::all()->random()->id,
             'commentable_type' => $commentable,
             'body' =>  fake()->text(),
         ];

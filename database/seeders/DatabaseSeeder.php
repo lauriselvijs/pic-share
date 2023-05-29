@@ -23,12 +23,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         // \App\Models\User::factory(10)->create();
 
         $user = User::factory()->create();
-        $activityStatus = (Activity::factory()->count(3)->for($user));
-        $post = Post::factory()->count(3)->has($activityStatus)->hasActivityStatuses(2);
+        $activity = Activity::factory()->count(3)->for($user)->hasActivityStatuses(2);
+        $post = Post::factory()->count(3)->has($activity);
 
         User::factory()
             ->count(10)
@@ -36,15 +35,6 @@ class DatabaseSeeder extends Seeder
             ->hasVideos(1)
             ->hasComments(1)
             ->create();
-
-        // Post::factory()->hasActivities(1);
-
-        // Activity::factory()->has
-
-        // Activity::factory(10)->create();
-        // ActivityStatus::factory(10)->create();
-
-        // Comment::factory(10)->create();
 
         // Admin::factory(3)->create();
 
