@@ -31,7 +31,6 @@ class CommentFactory extends Factory
 
 
         return [
-            'user_id' =>  User::all()->random()->id,
             'commentable_id' => $commentable::all()->random()->id,
             'commentable_type' => $commentable,
             'body' =>  fake()->text(),

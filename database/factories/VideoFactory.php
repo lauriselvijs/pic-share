@@ -27,7 +27,6 @@ class VideoFactory extends Factory
 
         return [
             'title' =>  rtrim(fake()->sentence(3), '.'),
-            'user_id' =>  User::all()->random()->id,
             'thumbnail' =>  fake()->imageUrl(),
             'path' => fake()->url(),
             'tags' => implode(', ', fake()->randomElements($tags, 3))

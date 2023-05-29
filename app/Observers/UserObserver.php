@@ -41,8 +41,8 @@ class UserObserver
         // Send verification email to user
         event(new Registered($user));
 
-        // Send notification email to admins
-        $admins = Admin::all();
+        // Send notification to notifiable admins
+        $admins = Admin::where('notify', true)->get();
         Notification::send($admins, new UserRegisteredNotification($user));
 
         // Log user

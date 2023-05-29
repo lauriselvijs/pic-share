@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,7 +26,6 @@ class ActivityFactory extends Factory
 
 
         return [
-            'post_id' => Post::all()->random()->id,
             'type' => fake()->randomElement($type)
         ];
     }

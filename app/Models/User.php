@@ -5,9 +5,10 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Post;
+use App\Models\Video;
+use App\Models\Comment;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Events\UserRegisteredEvent;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -82,5 +83,29 @@ class User extends Authenticatable implements MustVerifyEmail
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Relationship to videos
+     */
+    public function videos(): HasMany
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    /**
+     * Relationship to videos
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get the activities for the user.
+     */
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 }

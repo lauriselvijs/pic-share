@@ -26,7 +26,6 @@ class ActivityStatusFactory extends Factory
 
 
         return [
-            'activity_id' => Activity::all()->random()->id,
             'type' => fake()->randomElement($type)
         ];
     }

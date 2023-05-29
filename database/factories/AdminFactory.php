@@ -19,6 +19,7 @@ class AdminFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->safeEmail(),
+            'notify' => fake()->boolean(true)
         ];
     }
 }
