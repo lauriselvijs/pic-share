@@ -1,4 +1,4 @@
-<button title="Search" id="submit-post-search" aria-label='Search' type="submit"
+<button title="Search" id="submit-post-search" aria-label="{{ __('Search') }}" type="submit"
     class='cursor-pointer bg-black w-14 h-full flex justify-center items-center fill-white hover:fill-sunset'>
     <svg class='w-4 h-4' viewBox='0 0 16 16'>
         <path

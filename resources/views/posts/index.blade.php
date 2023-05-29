@@ -1,6 +1,6 @@
 @extends('layout.index')
 @section('title')
-Posts
+{{ __('Posts') }}
 @endsection
 
 @section('content')

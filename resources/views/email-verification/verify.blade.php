@@ -1,7 +1,7 @@
 @extends('layout.index')
 
 @section('title')
-Verify Email
+{{ __('Verify Email') }}
 @endsection
 
 @section('content')
@@ -16,18 +16,16 @@ Verify Email
     </div>
     <div class="flex flex-col items-center justify-center bg-white">
         <div class="max-w-xl px-5 text-center space-y-12">
-            <h2 class="mb-2 text-4xl font-bold text-black">Check your inbox to verify your email</h2>
-            <p class="mb-2 text-lg text-black">We are glad, that you’re with us. <strong class="text-black">To
-                    start adding posts you should verify
-                    your email adress.</strong> We’ve sent you a verification link
-                to
-                the email address <strong class="text-black">{{ auth()->user()->email }}</strong>.</p>
+            <h2 class="mb-2 text-4xl font-bold text-black">{{ __('Check your inbox to verify your email') }}</h2>
+            <p class="mb-2 text-lg text-black">{{ __('We are glad, that you’re with us. To start adding posts you should
+                verify your email address. We’ve sent you a verification link to the email address') }} <strong
+                    class="text-black">{{ auth()->user()->email }}</strong>.</p>
         </div>
     </div>
     <x-form :action='route("verification.send")' method='POST'>
         @csrf
         <x-button type='submit'>
-            Resend email verifcation
+            {{ __('Resend email verification') }}
         </x-button>
     </x-form>
 </x-card.logo>

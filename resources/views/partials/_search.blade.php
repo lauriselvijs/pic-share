@@ -6,8 +6,8 @@ $value = request()->query("search") ?? ""
     class='absolute flex flex-col justify-center items-center w-3/4 md:w-2/4 top-1/2 left-0 right-0 ml-auto mr-auto md:top-3/4'>
     <form autocomplete='off' id='posts-search-form' action={{ route('posts.index') }}
         class='relative flex justify-center items-center h-10 w-full'>
-        <x-input.secondary id="posts-search-input" label='Search' type='text' name='search' placeholder='Search'
-            required='false' :value="$value" />
+        <x-input.secondary id="posts-search-input" label="{{ __('Search') }}" type='text' name='search'
+            placeholder="{{ __('Search') }}" required='false' :value="$value" />
         @include('partials.button._search')
         @include('partials.button._clear')
     </form>

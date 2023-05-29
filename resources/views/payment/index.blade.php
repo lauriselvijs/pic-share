@@ -1,24 +1,26 @@
 @extends('layout.index')
+
 @section('title')
-Payment
+{{ __('Payment') }}
 @endsection
+
 @section('content')
 
 <div class='flex flex-1 flex-col justify-center items-center bg-shadow p-8'>
     <form action="{{route('payment.process', $post->slug)}}" method='POST' id='payment-form'
         class='flex flex-col gap-4 p-4 w-3/4 md:w-1/4 shadow-lg shadow-black bg-sunset backdrop-blur-md'>
         @csrf
-        <h2 class='text-2xl font-bold uppercase text-error'>Only for Testing!</h2>
+        <h2 class='text-2xl font-bold uppercase text-error'>{{ __('Only for Testing!') }}</h2>
         <div class='flex flex-col'>
-            <div class='text-base font-bold'>Payment amount</div>
+            <div class='text-base font-bold'>{{ __('Payment amount') }}</div>
             <div class='plan-price text-2xl font-bold text-shadow'>${{$post->price}}</div>
         </div>
         <div class='flex flex-col'>
-            <label class='text-base font-bold' for='card-holder-name'>Card Holder Name</label>
+            <label class='text-base font-bold' for='card-holder-name'>{{ __('Card Holder Name') }}</label>
             <input class='bg-sunset text-shadow uppercase' id='card-holder-name' type='text' value='{{$user->name}}'>
         </div>
         <div class='form-row text-base'>
-            <label class='font-bold' for='card-element'>Credit or debit card</label>
+            <label class='font-bold' for='card-element'>{{ __('Credit or debit card') }}</label>
             <div id='card-element-container' class='pt-2'> </div>
             <!-- Used to display form errors. -->
             <div class='pt-4'>
@@ -46,7 +48,7 @@ Payment
                     <path
                         d='M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z' />
                 </svg>
-                <span id='pay-btn-text'>Pay ${{$post->price}}</span>
+                <span id='pay-btn-text'>{{ __('Pay'). ' $' . $post->price }}</span>
             </button>
         </div>
     </form>
