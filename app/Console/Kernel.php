@@ -47,6 +47,11 @@ class Kernel extends ConsoleKernel
                 ->hourly()
                 ->onOneServer()
                 ->runInBackground();
+
+            $schedule->command('horizon:snapshot')->name('horizon:snapshot')
+                ->everyFiveMinutes()
+                ->onOneServer()
+                ->runInBackground();
         }
 
         if (config('app.server_type') == 'monitor') {
