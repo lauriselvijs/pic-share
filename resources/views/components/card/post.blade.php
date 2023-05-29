@@ -1,7 +1,7 @@
 @props(['post'])
 
 <div
-    class='flex flex-col gap-2 bg-shadow text-white text-left hover:md:rounded-[32px] rounded-none shadow-md transition-all overflow-hidden'>
+    class='flex flex-col gap-2 bg-shadow text-white text-left md:rounded-[32px] hover:rounded-none rounded-none shadow-md transition-all overflow-hidden'>
     <a href={{ route('posts.show', $post->slug) }}>
         <img decoding="async" loading="lazy" class='h-full w-full' src={{asset($post->image)}} alt='Post'
         title='Post'>
