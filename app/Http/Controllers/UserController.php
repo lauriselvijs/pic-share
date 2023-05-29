@@ -25,6 +25,7 @@ class UserController extends Controller
      */
     public function posts(Request $request, User $user): View
     {
+
         $search = $request->query("search");
         $page = $request->query('page');
 
@@ -32,7 +33,7 @@ class UserController extends Controller
 
 
         return view('posts.index', [
-            'posts' => $this->postService->includeAuthorNamesInPosts($posts)
+            'posts' => $this->postService->includeAuthorNamesAndGenImgUrlFor($posts)
         ]);
     }
 }

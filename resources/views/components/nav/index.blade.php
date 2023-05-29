@@ -8,8 +8,8 @@
     <a href={{ route('posts.create') }} class='cursor-pointer hover:{{ $hoverLinkColor }}'>
         Add new post
     </a>
-    <form method='GET' class='cursor-pointer hover:{{ $hoverLinkColor }}' action={{ route('users.posts', auth()->id())
-        }}>
+    <form method='GET' class='cursor-pointer hover:{{ $hoverLinkColor }}' action={{ route('users.posts', auth()->
+        user()->username)}}>
         @csrf
         <button type='submit'>My Posts</button>
     </form>

@@ -3,15 +3,14 @@
 namespace App\Services;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
 class Helper
 {
     /**
-     * Generates unique username for given users name
+     * Generates unique username for given email
      */
-    public static function generateUsernameFor(string $name): string
+    public static function generateUsernameFrom(string $email): string
     {
-        return Str::of($name)->replace(' ', '.')->ascii()->append('#')->append(Str::uuid())->lower();
+        return Str::of($email)->before("@")->ascii()->append('-')->append(Str::uuid())->lower();
     }
 }

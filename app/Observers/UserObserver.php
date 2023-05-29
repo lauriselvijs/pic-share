@@ -18,7 +18,6 @@ class UserObserver
         $this->post = $post;
     }
 
-
     /**
      * Handle the User "creating" event.
      *
@@ -27,7 +26,7 @@ class UserObserver
      */
     public function creating(User $user): void
     {
-        $user->username = Helper::generateUsernameFor($user->name);
+        $user->username = Helper::generateUsernameFrom($user->email);
     }
 
 
