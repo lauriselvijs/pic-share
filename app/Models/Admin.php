@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\AdminRole;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Admin extends Model
 {
@@ -16,4 +18,21 @@ class Admin extends Model
      * @var array<string>
      */
     protected $fillable = ['name', 'email', 'notify'];
+
+
+    /**
+     * How many admins per page
+     * 
+     * @var int
+     */
+    public final const PER_PAGE = 9;
+
+
+    /**
+     * The roles that belong to the admin.
+     */
+    public function adminRoles(): BelongsToMany
+    {
+        return $this->belongsToMany(AdminRole::class);
+    }
 }

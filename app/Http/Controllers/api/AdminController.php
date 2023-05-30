@@ -15,8 +15,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-
-        return new AdminCollection(Admin::latest()->cursorPaginate(2));
+        return new AdminCollection(Admin::latest()->cursorPaginate(Admin::PER_PAGE));
     }
 
     /**
@@ -32,7 +31,7 @@ class AdminController extends Controller
      */
     public function show(Admin $admin)
     {
-        //
+        return new AdminResource(Admin::findOrFail($admin->id));
     }
 
     /**

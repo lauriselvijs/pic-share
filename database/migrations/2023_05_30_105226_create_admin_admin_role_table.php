@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Admin;
 use App\Models\AdminRole;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -9,27 +10,22 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('admin_admin_role', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->boolean('notify')->default(false);
+            $table->foreignIdFor(AdminRole::class)->constrained();
+            $table->foreignIdFor(Admin::class)->constrained();
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('admin_admin_role');
     }
 };

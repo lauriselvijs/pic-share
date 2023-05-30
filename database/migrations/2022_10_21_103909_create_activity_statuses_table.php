@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('activity_statuses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Activity::class)->constrained()->onDelete("cascade");;
+            $table->foreignIdFor(Activity::class)->constrained()->cascadeOnDelete();
             $table->string('type');
             $table->timestamps();
         });

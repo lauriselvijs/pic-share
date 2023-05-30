@@ -18,8 +18,8 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->foreignIdFor(Post::class)->constrained()->onDelete("cascade");
-            $table->foreignIdFor(User::class)->constrained()->onDelete("cascade");
+            $table->foreignIdFor(Post::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

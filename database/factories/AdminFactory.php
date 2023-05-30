@@ -30,7 +30,7 @@ class AdminFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'email' => fake()->safeEmail(),
+            'email' => fake()->unique()->safeEmail(),
         ];
     }
 }
