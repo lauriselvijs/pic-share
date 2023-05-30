@@ -26,6 +26,7 @@ class VideoFactory extends Factory
         $tags = ['History', 'Forest', 'Water', 'Castle', 'Sea'];
 
         return [
+            'user_id' => User::factory(),
             'title' =>  rtrim(fake()->sentence(3), '.'),
             'thumbnail' =>  fake()->imageUrl(),
             'path' => fake()->url(),

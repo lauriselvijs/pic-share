@@ -27,6 +27,7 @@ class PostFactory extends Factory
 
         return [
             'title' =>  rtrim(fake()->sentence(3), '.'),
+            'user_id' => User::factory(),
             'slug' =>  fake()->slug(),
             'image' => fake()->imageUrl(),
             'tags' => implode(', ', fake()->randomElements($tags, 3)),
