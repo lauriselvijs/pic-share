@@ -16,9 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::apiResource('/admins', AdminController::class);
-
-
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

@@ -19,7 +19,7 @@ class AdminResource extends JsonResource
             'admin_id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'roles' => AdminRoleResource::collection($this->adminRoles),
+            'roles' => AdminRoleResource::collection($this->roles),
             'notify' => $this->notify,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

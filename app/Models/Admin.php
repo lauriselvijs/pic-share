@@ -31,7 +31,7 @@ class Admin extends Model
     /**
      * The roles that belong to the admin.
      */
-    public function adminRoles(): BelongsToMany
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(AdminRole::class);
     }

@@ -11,7 +11,7 @@ class UpdateAdminRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,7 @@ class UpdateAdminRequest extends FormRequest
         return [
             'name' => 'filled|string',
             'email' => 'filled|email|unique:admins',
+            'role' => 'filled|exists:admin_roles,role',
             'notify' => 'filled|boolean'
         ];
     }

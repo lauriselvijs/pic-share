@@ -11,7 +11,7 @@ class StoreAdminRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,7 @@ class StoreAdminRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|email|unique:admins',
+            'role' => 'filled|exists:admin_roles,role',
             'notify' => 'filled|boolean'
         ];
     }
