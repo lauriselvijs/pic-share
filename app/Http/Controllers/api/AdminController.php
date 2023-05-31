@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Enums\ResourceModificationAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\api\QueueAdminForDeletion;
 use App\Http\Requests\api\StoreAdminRequest;
 use App\Http\Requests\api\UpdateAdminRequest;
 use App\Http\Resources\AdminCollection;
@@ -72,11 +73,12 @@ class AdminController extends Controller
         return response()->noContent();
     }
 
-    // TODO:
-    // [ ] - Add validation class
-    public function queueForDeletion(Request $request): Response|JsonResponse
+
+    public function queueForDeletion(QueueAdminForDeletion $request): Response|JsonResponse
     {
-        $key = $this->adminService->storeIdsForDeletion($request->input('admins_id'));
+        $request->validated();
+
+        $key = $this->adminService->storeIdsForDeletion($request->input('ids'));
 
         if ($key) {
             return response()->json([__('key') => $key])->setStatusCode(Response::HTTP_CREATED);
