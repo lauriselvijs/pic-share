@@ -35,11 +35,11 @@ class Kernel extends ConsoleKernel
                 $schedule->command('backup:run')->name('run:backup')
                     ->monthly()
                     ->onOneServer()
-                    ->runInBackground();
+                    ->runInBackground()->environments('production');
                 $schedule->command('backup:clean')->name('cleaned:backup')
                     ->monthly()
                     ->onOneServer()
-                    ->runInBackground();
+                    ->runInBackground()->environments('production');
             }
 
             // Prune stale cache tags

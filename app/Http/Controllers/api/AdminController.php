@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Enums\ResourceModificationAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\StoreAdminRequest;
 use App\Http\Requests\api\UpdateAdminRequest;
 use App\Http\Resources\AdminCollection;
 use App\Http\Resources\AdminResource;
+use App\Jobs\ProcessDeleteAdmins;
 use App\Models\Admin;
-use App\Models\AdminRole;
 use App\Services\AdminService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class AdminController extends Controller
 {
@@ -22,7 +27,7 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): AdminCollection
     {
         return new AdminCollection(Admin::latest()->cursorPaginate(Admin::PER_PAGE));
     }
@@ -30,7 +35,7 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAdminRequest $request)
+    public function store(StoreAdminRequest $request): AdminResource
     {
         $admin = $this->adminService->store($request->validated());
 
@@ -40,7 +45,7 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Admin $admin)
+    public function show(Admin $admin): AdminResource
     {
         // REVIEW: Check Exceptions/Handler.php for how to handle route model binding not found exceptions
         return new AdminResource($admin);
@@ -49,7 +54,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAdminRequest $request, Admin $admin)
+    public function update(UpdateAdminRequest $request, Admin $admin): AdminResource
     {
 
         $admin = $this->adminService->update($request->validated(), $admin);
@@ -60,11 +65,34 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy(Admin $admin): Response
     {
-        $admin->roles()->detach();
-        $admin->delete();
+        $this->adminService->delete($admin);
 
         return response()->noContent();
+    }
+
+    // TODO:
+    // [ ] - Add validation class
+    public function queueForDeletion(Request $request): Response|JsonResponse
+    {
+        $key = $this->adminService->storeIdsForDeletion($request->input('admins_id'));
+
+        if ($key) {
+            return response()->json([__('key') => $key])->setStatusCode(Response::HTTP_CREATED);
+        }
+
+        return response('', Response::HTTP_SERVICE_UNAVAILABLE);
+    }
+
+    public function deleteAdmins(string $key): Response
+    {
+        $idFound = $this->adminService->deleteAdmins($key);
+
+        if ($idFound) {
+            return response('', Response::HTTP_OK);
+        }
+
+        return response('', Response::HTTP_NOT_FOUND);
     }
 }

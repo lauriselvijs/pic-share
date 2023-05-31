@@ -69,6 +69,9 @@ return [
             'retry_after' => 90,
             'block_for' => null,
             'after_commit' => false,
+            // REVIEW: Dispatch jobs after transaction
+            // 'after_commit' => true,
+
         ],
 
     ],

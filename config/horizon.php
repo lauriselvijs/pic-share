@@ -167,7 +167,7 @@ return [
     'defaults' => [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => ['default', 'emails', 'logs'],
+            'queue' => ['default', 'emails', 'logs', 'delete'],
             'balance' => 'auto',
             'maxProcesses' => 1,
             'maxTime' => 0,
