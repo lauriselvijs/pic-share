@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
         $this->renderable(function (NotFoundHttpException $e, $request) {
             if ($request->routeIs('admins.*')) {
                 return response()->json([
-                    'message' => 'Record not found.'
+                    'message' => 'Record not found'
                 ], 404);
             }
         });

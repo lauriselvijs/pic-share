@@ -2,31 +2,27 @@
 
 namespace App\Jobs;
 
-
 use App\Models\Admin;
-use App\Services\AdminService;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Redis;
 
 class ProcessDeleteAdmins implements ShouldQueue, ShouldBeUnique
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
 
     /**
      * Create a new job instance.
      */
-    public function __construct(private array $ids, private string $deleteKey, private string $cacheKey, private int $expirationTime)
+    public function __construct(private Admin $admin, private string $deleteKey)
     {
-        $this->ids = $ids;
+        $this->admin = $admin;
         $this->deleteKey = $deleteKey;
-        $this->cacheKey = $cacheKey;
-        $this->expirationTime = $expirationTime;
 
         $this->connection = 'redis';
         $this->queue = 'delete';
@@ -56,6 +52,13 @@ class ProcessDeleteAdmins implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
+        if ($this->batch()->cancelled()) {
+            // Determine if the batch has been cancelled...
+
+            return;
+        }
+
+        // Do something here
     }
 
 

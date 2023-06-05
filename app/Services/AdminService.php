@@ -7,6 +7,8 @@ use App\Http\Resources\AdminResource;
 use App\Jobs\ProcessDeleteAdmins;
 use App\Models\Admin;
 use App\Models\AdminRole;
+use Illuminate\Bus\Batch;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Redis;
@@ -19,12 +21,6 @@ class AdminService
     public final const THROTTLE_KEY = 'admin';
     public final const THROTTLE_ATTEMPTS = 10;
     public final const THROTTLED_RECORDS = 5;
-
-    public function __construct(private Admin $admin)
-    {
-        $this->admin = $admin;
-    }
-
 
     public function throttleRequest(): AdminCollection
     {
@@ -89,27 +85,45 @@ class AdminService
         });
     }
 
+    /**
+     * Returns tuple that consists of true and bus id for deleted admin report or false if cant delete admins
+     *
+     * @param string $key
+     * @return boolean
+     */
     public function deleteAdmins(string $key): bool
     {
         $ids = $this->getIdsForDeletionFromCacheUsing($key);
+        $jobBatch = [];
 
         if ($ids) {
-            DB::transaction(function () use ($ids, $key) {
-                Admin::whereIn('id', $ids)->lazyById()->each(function ($admin) {
+            DB::transaction(function () use ($ids, $key, &$jobBatch) {
+                Admin::whereIn('id', $ids)->lazyById()->each(function (Admin $admin) use ($key, &$jobBatch) {
                     $this->delete($admin);
+
+                    $jobBatch = [...$jobBatch, new ProcessDeleteAdmins($admin, $key)];
                 });
 
-                ProcessDeleteAdmins::dispatch(
-                    $ids,
-                    $key,
-                    self::ADMIN_CACHE_KEY,
-                    self::ADMIN_CACHE_EXPIRATION_TIME
-                )->afterCommit();
+                // REVIEW: For dispatching jobs within database transaction use after commit to dispatch job after transaction is finished
+                // ProcessDeleteAdmins::dispatch(
+                //     $id,
+                //     $key,
+                // )->afterCommit();
             });
 
             $this->clearCache();
 
-            return true;
+            $busId = Bus::batch(
+                $jobBatch
+            )->then(function (Batch $batch) {
+                // All jobs completed successfully...
+            })->catch(function (Batch $batch, \Throwable $e) {
+                // First batch job failure detected...
+            })->finally(function (Batch $batch) {
+                // The batch has finished executing...
+            })->name('Deleted admins report')->dispatch();
+
+            return [true, $busId];
         }
 
         return false;
@@ -118,7 +132,7 @@ class AdminService
     /**
      * Store ids for deletion
      *
-     * @param array<integer> $ids
+     * @param array<int> $ids
      * @return string|boolean
      */
     public function storeIdsForDeletion(array $ids): string|bool
@@ -136,7 +150,7 @@ class AdminService
             $redis->set(self::ADMIN_CACHE_KEY, json_encode([
                 'key' => $key,
                 'ids' => $ids,
-            ]), 'ex', self::ADMIN_CACHE_EXPIRATION_TIME);
+            ]), self::ADMIN_CACHE_EXPIRATION_TIME);
         });
 
         return $key;

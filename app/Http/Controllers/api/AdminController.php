@@ -85,10 +85,10 @@ class AdminController extends Controller
 
     public function deleteAdmins(string $key): Response
     {
-        $keyFound = $this->adminService->deleteAdmins($key);
+        [$keyFound, $busId] = $this->adminService->deleteAdmins($key);
 
         if ($keyFound) {
-            return response('', Response::HTTP_OK);
+            return response()->json(['bus_id' => $busId])->setStatusCode(Response::HTTP_OK);
         }
 
         return response('', Response::HTTP_NOT_FOUND);

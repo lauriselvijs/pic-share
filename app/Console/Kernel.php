@@ -23,6 +23,12 @@ class Kernel extends ConsoleKernel
                 ->onOneServer()
                 ->runInBackground();
 
+            $schedule->command('queue:prune-batches --unfinished=72 --cancelled=72')->name('pruned:batches')
+                ->daily()
+                ->onOneServer()
+                ->runInBackground();
+
+
             // Delete all pruned models daily
             $schedule->command('model:prune')->name('pruned:models')
                 ->daily()

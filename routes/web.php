@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 |
 */
 
+
 Route::middleware(['throttle:global'])->group(function () {
 
     // Home page
