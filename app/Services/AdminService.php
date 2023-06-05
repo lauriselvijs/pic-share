@@ -2,36 +2,57 @@
 
 namespace App\Services;
 
+use App\Http\Resources\AdminCollection;
+use App\Http\Resources\AdminResource;
 use App\Jobs\ProcessDeleteAdmins;
 use App\Models\Admin;
 use App\Models\AdminRole;
+use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 
 class AdminService
 {
-
     public final const ADMIN_CACHE_KEY  = 'delete_admins';
     public final const ADMIN_CACHE_EXPIRATION_TIME  = 60;
+    public final const THROTTLE_KEY = 'admin';
+    public final const THROTTLE_ATTEMPTS = 10;
+    public final const THROTTLED_RECORDS = 5;
+
+
+    public function throttleRequest(): AdminCollection
+    {
+        $admins = RateLimiter::attempt(self::THROTTLE_KEY, 1, function () {
+            return Admin::latest()->cursorPaginate(Admin::PER_PAGE);
+        });
+
+        if ($admins) {
+            return new AdminCollection($admins);
+        }
+
+        return new AdminCollection(Admin::latest()->take(self::THROTTLED_RECORDS)->get());
+    }
 
     /**
      * Store admin in database.
      *
      * @param array<string, mixed> $adminData
-     * @return Admin
+     * @return AdminResource
      */
-    public function store(array $adminData): Admin
+    public function store(array $adminData): AdminResource
     {
-        $role = AdminRole::where('role', $adminData['role'])->first();
+        $adminRole = AdminRole::where('role', $adminData['role'])->first();
 
         unset($adminData["role"]);
 
         $admin = Admin::create($adminData);
-        $admin->roles()->attach($role->id);
+        $admin->roles()->attach($adminRole->id);
         $admin->refresh();
 
-        return $admin;
+        return new AdminResource($admin);
     }
 
     /**
@@ -46,8 +67,8 @@ class AdminService
         $role = $adminData['role'];
 
         if ($admin->roles()->where('role', $role)->doesntExist()) {
-            $newRole = AdminRole::where('role', $role)->first();
-            $admin->roles()->syncWithoutDetaching([$newRole->id]);
+            $newAdminRole = AdminRole::where('role', $role)->first();
+            $admin->roles()->syncWithoutDetaching([$newAdminRole->id]);
             $admin->refresh();
         }
 
@@ -59,7 +80,6 @@ class AdminService
 
     public function delete(Admin $admin)
     {
-
         DB::transaction(function () use ($admin) {
             $admin->roles()->detach();
             $admin->delete();
@@ -72,8 +92,7 @@ class AdminService
 
         if ($ids) {
             DB::transaction(function () use ($ids, $key) {
-                $admins = Admin::whereIn('id', $ids)->get();
-                $admins->each(function ($admin) {
+                Admin::whereIn('id', $ids)->lazyById()->each(function ($admin) {
                     $this->delete($admin);
                 });
 
@@ -93,6 +112,12 @@ class AdminService
         return false;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param array<integer> $ids
+     * @return string|boolean
+     */
     public function storeIdsForDeletion(array $ids): string|bool
     {
         $cacheFull = $this->cacheFull();
@@ -108,9 +133,7 @@ class AdminService
             $redis->set(self::ADMIN_CACHE_KEY, json_encode([
                 'key' => $key,
                 'ids' => $ids,
-            ]));;
-
-            // $redis->expire(self::ADMIN_CACHE_KEY, self::ADMIN_CACHE_EXPIRATION_TIME);
+            ]), 'ex', self::ADMIN_CACHE_EXPIRATION_TIME);
         });
 
         return $key;
@@ -142,8 +165,5 @@ class AdminService
     public function clearCache(): void
     {
         Redis::command('del', [self::ADMIN_CACHE_KEY]);
-
-
-        // Redis::forget(self::ADMIN_CACHE_KEY);
     }
 }

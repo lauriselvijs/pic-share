@@ -25,7 +25,11 @@ class AdminController extends Controller
      */
     public function index(): AdminCollection
     {
-        return new AdminCollection(Admin::latest()->cursorPaginate(Admin::PER_PAGE));
+        $admins = $this->adminService->throttleRequest();
+
+        print_r(gettype($admins));
+
+        return $admins;
     }
 
     /**
@@ -35,7 +39,7 @@ class AdminController extends Controller
     {
         $admin = $this->adminService->store($request->validated());
 
-        return new AdminResource($admin);
+        return $admin;
     }
 
     /**
@@ -53,7 +57,11 @@ class AdminController extends Controller
     {
         $admin = $this->adminService->update($request->validated(), $admin);
 
-        return new AdminResource($admin);
+        if ($admin) {
+            return new AdminResource($admin);
+        }
+
+        return response('', Response::HTTP_TOO_MANY_REQUESTS);
     }
 
     /**
@@ -65,7 +73,6 @@ class AdminController extends Controller
 
         return response()->noContent();
     }
-
 
     public function queueForDeletion(QueueAdminForDeletionRequest $request): Response|JsonResponse
     {
@@ -80,9 +87,9 @@ class AdminController extends Controller
 
     public function deleteAdmins(string $key): Response
     {
-        $idFound = $this->adminService->deleteAdmins($key);
+        $keyFound = $this->adminService->deleteAdmins($key);
 
-        if ($idFound) {
+        if ($keyFound) {
             return response('', Response::HTTP_OK);
         }
 
