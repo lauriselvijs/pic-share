@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Enums\ResourceModificationAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\api\QueueAdminForDeletion;
+use App\Http\Requests\api\QueueAdminForDeletionRequest;
 use App\Http\Requests\api\StoreAdminRequest;
 use App\Http\Requests\api\UpdateAdminRequest;
 use App\Http\Resources\AdminCollection;
 use App\Http\Resources\AdminResource;
-use App\Jobs\ProcessDeleteAdmins;
 use App\Models\Admin;
 use App\Services\AdminService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redis;
 
 class AdminController extends Controller
 {
@@ -48,7 +43,6 @@ class AdminController extends Controller
      */
     public function show(Admin $admin): AdminResource
     {
-        // REVIEW: Check Exceptions/Handler.php for how to handle route model binding not found exceptions
         return new AdminResource($admin);
     }
 
@@ -57,7 +51,6 @@ class AdminController extends Controller
      */
     public function update(UpdateAdminRequest $request, Admin $admin): AdminResource
     {
-
         $admin = $this->adminService->update($request->validated(), $admin);
 
         return new AdminResource($admin);
@@ -74,14 +67,12 @@ class AdminController extends Controller
     }
 
 
-    public function queueForDeletion(QueueAdminForDeletion $request): Response|JsonResponse
+    public function queueForDeletion(QueueAdminForDeletionRequest $request): Response|JsonResponse
     {
-        $request->validated();
-
-        $key = $this->adminService->storeIdsForDeletion($request->input('ids'));
+        $key = $this->adminService->storeIdsForDeletion($request->validated('ids'));
 
         if ($key) {
-            return response()->json([__('key') => $key])->setStatusCode(Response::HTTP_CREATED);
+            return response()->json(['key' => $key])->setStatusCode(Response::HTTP_CREATED);
         }
 
         return response('', Response::HTTP_SERVICE_UNAVAILABLE);

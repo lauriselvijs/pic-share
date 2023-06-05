@@ -98,7 +98,7 @@ class AdminService
         $cacheFull = $this->cacheFull();
 
         if ($cacheFull) {
-            return true;
+            return false;
         }
 
         $key = Str::uuid();
@@ -118,7 +118,8 @@ class AdminService
 
     public function getIdsForDeletionFromCacheUsing(string $deleteKey): array|bool
     {
-        $ids = $this->getIdsForDeletionFromCache();
+        $cache = Redis::get(self::ADMIN_CACHE_KEY);
+        $ids = json_decode($cache, true);
 
         if (isset($ids['key']) && $ids['key'] === $deleteKey) {
             return $ids['ids'];
@@ -140,6 +141,9 @@ class AdminService
 
     public function clearCache(): void
     {
-        Redis::forget(self::ADMIN_CACHE_KEY);
+        Redis::command('del', [self::ADMIN_CACHE_KEY]);
+
+
+        // Redis::forget(self::ADMIN_CACHE_KEY);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests\api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class QueueAdminForDeletion extends FormRequest
+class QueueAdminForDeletionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
