@@ -61,7 +61,7 @@ class AdminService
      * @param Admin $admin
      * @return AdminResource
      */
-    public function update(array $adminData, Admin $admin): AdminResource
+    public function update(Admin $admin, array $adminData): AdminResource
     {
         $role = $adminData['role'];
 

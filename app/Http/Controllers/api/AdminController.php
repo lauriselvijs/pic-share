@@ -53,7 +53,7 @@ class AdminController extends Controller
      */
     public function update(UpdateAdminRequest $request, Admin $admin): AdminResource|Response
     {
-        $admin = $this->adminService->update($request->validated(), $admin);
+        $admin = $this->adminService->update($admin, $request->validated());
 
         if ($admin) {
             return $admin;
