@@ -27,8 +27,6 @@ class AdminController extends Controller
     {
         $admins = $this->adminService->throttleRequest();
 
-        print_r(gettype($admins));
-
         return $admins;
     }
 
@@ -53,12 +51,12 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAdminRequest $request, Admin $admin): AdminResource
+    public function update(UpdateAdminRequest $request, Admin $admin): AdminResource|Response
     {
         $admin = $this->adminService->update($request->validated(), $admin);
 
         if ($admin) {
-            return new AdminResource($admin);
+            return $admin;
         }
 
         return response('', Response::HTTP_TOO_MANY_REQUESTS);

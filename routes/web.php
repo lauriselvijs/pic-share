@@ -34,6 +34,7 @@ Route::middleware(['throttle:global'])->group(function () {
 
     // Users
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
+        Route::get('/{locale}/local', [UserController::class, 'locale'])->middleware('auth')->name('locale');
         Route::get('/{user}/posts', [UserController::class, 'posts'])->middleware('auth')->name('posts');
     });
 

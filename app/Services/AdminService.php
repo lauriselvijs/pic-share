@@ -7,8 +7,6 @@ use App\Http\Resources\AdminResource;
 use App\Jobs\ProcessDeleteAdmins;
 use App\Models\Admin;
 use App\Models\AdminRole;
-use Illuminate\Contracts\Pagination\CursorPaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Redis;
@@ -22,10 +20,15 @@ class AdminService
     public final const THROTTLE_ATTEMPTS = 10;
     public final const THROTTLED_RECORDS = 5;
 
+    public function __construct(private Admin $admin)
+    {
+        $this->admin = $admin;
+    }
+
 
     public function throttleRequest(): AdminCollection
     {
-        $admins = RateLimiter::attempt(self::THROTTLE_KEY, 1, function () {
+        $admins = RateLimiter::attempt(self::THROTTLE_KEY, self::THROTTLE_ATTEMPTS, function () {
             return Admin::latest()->cursorPaginate(Admin::PER_PAGE);
         });
 
@@ -60,9 +63,9 @@ class AdminService
      *
      * @param array<string, mixed> $adminData
      * @param Admin $admin
-     * @return Admin
+     * @return AdminResource
      */
-    public function update(array $adminData, Admin $admin): Admin
+    public function update(array $adminData, Admin $admin): AdminResource
     {
         $role = $adminData['role'];
 
@@ -75,7 +78,7 @@ class AdminService
         unset($adminData['role']);
         $admin->update($adminData);
 
-        return $admin;
+        return new AdminResource($admin);
     }
 
     public function delete(Admin $admin)
@@ -113,7 +116,7 @@ class AdminService
     }
 
     /**
-     * Undocumented function
+     * Store ids for deletion
      *
      * @param array<integer> $ids
      * @return string|boolean
