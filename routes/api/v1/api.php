@@ -13,7 +13,6 @@ Route::group(['prefix' => 'admins', 'as' => 'admins.'], function () {
     Route::delete('/batch/{deleteKey}', [AdminController::class, 'deleteAdmins'])->name('delete-admins');
 });
 
-
 Route::get('/batch/{batchId}', function (string $batchId) {
     return Bus::findBatch($batchId);
 });

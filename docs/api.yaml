@@ -1,0 +1,227 @@
+openapi: 3.0.0
+info:
+  title: Admin API
+  version: 1.0.0
+paths:
+  /admins:
+    get:
+      summary: List all admins
+      parameters:
+        - name: cursor
+          in: query
+          schema:
+            type: string
+          description: The cursor for pagination
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCollection"
+    post:
+      summary: Create a new admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoreAdminRequest"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminResource"
+  /admins/{adminId}:
+    get:
+      summary: Get an admin by ID
+      parameters:
+        - name: adminId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminResource"
+    put:
+      summary: Update an admin
+      parameters:
+        - name: adminId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAdminRequest"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminResource"
+        "429":
+          description: Too Many Requests
+    delete:
+      summary: Delete an admin
+      parameters:
+        - name: adminId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: No Content
+  /admins/delete-queue:
+    post:
+      summary: Queue admins for deletion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueueAdminForDeletionRequest"
+      responses:
+        "201":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+        "503":
+          description: Service Unavailable
+  /admins/batch/{deleteKey}:
+    delete:
+      summary: Delete admins in batch
+      parameters:
+        - name: deleteKey
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bus_id:
+                    type: string
+        "404":
+          description: Not Found
+components:
+  schemas:
+    AdminCollection:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminResource"
+        links:
+          type: object
+          properties:
+            first:
+              type: string
+            last:
+              type: string
+            prev:
+              type: string
+            next:
+              type: string
+        meta:
+          type: object
+          properties:
+            path:
+              type: string
+            per_page:
+              type: string
+            next_cursor:
+              type: string
+            prev_cursor:
+              type: string
+    AdminResource:
+      type: object
+      properties:
+        admin_id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminRoleResource"
+        notify:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    AdminRoleResource:
+      type: object
+      properties:
+        role_id:
+          type: integer
+        role:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StoreAdminRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        notify:
+          type: boolean
+      required:
+        - name
+        - email
+    UpdateAdminRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        notify:
+          type: boolean
+    QueueAdminForDeletionRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: integer
+      required:
+        - ids
