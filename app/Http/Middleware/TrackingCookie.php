@@ -22,7 +22,6 @@ class TrackingCookie
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->session()->has($this->trackingCookieService::ALLOW_TRACKING_SESSION_KEY)) {
-
             if ($request->hasCookie($this->trackingCookieService::ALLOW_TRACKING_COOKIE_KEY)) {
                 $count = $request->cookie($this->trackingCookieService::ALLOW_TRACKING_COOKIE_KEY);
                 // Increment the request count
