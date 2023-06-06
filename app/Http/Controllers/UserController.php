@@ -9,6 +9,7 @@ use App\Services\PostService;
 use Illuminate\Contracts\View\View;
 use App\Contracts\CanGenerateProfilePic;
 use App\Http\Middleware\SetAppLocale;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
@@ -17,13 +18,12 @@ class UserController extends Controller
         private Post $post,
         private PostService $postService,
         private CanGenerateProfilePic $profilePicGenerator,
-        private SetAppLocale $setAppLocale
+        private UserService $userService,
     ) {
-        $this->$setAppLocale = $setAppLocale;
         $this->post = $post;
         $this->postService = $postService;
-
         $this->profilePicGenerator = $profilePicGenerator;
+        $this->$userService = $userService;
     }
 
     /**
@@ -41,9 +41,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function locale(Request $request, $locale)
+    public function locale($locale)
     {
-        $request->session()->put($this->setAppLocale::LOCAL_SESSION_KEY, $locale);
+        $this->userService->setLocal($locale);
 
         return redirect()->back();
     }

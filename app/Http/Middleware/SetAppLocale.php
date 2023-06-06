@@ -19,7 +19,6 @@ class SetAppLocale
     {
         // Check if the session has a "local" key
         if ($request->session()->has(self::LOCAL_SESSION_KEY)) {
-            dd($request->session()->get(self::LOCAL_SESSION_KEY));
             // Set the app locale
             app()->setLocale($request->session()->get(self::LOCAL_SESSION_KEY));
         } else {

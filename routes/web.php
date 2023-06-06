@@ -8,6 +8,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\TrackingCookieController;
 use Illuminate\Http\Request;
 
 /*
@@ -34,9 +35,9 @@ Route::middleware(['throttle:global'])->group(function () {
     Route::resource('posts', PostController::class)->only('show', 'index');
 
     // Users
-    Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
-        Route::get('/{locale}/local', [UserController::class, 'locale'])->middleware('auth')->name('locale');
-        Route::get('/{user}/posts', [UserController::class, 'posts'])->middleware('auth')->name('posts');
+    Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => 'auth'], function () {
+        Route::get('/{locale}/local', [UserController::class, 'locale'])->name('locale');
+        Route::get('/{user}/posts', [UserController::class, 'posts'])->name('posts');
     });
 
     // Authentication
@@ -76,6 +77,10 @@ Route::middleware(['throttle:global'])->group(function () {
         Route::get('/{post}', [PaymentController::class, 'charge'])->middleware('auth')->name('charge');
         Route::post('/process-payment/{post}/', [PaymentController::class, 'process'])->middleware('auth')->name('process');
     });
+
+    // Tracking
+
+    Route::get('/track/allow', [TrackingCookieController::class, 'allow'])->name('track.allow');
 });
 
 
