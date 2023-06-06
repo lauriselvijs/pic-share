@@ -35,4 +35,12 @@ class Admin extends Model
     {
         return $this->belongsToMany(AdminRole::class);
     }
+
+    /**
+     * Get the user's preferred locale.
+     */
+    // public function preferredLocale(): string
+    // {
+    //     return $this->locale;
+    // }
 }

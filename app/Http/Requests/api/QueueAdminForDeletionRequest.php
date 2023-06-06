@@ -23,7 +23,7 @@ class QueueAdminForDeletionRequest extends FormRequest
     {
         return [
             'ids' => 'array|required',
-            'ids.*' => 'integer'
+            'ids.*' => 'integer|exists:admins,id'
         ];
     }
 }

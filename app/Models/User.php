@@ -38,6 +38,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the user's preferred locale.
+     */
+    // public function preferredLocale(): string
+    // {
+    //     return $this->locale;
+    // }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

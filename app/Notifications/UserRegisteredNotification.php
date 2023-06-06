@@ -11,7 +11,6 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-
     /**
      * Create a new notification instance.
      *
@@ -55,9 +54,9 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
     public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('User ' . $notifiable->name .
+            ->line(__('User ' . $notifiable->name .
                 ' with email ' . $notifiable->email .
-                ' has sign up to PicShare');
+                ' has sign up to PicShare'));
     }
 
     /**

@@ -28,6 +28,11 @@ class Kernel extends ConsoleKernel
                 ->onOneServer()
                 ->runInBackground();
 
+            // Send newsletter
+            $schedule->command('newsletter:send')->name('sent:newsletters')
+                ->monthly()
+                ->onOneServer()
+                ->runInBackground();
 
             // Delete all pruned models daily
             $schedule->command('model:prune')->name('pruned:models')

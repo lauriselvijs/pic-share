@@ -9,6 +9,8 @@ use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\TrackingCookieController;
+use App\Mail\MonthlyNewsletter;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 /*
@@ -79,9 +81,17 @@ Route::middleware(['throttle:global'])->group(function () {
     });
 
     // Tracking
-
     Route::get('/track/allow', [TrackingCookieController::class, 'allow'])->name('track.allow');
 });
+
+
+if (config('app.env') == 'development') {
+    Route::get('/mailable', function () {
+        $user = User::find(1);
+
+        return new MonthlyNewsletter($user);
+    });
+}
 
 
 Route::get('/billing-portal', function (Request $request) {
