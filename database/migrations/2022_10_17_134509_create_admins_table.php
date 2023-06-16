@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('password');
             $table->boolean('notify')->default(false);
             $table->timestamps();
         });

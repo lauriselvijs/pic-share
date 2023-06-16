@@ -22,17 +22,6 @@ class AdminRoleFactory extends Factory
         );
     }
 
-    public function threeAdminRoles(): Factory
-    {
-        return $this->state(
-            new Sequence(
-                ['role' => 'DevOps'],
-                ['role' => 'DB Engineer'],
-                ['role' => 'Web Designer'],
-            )
-        );
-    }
-
     /**
      * Define the model's default state.
      *

@@ -10,6 +10,7 @@ use App\Models\AdminRole;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
@@ -21,6 +22,8 @@ class AdminService
     public final const THROTTLE_KEY = 'admin';
     public final const THROTTLE_ATTEMPTS = 10;
     public final const THROTTLED_RECORDS = 5;
+
+    public final const TOKEN_NAME = "admin";
 
     public function throttleRequest(): AdminCollection
     {
@@ -182,5 +185,29 @@ class AdminService
     public function clearCache(): void
     {
         Redis::command('del', [self::ADMIN_CACHE_KEY]);
+    }
+
+
+    function login($validatedAdmin, $header): string|bool
+    {
+        $admin = Admin::where('email', $validatedAdmin['email'])->first();
+        $adminAbilities = [];
+
+        if ($header === config('auth.admin_key')) {
+            $adminAbilities = [...$adminAbilities, 'admin:modify'];
+        }
+
+        if (!$admin || !Hash::check($validatedAdmin['password'], $admin->password)) {
+            return false;
+        }
+
+        $token = $admin->createToken(self::TOKEN_NAME,  $adminAbilities)->plainTextToken;
+
+        return $token;
+    }
+
+    function logout(): void
+    {
+        auth()->user()->currentAccessToken()->delete();
     }
 }

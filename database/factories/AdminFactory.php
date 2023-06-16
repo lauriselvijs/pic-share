@@ -31,6 +31,7 @@ class AdminFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'password' => fake()->password()
         ];
     }
 }

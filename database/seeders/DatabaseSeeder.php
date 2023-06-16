@@ -29,11 +29,9 @@ class DatabaseSeeder extends Seeder
         Activity::factory()->count(3)->hasActivityStatuses(2)->create();
 
         $twoAdminRoles = AdminRole::factory()->count(2)->twoAdminRoles()->create();
-        $threeAdminRoles = AdminRole::factory()->count(3)->threeAdminRoles()->create();
 
-        Admin::factory()->count(1)->notify()->hasAttached($twoAdminRoles)->create();
-        Admin::factory()->count(50)->hasAttached($threeAdminRoles)->create();
-        Admin::factory()->count(50)->hasAttached($threeAdminRoles)->create();
+        Admin::factory()->count(1)->notify()->hasRoles($twoAdminRoles)->create();
+        Admin::factory()->count(50)->hasRoles($twoAdminRoles)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

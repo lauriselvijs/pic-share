@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\api\AuthAdminRequest;
 use App\Http\Requests\api\QueueAdminForDeletionRequest;
 use App\Http\Requests\api\StoreAdminRequest;
 use App\Http\Requests\api\UpdateAdminRequest;
@@ -92,5 +93,25 @@ class AdminController extends Controller
         }
 
         return response('', Response::HTTP_NOT_FOUND);
+    }
+
+
+    function login(AuthAdminRequest $request): JsonResponse
+    {
+        $authHeader = $request->header('X-AUTH-ADMIN');
+        $token = $this->adminService->login($request->validated(), $authHeader);
+
+        if ($token) {
+        }
+
+        // throw new AuthenticationException;
+        return response()->json(['message' => 'The provided credentials are incorrect.'])->setStatusCode(Response::HTTP_UNAUTHORIZED);
+    }
+
+    function logout(): Response
+    {
+        $this->adminService->logout();
+
+        return response('', Response::HTTP_OK);
     }
 }
