@@ -34,7 +34,7 @@ class AuthController extends Controller
 
         auth()->login($user);
 
-        return redirect()->intended('verification.notice')->with('message',  __('user.created'));
+        return redirect()->route('verification.notice')->with('message',  __('user.created'));
     }
 
     /**

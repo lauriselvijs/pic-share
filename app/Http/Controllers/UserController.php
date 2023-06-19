@@ -8,22 +8,21 @@ use Illuminate\Http\Request;
 use App\Services\PostService;
 use Illuminate\Contracts\View\View;
 use App\Contracts\CanGenerateProfilePic;
-use App\Http\Middleware\SetAppLocale;
 use App\Services\UserService;
 
 class UserController extends Controller
 {
 
     public function __construct(
+        private UserService $userService,
         private Post $post,
         private PostService $postService,
         private CanGenerateProfilePic $profilePicGenerator,
-        private UserService $userService,
     ) {
+        $this->userService = $userService;
         $this->post = $post;
         $this->postService = $postService;
         $this->profilePicGenerator = $profilePicGenerator;
-        $this->$userService = $userService;
     }
 
     /**

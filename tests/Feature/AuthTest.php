@@ -50,6 +50,7 @@ class AuthTest extends TestCase
         Event::assertDispatched(Registered::class);
 
         $response->assertSessionHasNoErrors();
+
         $response->assertRedirect(route('verification.notice'));
 
 
