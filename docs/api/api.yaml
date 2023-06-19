@@ -2,10 +2,62 @@ openapi: 3.0.0
 info:
   title: Admin API
   version: 1.0.0
+servers:
+  - url: "localhost"
+    description: "Your local server"
+tags:
+  - name: admin
+    description: All possible admin operations
 paths:
+  /admins/login:
+    post:
+      tags:
+        - admin
+      summary: Admin Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /admins/logout:
+    post:
+      tags:
+        - admin
+      summary: Admin Logout
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful logout
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /admins:
     get:
+      tags:
+        - admin
       summary: List all admins
+      security:
+        - bearerAuth: []
       parameters:
         - name: cursor
           in: query
@@ -20,7 +72,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminCollection"
     post:
+      tags:
+        - admin
       summary: Create a new admin
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -34,9 +90,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AdminResource"
+
   /admins/{adminId}:
     get:
+      tags:
+        - admin
       summary: Get an admin by ID
+      security:
+        - bearerAuth: []
       parameters:
         - name: adminId
           in: path
@@ -51,7 +112,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminResource"
     put:
+      tags:
+        - admin
       summary: Update an admin
+      security:
+        - bearerAuth: []
       parameters:
         - name: adminId
           in: path
@@ -74,7 +139,11 @@ paths:
         "429":
           description: Too Many Requests
     delete:
+      tags:
+        - admin
       summary: Delete an admin
+      security:
+        - bearerAuth: []
       parameters:
         - name: adminId
           in: path
@@ -84,9 +153,14 @@ paths:
       responses:
         "204":
           description: No Content
+
   /admins/delete-queue:
     post:
+      tags:
+        - admin
       summary: Queue admins for deletion
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -105,9 +179,14 @@ paths:
                     type: string
         "503":
           description: Service Unavailable
+
   /admins/batch/{deleteKey}:
     delete:
+      tags:
+        - admin
       summary: Delete admins in batch
+      security:
+        - bearerAuth: []
       parameters:
         - name: deleteKey
           in: path
@@ -126,7 +205,13 @@ paths:
                     type: string
         "404":
           description: Not Found
+
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: bare
   schemas:
     AdminCollection:
       type: object
@@ -198,6 +283,8 @@ components:
           type: string
         email:
           type: string
+        password:
+          type: string
         role:
           type: string
         notify:
@@ -225,3 +312,24 @@ components:
             type: integer
       required:
         - ids
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
