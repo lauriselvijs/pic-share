@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Models\AdminRole;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -18,7 +18,7 @@ class Admin extends Model
      *
      * @var array<string>
      */
-    protected $fillable = ['name', 'email', 'notify'];
+    protected $fillable = ['name', 'email', 'notify', 'password'];
 
 
     /**

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('admin_admin_role', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(AdminRole::class)->constrained();
-            $table->foreignIdFor(Admin::class)->constrained();
+            $table->foreignIdFor(AdminRole::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Admin::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

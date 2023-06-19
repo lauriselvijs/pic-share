@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'admin' => [
+            'driver' => 'sanctum',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -69,6 +74,11 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
     ],
 
     /*
@@ -107,15 +117,4 @@ return [
     */
 
     'password_timeout' => 10800,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Key for admin
-    |--------------------------------------------------------------------------
-    |
-    | Key used with X-ADMIN-AUTH header
-    |
-    */
-
-    'admin_key' => env('ADMIN_AUTH_KEY'),
 ];

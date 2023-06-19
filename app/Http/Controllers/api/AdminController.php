@@ -54,13 +54,13 @@ class AdminController extends Controller
      */
     public function update(UpdateAdminRequest $request, Admin $admin): AdminResource|Response
     {
-        $admin = $this->adminService->update($admin, $request->validated());
+        $updatedAdmin = $this->adminService->update($request->validated(), $admin);
 
-        if ($admin) {
-            return $admin;
+        if ($updatedAdmin) {
+            return $updatedAdmin;
         }
 
-        return response('', Response::HTTP_TOO_MANY_REQUESTS);
+        return response('', Response::HTTP_SERVICE_UNAVAILABLE);
     }
 
     /**
@@ -68,6 +68,8 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin): Response
     {
+        $this->authorize('delete', $admin);
+
         $this->adminService->delete($admin);
 
         return response()->noContent();
@@ -98,10 +100,10 @@ class AdminController extends Controller
 
     function login(AuthAdminRequest $request): JsonResponse
     {
-        $authHeader = $request->header('X-AUTH-ADMIN');
-        $token = $this->adminService->login($request->validated(), $authHeader);
+        $token = $this->adminService->login($request->validated());
 
         if ($token) {
+            return response()->json(['token' => $token])->setStatusCode(Response::HTTP_OK);
         }
 
         // throw new AuthenticationException;

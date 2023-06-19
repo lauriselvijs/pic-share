@@ -18,12 +18,13 @@ use Illuminate\Support\Str;
 class AdminService
 {
     public final const ADMIN_CACHE_KEY  = 'delete_admins';
-    public final const ADMIN_CACHE_EXPIRATION_TIME  = 60;
+    public final const ADMIN_CACHE_EXPIRATION_TIME = 60;
+
     public final const THROTTLE_KEY = 'admin';
     public final const THROTTLE_ATTEMPTS = 10;
-    public final const THROTTLED_RECORDS = 5;
+    public final const THROTTLED_OUTPUT_RECORDS = 5;
 
-    public final const TOKEN_NAME = "admin";
+    public final const API_TOKEN_NAME = "admin";
 
     public function throttleRequest(): AdminCollection
     {
@@ -35,7 +36,7 @@ class AdminService
             return new AdminCollection($admins);
         }
 
-        return new AdminCollection(Admin::latest()->take(self::THROTTLED_RECORDS)->get());
+        return new AdminCollection(Admin::latest()->take(self::THROTTLED_OUTPUT_RECORDS)->get());
     }
 
     /**
@@ -46,6 +47,8 @@ class AdminService
      */
     public function store(array $adminData): AdminResource
     {
+        $adminData['password'] = Hash::make($adminData['password']);
+
         $adminRole = AdminRole::where('role', $adminData['role'])->first();
 
         unset($adminData["role"]);
@@ -60,32 +63,42 @@ class AdminService
     /**
      * Update admin
      *
-     * @param array<string, mixed> $adminData
+     * @param array<string, mixed> $newAdminData
      * @param Admin $admin
      * @return AdminResource
      */
-    public function update(Admin $admin, array $adminData): AdminResource
+    public function update(array $newAdminData, Admin $admin): AdminResource
     {
-        $role = $adminData['role'];
+        if (isset($newAdminData['password'])) {
+            $adminData['password'] = Hash::make($newAdminData['password']);
+        }
 
-        if ($admin->roles()->where('role', $role)->doesntExist()) {
+        if (isset($newAdminData['role'])) {
+            $role = $newAdminData['role'];
+
             $newAdminRole = AdminRole::where('role', $role)->first();
             $admin->roles()->syncWithoutDetaching([$newAdminRole->id]);
             $admin->refresh();
-        }
 
-        unset($adminData['role']);
-        $admin->update($adminData);
+            unset($newAdminData['role']);
+        };
+
+        $admin->update($newAdminData);
 
         return new AdminResource($admin);
     }
 
     public function delete(Admin $admin)
     {
-        DB::transaction(function () use ($admin) {
-            $admin->roles()->detach();
-            $admin->delete();
-        });
+
+        // If in pivot table cascadeOnDelete dont need to detach
+        // DB::transaction(function () use ($admin) {
+        //     $admin->roles()->detach();
+        //     $admin->delete();
+        // });
+        auth('admin')->user()->tokens()->delete();
+
+        $admin->delete();
     }
 
     /**
@@ -187,27 +200,22 @@ class AdminService
         Redis::command('del', [self::ADMIN_CACHE_KEY]);
     }
 
-
-    function login($validatedAdmin, $header): string|bool
+    function login($validatedAdmin): string|bool
     {
         $admin = Admin::where('email', $validatedAdmin['email'])->first();
-        $adminAbilities = [];
-
-        if ($header === config('auth.admin_key')) {
-            $adminAbilities = [...$adminAbilities, 'admin:modify'];
-        }
 
         if (!$admin || !Hash::check($validatedAdmin['password'], $admin->password)) {
             return false;
         }
 
-        $token = $admin->createToken(self::TOKEN_NAME,  $adminAbilities)->plainTextToken;
+        $token = $admin->createToken(self::API_TOKEN_NAME, ['admin:create', 'admin:update', 'admin:delete'])->plainTextToken;
+        // $token = $admin->createToken(self::API_TOKEN_NAME)->plainTextToken;
 
         return $token;
     }
 
     function logout(): void
     {
-        auth()->user()->currentAccessToken()->delete();
+        auth('admin')->user()->tokens()->delete();
     }
 }
