@@ -15,7 +15,6 @@ class ProcessDeleteAdmins implements ShouldQueue, ShouldBeUnique
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
     /**
      * Create a new job instance.
      */

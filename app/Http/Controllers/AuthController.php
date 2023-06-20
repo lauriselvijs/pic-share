@@ -63,7 +63,7 @@ class AuthController extends Controller
     public function authenticate(AuthRequest $request): RedirectResponse
     {
         if ($this->authService->authenticate($request->session(), $request->validated(), $request->has('remember'))) {
-            return redirect()->route('posts.index')->with('message',  __('user.logged_in'));
+            return redirect()->intended(route('posts.index'))->with('message',  __('user.logged_in'));
         }
 
         return back()->withErrors(['password' => __('auth.failed')])->onlyInput('password');

@@ -118,13 +118,14 @@ class AdminService
                     $this->delete($admin);
 
                     $jobBatch = [...$jobBatch, new ProcessDeleteAdmins($admin, $key)];
-                });
 
-                // REVIEW: For dispatching jobs within database transaction use after commit to dispatch job after transaction is finished
-                // ProcessDeleteAdmins::dispatch(
-                //     $id,
-                //     $key,
-                // )->afterCommit();
+                    // REVIEW: For dispatching jobs within database transaction use after commit to dispatch job after transaction is finished
+                    // dispatch(new ProcessDeleteAdmins($admin, $key))->afterCommit();
+                    // ProcessDeleteAdmins::dispatch(
+                    //     $id,
+                    //     $key,
+                    // )->afterCommit();
+                });
             });
 
             $this->clearCache();

@@ -20,7 +20,5 @@ Route::middleware(['throttle:api'])->group(function () {
         Route::delete('/batch/{deleteKey}', [AdminController::class, 'deleteAdmins'])->name('delete_admins');
     });
 
-
-
     Route::apiResource('admins', AdminController::class)->middleware(['auth:sanctum', 'abilities:admin:create,admin:update,admin:delete']);
 });
