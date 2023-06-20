@@ -16,7 +16,8 @@
         "laravel-vite-plugin": "^0.7.3",
         "postcss": "^8.4.16",
         "tailwindcss": "^3.1.8",
-        "vite": "^4.0.4"
+        "vite": "^4.0.4",
+        "vite-plugin-top-level-await": "^1.3.0"
     },
     "browserslist": {
         "production": [
@@ -29,8 +30,5 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
-    },
-    "dependencies": {
-        "vite-plugin-top-level-await": "^1.3.0"
     }
 }
