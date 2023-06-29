@@ -11,17 +11,6 @@ use Illuminate\Database\Eloquent\Factories\Sequence;
  */
 class AdminRoleFactory extends Factory
 {
-
-    public function twoAdminRoles(): Factory
-    {
-        return $this->state(
-            new Sequence(
-                ['role' => 'Backend Engineer'],
-                ['role' => 'Tester'],
-            )
-        );
-    }
-
     /**
      * Define the model's default state.
      *

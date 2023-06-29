@@ -28,8 +28,6 @@ class DatabaseSeeder extends Seeder
 
         Activity::factory()->count(3)->hasActivityStatuses(2)->create();
 
-        AdminRole::factory()->count(2)->twoAdminRoles()->create();
-
         Admin::factory()->count(1)->notify()->hasRoles(1)->create();
         Admin::factory()->count(2)->hasRoles(2)->create();
 
