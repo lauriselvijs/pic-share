@@ -28,6 +28,11 @@ class Kernel extends ConsoleKernel
                 ->onOneServer()
                 ->runInBackground();
 
+            $schedule->command('auth:clear-resets')->name('cleared:auth')
+                ->everyFifteenMinutes()
+                ->onOneServer()
+                ->runInBackground();
+
             // Send newsletter
             $schedule->command('newsletter:send')->name('sent:newsletters')
                 ->monthly()
