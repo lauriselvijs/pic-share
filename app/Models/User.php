@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\MassPrunable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -28,6 +29,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     // protected $dispatchesEvents  = ['created' => UserRegisteredEvent::class];
+
+
+    // REVIEW: Allows deleting without rising events (faster).
+    // use MassPrunable;
+
 
     /**
      * Get the route key for the model.

@@ -7,6 +7,15 @@ use Illuminate\Support\Str;
 
 class PostObserver
 {
+
+    // REVIEW: Runs events after transactions
+    /**
+     * Handle events after all transactions are committed.
+     *
+     * @var bool
+     */
+    public $afterCommit = true;
+
     /**
      * Handle the User "creating" event.
      *
