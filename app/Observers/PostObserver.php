@@ -48,7 +48,7 @@ class PostObserver
      */
     public function updating(Post $post)
     {
-        cache()->flush($post->image);
+        // cache()->flush($post->image);
     }
 
     /**

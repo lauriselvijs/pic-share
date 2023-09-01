@@ -16,6 +16,11 @@ class Kernel extends ConsoleKernel
 
         if (config('app.server_type') == 'default') {
 
+            $schedule->command('sanctum:prune-expired --hours=24')->name('pruned-expired:sanctum')
+                ->daily()
+                ->onOneServer()
+                ->runInBackground();;
+
             // Remove failed jobs from DB every month
             $schedule->command('queue:prune-failed')->name('deleted:jobs')
                 ->monthly()

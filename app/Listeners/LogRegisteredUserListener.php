@@ -15,7 +15,7 @@ class LogRegisteredUserListener implements ShouldQueue
      *
      * @var string|null
      */
-    public $connection = 'redis';
+    public string|null $connection = 'redis';
 
     /**
      * The name of the queue the job should be sent to.

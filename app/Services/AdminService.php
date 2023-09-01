@@ -101,13 +101,32 @@ class AdminService
         $admin->delete();
     }
 
+    public function getIdsForDeletionFromCacheUsing(string $deleteKey): array|bool
+    {
+        Redis::command('persist', [self::ADMIN_CACHE_KEY]);
+
+        $cache = Redis::get(self::ADMIN_CACHE_KEY);
+        $ids = json_decode($cache, true);
+
+        if (isset($ids['key']) && $ids['key'] === $deleteKey) {
+            return $ids['ids'];
+        }
+
+        return false;
+    }
+
+    public function clearCache(): void
+    {
+        Redis::command('del', [self::ADMIN_CACHE_KEY]);
+    }
+
     /**
      * Returns tuple that consists of true and bus id for deleted admin report or false if cant delete admins
      *
      * @param string $key
-     * @return boolean
+     * @return boolean|array<int, \Illuminate\Bus\Batch>
      */
-    public function deleteAdmins(string $key): bool
+    public function deleteAdmins(string $key): bool|array
     {
         $ids = $this->getIdsForDeletionFromCacheUsing($key);
         $jobBatch = [];
@@ -140,7 +159,7 @@ class AdminService
                 // The batch has finished executing...
             })->name('Deleted admins report')->dispatch();
 
-            return [true, $busId];
+            return $busId;
         }
 
         return false;
@@ -173,19 +192,8 @@ class AdminService
         return $key;
     }
 
-    public function getIdsForDeletionFromCacheUsing(string $deleteKey): array|bool
-    {
-        $cache = Redis::get(self::ADMIN_CACHE_KEY);
-        $ids = json_decode($cache, true);
 
-        if (isset($ids['key']) && $ids['key'] === $deleteKey) {
-            return $ids['ids'];
-        }
-
-        return false;
-    }
-
-    public function cacheFull(): bool|array
+    public function cacheFull(): bool
     {
         $cache = Redis::get(self::ADMIN_CACHE_KEY);
 
@@ -196,11 +204,6 @@ class AdminService
         return false;
     }
 
-    public function clearCache(): void
-    {
-        Redis::command('del', [self::ADMIN_CACHE_KEY]);
-    }
-
     function login($validatedAdmin): string|bool
     {
         $admin = Admin::where('email', $validatedAdmin['email'])->first();
@@ -209,7 +212,9 @@ class AdminService
             return false;
         }
 
-        $token = $admin->createToken(self::API_TOKEN_NAME, ['admin:create', 'admin:update', 'admin:delete'])->plainTextToken;
+        $tokenName = Str::uuid();
+
+        $token = $admin->createToken($tokenName, ['admin:create', 'admin:update', 'admin:delete'])->plainTextToken;
         // $token = $admin->createToken(self::API_TOKEN_NAME)->plainTextToken;
 
         return $token;

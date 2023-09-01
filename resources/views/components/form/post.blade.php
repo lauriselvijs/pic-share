@@ -37,8 +37,8 @@
     --}}
     <div id='image-drop-box' class='w-full p-20 bg-sunset flex flex-col justify-center items-center gap-2'>
         <img role="img" class='w-6 h-6' src="{{ asset('assets/icons/upload-icon.svg') }}" alt='{{ __(' Upload') }}'>
-        <p class='text-xs whitespace-nowrap font-medium text-black'>{{ __('Drag picture to this drop zone. *.jpeg
-            *.png') }}</p>
+        <p class='text-xs whitespace-nowrap font-medium text-black'>{{ __('Drag picture to this drop zone')}}. *.jpeg,
+            *.png</p>
         <label for='image-drop-box-input' aria-describedby='image-drop-box-input'
             class='text-sm font-medium text-white bg-black px-2.5 py-2.5 text-center hover:bg-shadow cursor-pointer'>{{
             __('Upload your image') }}</label>
