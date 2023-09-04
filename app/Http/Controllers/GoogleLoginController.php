@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Routing\Redirector;
 use App\Services\GoogleLoginService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleLoginController extends Controller
@@ -17,8 +18,6 @@ class GoogleLoginController extends Controller
 
     /**
      * Redirects to Google callback.
-     *
-     * @return RedirectResponse
      */
     public function redirect(): RedirectResponse
     {
@@ -27,34 +26,27 @@ class GoogleLoginController extends Controller
 
     /**
      * Checks if user exists in DB if not create new user instance.
-     *
-     * @return Redirector|RedirectResponse
      */
-    public function callback(): Redirector|RedirectResponse
+    public function callback(Request $request): Redirector|RedirectResponse
     {
         try {
             $user = $this->googleLoginService->getUser();
-        } catch (\Exception $error) {
-            dd($error);
-            return redirect()->route('home')->with('message',  __('error.primary'));
+        } catch (\Exception $_error) {
+            return redirect()->route('home')->with('message', __('error.primary'));
         }
 
-        $findUser = $this->googleLoginService->findUser($user->id);
+        $foundUser = $this->googleLoginService->findUser($user->id);
 
-        if ($findUser) {
-            auth()->login($findUser);
+        $request->session()->regenerate();
 
-            return redirect()->route('posts.index')->with('message',  __('user.logged_in'));
-        }
-
-        if (!$findUser) {
+        if ($foundUser) {
+            auth()->login($foundUser);
+            $message = __('user.logged_in');
+        } else {
             $this->googleLoginService->createAndAuthUser($user);
-
-            return redirect()->route('posts.index')->with('message',  __('user.created'));
+            $message = __('user.created');
         }
 
-        return back()->with('message',  __('error.primary'));
-
-        return redirect()->route('posts.index')->with('message',  __('user.logged_in'));
+        return redirect()->route('posts.index')->with('message', $message);
     }
 }

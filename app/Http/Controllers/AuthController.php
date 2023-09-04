@@ -32,6 +32,8 @@ class AuthController extends Controller
     {
         $user = $this->authService->store($request->validated());
 
+        $request->session()->regenerate();
+
         auth()->login($user);
 
         return redirect()->route('verification.notice')->with('message',  __('user.created'));
