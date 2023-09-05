@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Services\PaymentService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Laravel\Cashier\Exceptions\IncompletePayment;
 
 class PaymentController extends Controller
 {
@@ -43,8 +44,8 @@ class PaymentController extends Controller
 
         try {
             $this->paymentService->makePayment($user,  $post->price, $paymentMethodId);
-        } catch (Exception $error) {
-            return back()->withErrors(['message' => __('payment.error', ['error' => $error->getMessage()])]);
+        } catch (IncompletePayment $exception) {
+            return back()->withErrors(['message' => __('payment.error', ['error' => $exception->payment->status])]);
         }
 
         return redirect()->route('posts.index')->with('message',  __('payment.success'));
