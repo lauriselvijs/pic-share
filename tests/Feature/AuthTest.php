@@ -46,8 +46,8 @@ class AuthTest extends TestCase
         ]);
 
         Event::assertDispatched(UserRegisteredEvent::class);
-        Notification::assertNothingSent();
         Event::assertDispatched(Registered::class);
+        Notification::assertNothingSent();
 
         $response->assertSessionHasNoErrors();
 
