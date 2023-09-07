@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\TrackingCookieService;
-use Illuminate\Http\Request;
 
 class TrackingCookieController extends Controller
 {
@@ -11,7 +10,7 @@ class TrackingCookieController extends Controller
     {
     }
 
-    public function allow(Request $request)
+    public function allow()
     {
         $cookie = $this->trackingCookieService->allowTracking();
 
