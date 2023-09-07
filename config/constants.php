@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'storage_disk_name' => 'dropbox-files'
+    'min_file_size' => 1,
+    'max_file_size' => 10 * 1024
 ];

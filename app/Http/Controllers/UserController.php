@@ -19,10 +19,6 @@ class UserController extends Controller
         private PostService $postService,
         private CanGenerateProfilePic $profilePicGenerator,
     ) {
-        $this->userService = $userService;
-        $this->post = $post;
-        $this->postService = $postService;
-        $this->profilePicGenerator = $profilePicGenerator;
     }
 
     /**

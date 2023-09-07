@@ -12,7 +12,7 @@
         <button type='submit'>{{ __('My Posts') }}</button>
     </form>
     @auth
-    <div>{{ __('Welcome') }} {{ auth()->user()->name }}</div>
+    <div class="hidden md:block">{{ __('Welcome') }} {{ auth()->user()->name }}</div>
     @endauth
     <form method='POST' action="{{ route('auth.logout') }}" class='cursor-pointer hover:{{ $hoverLinkColor }}'>
         @csrf

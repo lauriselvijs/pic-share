@@ -29,9 +29,12 @@ class PostTest extends TestCase
      */
     public function test_authorized_user_stores_post(): void
     {
-        Storage::fake(config('constants.storage_disk_name'));
+        $fileManipulator = app(CanManipulateFiles::class);
+        $storage = $fileManipulator->getStorageName();
 
-        $postImage = UploadedFile::fake()->image('post.jpg');
+        Storage::fake($storage);
+
+        $postImage = UploadedFile::fake()->image('post.jpg')->size(config('constants.max_file_size'));
 
         $response = $this->post(
             route('posts.store'),
@@ -43,7 +46,7 @@ class PostTest extends TestCase
             ]
         );
 
-        Storage::disk(config('constants.storage_disk_name'))->assertExists($postImage->hashName());
+        Storage::disk($storage)->assertExists($postImage->hashName());
 
         $response->assertRedirect(route('posts.index'));
 

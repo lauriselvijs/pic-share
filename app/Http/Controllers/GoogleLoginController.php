@@ -13,7 +13,6 @@ class GoogleLoginController extends Controller
 
     public function __construct(private GoogleLoginService $googleLoginService)
     {
-        $this->googleLoginService = $googleLoginService;
     }
 
     /**

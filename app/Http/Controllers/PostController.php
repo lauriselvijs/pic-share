@@ -15,8 +15,6 @@ class PostController extends Controller
 
     public function __construct(private Post $post, private PostService $postService)
     {
-        $this->post = $post;
-        $this->postService = $postService;
     }
 
     /**
@@ -61,7 +59,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request): RedirectResponse
     {
-        $this->postService->store([...$request->validated(), 'user_id' => auth()->id()]);
+        $this->postService->store($request->safe(), request()->user());
 
         return redirect()->route('posts.index')->with('message',  __('post.created'));
     }
@@ -83,7 +81,7 @@ class PostController extends Controller
      */
     public function update(Post $post, UpdatePostRequest $request): RedirectResponse
     {
-        $this->postService->update($post, $request->validated());
+        $this->postService->update($post, $request->safe());
 
         return redirect()->route('posts.index')->with('message',  __('post.updated'));
     }

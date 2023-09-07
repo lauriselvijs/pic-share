@@ -22,10 +22,10 @@ class UpdateAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'filled|string',
-            'email' => 'filled|email|unique:admins',
-            'role' => 'filled|exists:admin_roles,role',
-            'notify' => 'filled|boolean'
+            'name' => 'required|string',
+            'email' => 'required|email|unique:admins',
+            'role' => 'required|exists:admin_roles,role',
+            'notify' => 'required|boolean'
         ];
     }
 }

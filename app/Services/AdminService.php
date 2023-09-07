@@ -17,14 +17,12 @@ use Illuminate\Support\Str;
 
 class AdminService
 {
-    public final const ADMIN_CACHE_KEY  = 'delete_admins';
-    public final const ADMIN_CACHE_EXPIRATION_TIME = 60;
+    private const ADMIN_CACHE_KEY  = 'delete_admins';
+    private const ADMIN_CACHE_EXPIRATION_TIME = 60;
 
-    public final const THROTTLE_KEY = 'admin';
-    public final const THROTTLE_ATTEMPTS = 10;
-    public final const THROTTLED_OUTPUT_RECORDS = 5;
-
-    public final const API_TOKEN_NAME = "admin";
+    private const THROTTLE_KEY = 'admin';
+    private const THROTTLE_ATTEMPTS = 10;
+    private const THROTTLED_OUTPUT_RECORDS = 5;
 
     public function throttleRequest(): AdminCollection
     {
@@ -215,7 +213,6 @@ class AdminService
         $tokenName = Str::uuid();
 
         $token = $admin->createToken($tokenName, ['admin:create', 'admin:update', 'admin:delete'])->plainTextToken;
-        // $token = $admin->createToken(self::API_TOKEN_NAME)->plainTextToken;
 
         return $token;
     }

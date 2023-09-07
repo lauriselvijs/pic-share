@@ -9,7 +9,6 @@ class TrackingCookieController extends Controller
 {
     public function __construct(private TrackingCookieService $trackingCookieService)
     {
-        $this->trackingCookieService = $trackingCookieService;
     }
 
     public function allow(Request $request)

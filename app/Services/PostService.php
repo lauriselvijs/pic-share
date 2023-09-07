@@ -4,22 +4,16 @@ namespace App\Services;
 
 use App\Contracts\CanManipulateFiles;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\ValidatedInput;
 
 class PostService
 {
     public function __construct(private CanManipulateFiles $fileManipulator)
     {
-        $this->fileManipulator = $fileManipulator;
     }
-
-    /**
-     * Post table image path column name
-     * 
-     * @var string
-     */
-    private const IMAGE_COLUMN_NAME = 'image';
 
     /**
      * Includes author names and generates temporary url for posted images in post (all posts).
@@ -81,27 +75,27 @@ class PostService
     /**
      * Store post in database.
      *
-     * @param array<string, int|string|UploadedFile> $postData
+     * @param ValidatedInput|array<string, int|string|UploadedFile> $postData
      */
-    public function store(array $postData): void
+    public function store(ValidatedInput $post, User $user): void
     {
-        $imagePath = $this->saveAndReturnPathOfImage($postData[self::IMAGE_COLUMN_NAME]);
-        $postData[self::IMAGE_COLUMN_NAME] = $imagePath;
+        $imagePath = $this->saveAndReturnPathOfImage($post->image);
+        $post->image = $imagePath;
 
-        Post::create($postData);
+        $user->posts()->create($post->toArray());
     }
 
     /**
      * Update post.
      */
-    public function update(Post $post, array $postData)
+    public function update(Post $post, ValidatedInput $postData)
     {
-        if (isset($postData[self::IMAGE_COLUMN_NAME]) && $postData[self::IMAGE_COLUMN_NAME]) {
-            $imagePath = $this->updatePathOfImage($postData[self::IMAGE_COLUMN_NAME], $post->image);
-            $postData[self::IMAGE_COLUMN_NAME] = $imagePath;
+        if (isset($postData->image) && $postData->image) {
+            $imagePath = $this->updatePathOfImage($postData->image, $post->image);
+            $postData->image = $imagePath;
         }
 
-        $post->update($postData);
+        $post->update($postData->toArray());
     }
 
     /**

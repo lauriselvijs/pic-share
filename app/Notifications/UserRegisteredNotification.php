@@ -18,8 +18,6 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
      */
     public function __construct(private mixed $notifiable)
     {
-        $this->notifiable = $notifiable;
-
         $this->connection = 'redis';
         $this->queue = 'emails';
     }

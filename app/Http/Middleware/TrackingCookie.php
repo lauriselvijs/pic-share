@@ -11,7 +11,6 @@ class TrackingCookie
 {
     public function __construct(private TrackingCookieService $trackingCookieService)
     {
-        $this->trackingCookieService = $trackingCookieService;
     }
 
     /**

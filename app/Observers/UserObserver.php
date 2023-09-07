@@ -15,7 +15,6 @@ class UserObserver
 {
     public function __construct(private Post $post)
     {
-        $this->post = $post;
     }
 
     /**

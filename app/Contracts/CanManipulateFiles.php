@@ -10,13 +10,6 @@ use Illuminate\Http\UploadedFile;
 interface CanManipulateFiles
 {
     /**
-     * The name of the storage disk that will be used.
-     * 
-     * @var string
-     */
-    const STORAGE_DISK_NAME = 'dropbox-files';
-
-    /**
      * Stores an uploaded file.
      * 
      * @param UploadedFile $file The file to be stored.
@@ -52,4 +45,11 @@ interface CanManipulateFiles
      * @return string The path of the updated file.
      */
     public function update(UploadedFile $newImage, string $oldImagePath): string;
+
+    /**
+     * Get disk name of storage.
+     * 
+     * @return string The disk name.
+     */
+    public function getStorageName(): string;
 }

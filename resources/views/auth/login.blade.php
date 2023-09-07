@@ -10,12 +10,12 @@
         {{ __('Login to your account') }}
     </x-slot>
     <x-form.auth :action='route("auth.authenticate")'>
-        <x-slot name='extraInputFields'>
+        <x-slot name='fields'>
         </x-slot>
-        <x-slot name='addAuthFormInfo'>
+        <x-slot name='info'>
             <div class='flex items-center justify-between'>
-                <x-input.checkbox name='remember' required=''>
-                    <x-slot name='checkboxLabel'>
+                <x-input.checkbox name='remember' required>
+                    <x-slot name='label'>
                         {{ __('Remember me') }}
                     </x-slot>
                 </x-input.checkbox>
@@ -28,7 +28,7 @@
                 {{ __('Login') }}
             </x-button>
         </x-slot>
-        <x-slot name='authFormFooter'>
+        <x-slot name='footer'>
             {{ __("Don't have an account yet?") }} <x-link :href='route("auth.create")'
                 class='font-medium text-black hover:underline'>
                 {{ __('Sign up') }}</x-link>

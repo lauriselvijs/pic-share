@@ -41,8 +41,8 @@ class AuthTest extends TestCase
             'name' => 'John',
             'email' => 'john@mail.com',
             'agreement' => 'true',
-            'password' => '123456',
-            'password_confirmation' => '123456'
+            'password' => '}YVPrN0e1P81',
+            'password_confirmation' => '}YVPrN0e1P81'
         ]);
 
         Event::assertDispatched(UserRegisteredEvent::class);

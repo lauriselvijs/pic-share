@@ -64,14 +64,6 @@ return [
             'throw' => false,
         ],
 
-        'files' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/files'),
-            'url' => env('APP_URL') . '/files',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-
         'dropbox-backups' => [
             'driver' => 'dropbox',
             'root' => "backups"
@@ -97,7 +89,6 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('media') => storage_path('app/public/media')
     ],
 
 ];

@@ -1,26 +1,25 @@
-@props(['label', 'name'])
-
-{{-- TODO:
-[ ] - add strength meter for validation --}}
+@props([
+'label',
+'name',
+])
 
 <div>
     <label for="{{ $name }}" class="block mb-2 text-base font-medium text-black">{{ $label }}</label>
     <input {{ $attributes->merge([
-    'type' => 'text',
+    'step' => '.01',
+    'min' => '0.01',
+    'max' => '199999.99',
     'name' => $name,
     'id' => $name,
     'class' => 'bg-white border border-black text-black text-sm block w-full p-2.5',
     'placeholder' => false,
-    'value' => '',
-    'required' => false,
-    'autocomplete' => false,
-    'min' => false,
-    'max' => false,
-    ]) }}
-    >
+    'value' => false,
+    'required' => false
+    ])
+    }} type="number">
 </div>
 @error($name)
-<x-message.error aria-describedby={{ $name }}>
+<x-message.error>
     {{ $message }}
 </x-message.error>
 @enderror

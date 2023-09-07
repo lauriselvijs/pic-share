@@ -12,13 +12,8 @@
     <x-form :action='route("password.email")' method='POST'>
         @csrf
 
-        <x-input label="{{ __('Your email') }}" type='email' name='email' placeholder="{{ __('name@company.com') }}"
-            required />
-        @error('email')
-        <x-message.error>
-            {{ $message }}
-        </x-message.error>
-        @enderror
+        <x-input label="{{ __('Your email') }}" type='email' autocomplete="email" name='email'
+            placeholder="{{ __('name@company.com') }}" required />
 
         <x-button type='submit'>
             {{ __('Send reset password link') }}

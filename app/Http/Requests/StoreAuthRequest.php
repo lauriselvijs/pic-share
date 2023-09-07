@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class StoreAuthRequest extends FormRequest
 {
@@ -27,7 +28,7 @@ class StoreAuthRequest extends FormRequest
             'name' => 'required|string:min:3',
             'email' => 'required|email|unique:users',
             'agreement' => 'required',
-            'password' => 'required|string|confirmed|min:6'
+            'password' => ['required', 'string', 'confirmed', Password::defaults()]
         ];
     }
 }

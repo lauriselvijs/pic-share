@@ -15,8 +15,16 @@ class ProfilePicServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(CanGenerateProfilePic::class, PixelenCounterService::class);
     }
+
+    /**
+     * All of the container singletons that should be registered.
+     *
+     * @var array
+     */
+    public $singletons = [
+        CanGenerateProfilePic::class =>  PixelenCounterService::class,
+    ];
 
     /**
      * Bootstrap services.

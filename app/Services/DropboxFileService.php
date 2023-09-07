@@ -16,12 +16,19 @@ class DropboxFileService implements CanManipulateFiles
      * 
      * @var int
      */
-    protected final const URL_EXPIRATION_TIME = 60 * 60 * 4;
+    private const URL_EXPIRATION_TIME = 60 * 60 * 4;
+
+    /**
+     * The name of the storage disk that will be used.
+     * 
+     * @var string
+     */
+    private string $storage = 'dropbox-files';
 
 
     public function store(UploadedFile $file): string
     {
-        $path = Storage::disk(self::STORAGE_DISK_NAME)->putFile('/', $file);
+        $path = Storage::disk($this->getStorageName())->putFile('/', $file);
 
         return $path;
     }
@@ -30,7 +37,7 @@ class DropboxFileService implements CanManipulateFiles
     {
         try {
             return cache()->remember(($path), self::URL_EXPIRATION_TIME, function () use ($path) {
-                return Storage::disk(self::STORAGE_DISK_NAME)->url(config('filesystems.disks.dropbox-files.root') . '/' . $path);
+                return Storage::disk($this->getStorageName())->url(config('filesystems.disks.dropbox-files.root') . '/' . $path);
             });
         } catch (\Throwable $th) {
             return $path;
@@ -39,7 +46,7 @@ class DropboxFileService implements CanManipulateFiles
 
     public function delete(string $path): void
     {
-        Storage::disk(self::STORAGE_DISK_NAME)->delete($path);
+        Storage::disk($this->getStorageName())->delete($path);
     }
 
     public function update(UploadedFile $file, string $oldPath): string
@@ -48,5 +55,10 @@ class DropboxFileService implements CanManipulateFiles
         $path = $this->store($file);
 
         return $path;
+    }
+
+    public function getStorageName(): string
+    {
+        return $this->storage;
     }
 }

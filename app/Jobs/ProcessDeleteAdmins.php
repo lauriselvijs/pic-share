@@ -20,9 +20,6 @@ class ProcessDeleteAdmins implements ShouldQueue, ShouldBeUnique
      */
     public function __construct(private Admin $admin, private string $deleteKey)
     {
-        $this->admin = $admin;
-        $this->deleteKey = $deleteKey;
-
         $this->connection = 'redis';
         $this->queue = 'delete';
     }
