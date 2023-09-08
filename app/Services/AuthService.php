@@ -4,25 +4,26 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\ValidatedInput;
 
 class AuthService
 {
     /**
-     * Store new user in database
+     * Store new user in database and log in user
      *
-     * @param array<string, mixed> $userData
+     * @param ValidatedInput $user
      */
-    public function store(array $userData): User
+    public function storeAndLogIn(ValidatedInput $user, Session $session): void
     {
-        // TODO: 
-        // [ ] - Add agreement checked to user table as column.
         // Hash password.
-        $userData['password'] = bcrypt($userData['password']);
+        $user->password = bcrypt($user->password);
 
         // Create user
-        $user = User::create($userData);
+        $user = User::create($user->toArray());
 
-        return $user;
+        auth()->login($user);
+
+        $session->regenerate();
     }
 
     /**

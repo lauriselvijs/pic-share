@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
+use Illuminate\Support\ValidatedInput;
 
 class AdminService
 {
@@ -40,19 +41,19 @@ class AdminService
     /**
      * Store admin in database.
      *
-     * @param array<string, mixed> $adminData
+     * @param ValidatedInput $admin
      * @return AdminResource
      */
-    public function store(array $adminData): AdminResource
+    public function store(ValidatedInput $admin): AdminResource
     {
-        $adminData['password'] = Hash::make($adminData['password']);
+        $admin->password = Hash::make($admin->password);
 
-        $adminRole = AdminRole::where('role', $adminData['role'])->first();
+        $role = AdminRole::where('role', $admin->role)->first();
 
-        unset($adminData["role"]);
+        unset($admin->role);
 
-        $admin = Admin::create($adminData);
-        $admin->roles()->attach($adminRole->id);
+        $admin = Admin::create($admin->toArray());
+        $admin->roles()->attach($role->id);
         $admin->refresh();
 
         return new AdminResource($admin);
@@ -61,34 +62,33 @@ class AdminService
     /**
      * Update admin
      *
-     * @param array<string, mixed> $newAdminData
+     * @param ValidatedInput $newAdmin
      * @param Admin $admin
      * @return AdminResource
      */
-    public function update(array $newAdminData, Admin $admin): AdminResource
+    public function update(ValidatedInput $newAdmin, Admin $admin): AdminResource
     {
-        if (isset($newAdminData['password'])) {
-            $adminData['password'] = Hash::make($newAdminData['password']);
+        if (isset($newAdmin->password)) {
+            $newAdmin->password = Hash::make($newAdmin->password);
         }
 
-        if (isset($newAdminData['role'])) {
-            $role = $newAdminData['role'];
+        if (isset($newAdmin->role)) {
+            $role = $newAdmin->role;
 
             $newAdminRole = AdminRole::where('role', $role)->first();
             $admin->roles()->syncWithoutDetaching([$newAdminRole->id]);
             $admin->refresh();
 
-            unset($newAdminData['role']);
+            unset($newAdmin->role);
         };
 
-        $admin->update($newAdminData);
+        $admin->save($newAdmin->toArray());
 
         return new AdminResource($admin);
     }
 
-    public function delete(Admin $admin)
+    public function delete(Admin $admin): void
     {
-
         // If in pivot table cascadeOnDelete dont need to detach
         // DB::transaction(function () use ($admin) {
         //     $admin->roles()->detach();
@@ -202,11 +202,11 @@ class AdminService
         return false;
     }
 
-    function login($validatedAdmin): string|bool
+    function login(ValidatedInput $adminData): string|bool
     {
-        $admin = Admin::where('email', $validatedAdmin['email'])->first();
+        $admin = Admin::where('email', $adminData->email)->first();
 
-        if (!$admin || !Hash::check($validatedAdmin['password'], $admin->password)) {
+        if (!$admin || !Hash::check($adminData->password, $admin->password)) {
             return false;
         }
 
@@ -219,6 +219,6 @@ class AdminService
 
     function logout(): void
     {
-        auth('admin')->user()->tokens()->delete();
+        auth('admin')->user()->currentAccessToken()->delete();
     }
 }

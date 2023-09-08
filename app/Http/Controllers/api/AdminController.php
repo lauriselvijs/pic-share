@@ -35,7 +35,7 @@ class AdminController extends Controller
      */
     public function store(StoreAdminRequest $request): AdminResource
     {
-        $admin = $this->adminService->store($request->validated());
+        $admin = $this->adminService->store($request->safe());
 
         return $admin;
     }
@@ -53,13 +53,13 @@ class AdminController extends Controller
      */
     public function update(UpdateAdminRequest $request, Admin $admin): AdminResource|Response
     {
-        $updatedAdmin = $this->adminService->update($request->validated(), $admin);
+        $updatedAdmin = $this->adminService->update($request->safe(), $admin);
 
         if ($updatedAdmin) {
             return $updatedAdmin;
         }
 
-        return response('', Response::HTTP_SERVICE_UNAVAILABLE);
+        return response()->setStatusCode(Response::HTTP_SERVICE_UNAVAILABLE);
     }
 
     /**
@@ -76,13 +76,13 @@ class AdminController extends Controller
 
     public function queueForDeletion(QueueAdminForDeletionRequest $request): Response|JsonResponse
     {
-        $key = $this->adminService->storeIdsForDeletion($request->validated('ids'));
+        $key = $this->adminService->storeIdsForDeletion($request->safe(['ids']));
 
         if ($key) {
             return response()->json(['key' => $key])->setStatusCode(Response::HTTP_CREATED);
         }
 
-        return response('', Response::HTTP_SERVICE_UNAVAILABLE);
+        return response()->setStatusCode(Response::HTTP_SERVICE_UNAVAILABLE);
     }
 
     public function deleteAdmins(string $key): Response
@@ -93,13 +93,13 @@ class AdminController extends Controller
             return response()->json(['bus_id' => $busId])->setStatusCode(Response::HTTP_OK);
         }
 
-        return response('', Response::HTTP_NOT_FOUND);
+        return response()->setStatusCode(Response::HTTP_NOT_FOUND);
     }
 
 
     function login(AuthAdminRequest $request): JsonResponse
     {
-        $token = $this->adminService->login($request->validated());
+        $token = $this->adminService->login($request->safe());
 
         if ($token) {
             return response()->json(['token' => $token])->setStatusCode(Response::HTTP_OK);
@@ -113,6 +113,6 @@ class AdminController extends Controller
     {
         $this->adminService->logout();
 
-        return response('', Response::HTTP_OK);
+        return response()->setStatusCode(Response::HTTP_OK);
     }
 }

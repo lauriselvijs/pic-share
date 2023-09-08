@@ -79,8 +79,7 @@ class PostService
      */
     public function store(ValidatedInput $post, User $user): void
     {
-        $imagePath = $this->saveAndReturnPathOfImage($post->image);
-        $post->image = $imagePath;
+        $post->image = $this->saveAndReturnPathOfImage($post->image);
 
         $user->posts()->create($post->toArray());
     }
@@ -90,12 +89,11 @@ class PostService
      */
     public function update(Post $post, ValidatedInput $postData)
     {
-        if (isset($postData->image) && $postData->image) {
-            $imagePath = $this->updatePathOfImage($postData->image, $post->image);
-            $postData->image = $imagePath;
+        if (isset($postData->image)) {
+            $postData->image = $this->updatePathOfImage($postData->image, $post->image);
         }
 
-        $post->update($postData->toArray());
+        $post->save($postData->toArray());
     }
 
     /**

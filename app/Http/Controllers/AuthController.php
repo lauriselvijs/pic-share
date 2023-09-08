@@ -29,11 +29,7 @@ class AuthController extends Controller
      */
     public function store(StoreAuthRequest $request): RedirectResponse
     {
-        $user = $this->authService->store($request->validated());
-
-        $request->session()->regenerate();
-
-        auth()->login($user);
+        $this->authService->storeAndLogIn($request->safe(), $request->session());
 
         return redirect()->route('verification.notice')->with('message',  __('user.created'));
     }
@@ -63,7 +59,7 @@ class AuthController extends Controller
      */
     public function authenticate(AuthRequest $request): RedirectResponse
     {
-        if ($this->authService->authenticate($request->session(), $request->validated(), $request->has('remember'))) {
+        if ($this->authService->authenticate($request->session(), $request->safe()->toArray(), $request->has('remember'))) {
             return redirect()->intended(route('posts.index'))->with('message',  __('user.logged_in'));
         }
 

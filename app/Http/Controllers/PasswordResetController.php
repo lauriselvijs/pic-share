@@ -27,7 +27,7 @@ class PasswordResetController extends Controller
      */
     public function email(EmailPasswordResetRequest $request): RedirectResponse
     {
-        $sent = $this->passwordResetService->email($request->validated());
+        $sent = $this->passwordResetService->email($request->safe()->toArray());
 
         if ($sent) {
             return redirect()->route('posts.index')->with(['message' => __('passwords.sent_alert')]);
@@ -49,9 +49,7 @@ class PasswordResetController extends Controller
      */
     public function update(UpdatePasswordResetRequest $request): RedirectResponse
     {
-        $request->validated();
-
-        $sent = $this->passwordResetService->update($request->only('email', 'password', 'password_confirmation', 'token'));
+        $sent = $this->passwordResetService->update($request->safe(['email', 'password', 'password_confirmation', 'token']));
 
         if ($sent) {
             return redirect()->route('auth.login')->with('message', __('passwords.reset_alert'));
