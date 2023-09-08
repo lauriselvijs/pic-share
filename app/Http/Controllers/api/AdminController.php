@@ -12,6 +12,7 @@ use App\Http\Resources\AdminResource;
 use App\Models\Admin;
 use App\Services\AdminService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class AdminController extends Controller
@@ -109,9 +110,9 @@ class AdminController extends Controller
         return response()->json(['message' => 'The provided credentials are incorrect.'])->setStatusCode(Response::HTTP_UNAUTHORIZED);
     }
 
-    function logout(): Response
+    function logout(Request $request): Response
     {
-        $this->adminService->logout();
+        $this->adminService->logout($request->user('admin'));
 
         return response()->setStatusCode(Response::HTTP_OK);
     }

@@ -89,7 +89,7 @@ class AdminService
 
     public function delete(Admin $admin): void
     {
-        // If in pivot table cascadeOnDelete dont need to detach
+        // REVIEW: If in pivot table cascadeOnDelete dont need to detach
         // DB::transaction(function () use ($admin) {
         //     $admin->roles()->detach();
         //     $admin->delete();
@@ -206,19 +206,19 @@ class AdminService
     {
         $admin = Admin::where('email', $adminData->email)->first();
 
-        if (!$admin || !Hash::check($adminData->password, $admin->password)) {
-            return false;
+        if ($admin && Hash::check($adminData->password, $admin->password)) {
+            $tokenName = Str::uuid();
+
+            $token = $admin->createToken($tokenName, ['admin:create', 'admin:update', 'admin:delete'])->plainTextToken;
+
+            return $token;
         }
 
-        $tokenName = Str::uuid();
-
-        $token = $admin->createToken($tokenName, ['admin:create', 'admin:update', 'admin:delete'])->plainTextToken;
-
-        return $token;
+        return false;
     }
 
-    function logout(): void
+    function logout(mixed $user): void
     {
-        auth('admin')->user()->currentAccessToken()->delete();
+        $user->currentAccessToken()->delete();
     }
 }

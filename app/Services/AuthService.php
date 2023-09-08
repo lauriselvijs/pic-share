@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ValidatedInput;
 
 class AuthService
@@ -13,35 +13,37 @@ class AuthService
      *
      * @param ValidatedInput $user
      */
-    public function storeAndLogIn(ValidatedInput $user, Session $session): void
+    public function storeAndLogIn(ValidatedInput $user): void
     {
         // Hash password.
-        $user->password = bcrypt($user->password);
+        $user->password = Hash::make($user->password);
 
         // Create user
         $user = User::create($user->toArray());
 
         auth()->login($user);
 
-        $session->regenerate();
+        session()->regenerate();
     }
 
     /**
      * Invalidate current session and regenerate CSRF token
      */
-    public function invalidate(Session $session): void
+    public function logout(): void
     {
-        $session->invalidate();
-        $session->regenerateToken();
+        auth()->logout();
+
+        session()->invalidate();
+        session()->regenerateToken();
     }
 
     /**
      * Auth user
      */
-    public function authenticate(Session $session, array $credentials, bool $remember): bool
+    public function authenticate(array $credentials, bool $remember): bool
     {
         if (auth()->attempt($credentials, $remember)) {
-            $session->regenerate();
+            session()->regenerate();
             return true;
         }
 

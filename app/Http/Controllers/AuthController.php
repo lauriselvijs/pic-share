@@ -37,11 +37,9 @@ class AuthController extends Controller
     /**
      * User logout
      */
-    public function logout(Request $request): RedirectResponse
+    public function logout(): RedirectResponse
     {
-        auth()->logout();
-
-        $this->authService->invalidate($request->session());
+        $this->authService->logout();
 
         return redirect()->route('home')->with('message', __('user.logged_out'));
     }
@@ -59,7 +57,7 @@ class AuthController extends Controller
      */
     public function authenticate(AuthRequest $request): RedirectResponse
     {
-        if ($this->authService->authenticate($request->session(), $request->safe()->toArray(), $request->has('remember'))) {
+        if ($this->authService->authenticate($request->safe()->toArray(), $request->has('remember'))) {
             return redirect()->intended(route('posts.index'))->with('message',  __('user.logged_in'));
         }
 
