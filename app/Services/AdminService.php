@@ -82,7 +82,8 @@ class AdminService
             unset($newAdmin->role);
         };
 
-        $admin->save($newAdmin->toArray());
+        $admin->fill($newAdmin->toArray());
+        $admin->save();
 
         return new AdminResource($admin);
     }

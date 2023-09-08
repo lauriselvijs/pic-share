@@ -93,7 +93,9 @@ class PostService
             $postData->image = $this->updatePathOfImage($postData->image, $post->image);
         }
 
-        $post->save($postData->toArray());
+        $post->fill($postData->toArray());
+
+        $post->save();
     }
 
     /**
