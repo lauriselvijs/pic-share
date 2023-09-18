@@ -15,8 +15,6 @@ class UpdatePostRequest extends FormRequest
         return $this->user()->can('edit', $this->post);
     }
 
-    // TODO:
-    // [ ] - Make this a PATCH request
     /**
      * Get the validation rules that apply to the request.
      *
