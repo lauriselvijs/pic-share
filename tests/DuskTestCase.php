@@ -32,43 +32,21 @@ abstract class DuskTestCase extends BaseTestCase
      */
     protected function driver()
     {
-        $options = (new ChromeOptions)->addArguments(collect([
-            $this->shouldStartMaximized() ? '--start-maximized' : '--window-size=1920,1080',
-        ])->unless($this->hasHeadlessDisabled(), function ($items) {
-            return $items->merge([
-                '--disable-gpu',
-                '--headless',
-            ]);
-        })->all());
+        $options = (new ChromeOptions)->addArguments([
+            '--disable-gpu',
+            '--headless',
+            '--no-sandbox',
+            '--disable-dev-shm-usage'
+        ]);
+
+        $host = static::runningInSail() ? 'http://selenium:4444/wd/hub' : 'http://localhost:9515';
 
         return RemoteWebDriver::create(
-            $_ENV['DUSK_DRIVER_URL'] ?? 'http://localhost:9515',
+            $host,
             DesiredCapabilities::chrome()->setCapability(
                 ChromeOptions::CAPABILITY,
                 $options
             )
         );
-    }
-
-    /**
-     * Determine whether the Dusk command has disabled headless mode.
-     *
-     * @return bool
-     */
-    protected function hasHeadlessDisabled()
-    {
-        return isset($_SERVER['DUSK_HEADLESS_DISABLED']) ||
-            isset($_ENV['DUSK_HEADLESS_DISABLED']);
-    }
-
-    /**
-     * Determine if the browser window should start maximized.
-     *
-     * @return bool
-     */
-    protected function shouldStartMaximized()
-    {
-        return isset($_SERVER['DUSK_START_MAXIMIZED']) ||
-            isset($_ENV['DUSK_START_MAXIMIZED']);
     }
 }
