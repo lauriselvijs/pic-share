@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Redirector;
 use App\Services\GoogleLoginService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleLoginController extends Controller
 {
-
-    public function __construct(private GoogleLoginService $googleLoginService)
-    {
-    }
+    public function __construct(private GoogleLoginService $googleLoginService) {}
 
     /**
      * Redirects to Google callback.
      */
     public function redirect(): RedirectResponse
     {
-        return Socialite::driver('google')->with(["prompt" => "select_account"])->redirect();
+        return Socialite::driver('google')->with(['prompt' => 'select_account'])->redirect();
     }
 
     /**
@@ -29,7 +26,7 @@ class GoogleLoginController extends Controller
     {
         try {
             $user = $this->googleLoginService->getUser();
-        } catch (\Exception $_error) {
+        } catch (\Exception $_) {
             return redirect()->route('home')->with('message', __('error.primary'));
         }
 

@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
 use App\Contracts\CanGenerateProfilePic;
+use Illuminate\Support\Facades\Http;
 
 class PixelenCounterService implements CanGenerateProfilePic
 {
@@ -13,9 +13,9 @@ class PixelenCounterService implements CanGenerateProfilePic
     public function generate(bool $colored = true): string
     {
         // TODO:
-        // [ ] - Replace url with config or const 
+        // [ ] - Replace url with config or const
         $response = Http::get('https://app.pixelencounter.com/api/v2/basic/svgmonsters', [
-            'colored' => $colored ? "true" : "false"
+            'colored' => $colored ? 'true' : 'false',
         ]);
 
         return $response->body();

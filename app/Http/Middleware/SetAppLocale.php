@@ -31,7 +31,6 @@ class SetAppLocale
             app()->setLocale($locale);
         }
 
-
         return $next($request);
     }
 }

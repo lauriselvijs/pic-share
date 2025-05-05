@@ -13,9 +13,7 @@ class ProfilePicServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
-    }
+    public function register() {}
 
     /**
      * All of the container singletons that should be registered.
@@ -23,7 +21,7 @@ class ProfilePicServiceProvider extends ServiceProvider
      * @var array
      */
     public $singletons = [
-        CanGenerateProfilePic::class =>  PixelenCounterService::class,
+        CanGenerateProfilePic::class => PixelenCounterService::class,
     ];
 
     /**

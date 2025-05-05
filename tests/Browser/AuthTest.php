@@ -15,7 +15,7 @@ class AuthTest extends DuskTestCase
      *
      * @return void
      */
-    public function testSignUp()
+    public function test_sign_up()
     {
         $this->browse(function (Browser $browser) {
             $browser->visitRoute('auth.create')

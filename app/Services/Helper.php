@@ -11,6 +11,6 @@ class Helper
      */
     public static function generateUsernameFrom(string $email): string
     {
-        return Str::of($email)->before("@")->ascii()->append('-')->append(Str::uuid())->lower();
+        return Str::of($email)->before('@')->ascii()->append('-')->append(Str::uuid())->lower();
     }
 }

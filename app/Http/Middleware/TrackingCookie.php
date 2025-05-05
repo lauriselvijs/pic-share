@@ -9,9 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TrackingCookie
 {
-    public function __construct(private TrackingCookieService $trackingCookieService)
-    {
-    }
+    public function __construct(private TrackingCookieService $trackingCookieService) {}
 
     /**
      * Handle an incoming request.

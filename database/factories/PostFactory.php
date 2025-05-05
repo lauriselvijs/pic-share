@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PostFactory extends Factory
 {
+    const RAND_IMAGE_URL = 'https://picsum.photos/';
+
     /**
      * Define the model's default state.
      *
@@ -24,14 +26,13 @@ class PostFactory extends Factory
          */
         $tags = ['History', 'Forest', 'Water', 'Castle', 'Sea'];
 
-
         return [
-            'title' =>  rtrim(fake()->sentence(3), '.'),
+            'title' => rtrim(fake()->sentence(3), '.'),
             'user_id' => User::factory(),
-            'slug' =>  fake()->slug(),
-            'image' => fake()->imageUrl(),
+            'slug' => fake()->slug(),
+            'image' => self::RAND_IMAGE_URL.fake()->numberBetween(200, 800).'/'.fake()->numberBetween(200, 800),
             'tags' => implode(', ', fake()->randomElements($tags, 3)),
-            'price' => fake()->randomFloat(2, 0, 50)
+            'price' => fake()->randomFloat(2, 0, 50),
         ];
     }
 }

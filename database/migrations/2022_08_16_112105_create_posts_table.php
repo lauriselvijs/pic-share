@@ -17,10 +17,10 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->string("title");
-            $table->string("slug");
-            $table->string("image");
-            $table->string("tags")->nullable();
+            $table->string('title');
+            $table->string('slug');
+            $table->string('image');
+            $table->string('tags')->nullable();
             $table->decimal('price', 8, 2);
             $table->timestamps();
         });

@@ -7,7 +7,6 @@ use Laravel\Cashier\Exceptions\IncompletePayment;
 
 class PaymentService
 {
-
     /**
      * Remove special characters from name
      */
@@ -18,7 +17,7 @@ class PaymentService
 
     /**
      * Make payment
-     * 
+     *
      * @throws IncompletePayment
      */
     public function makePayment(User $user, string $price, string $paymentMethodId): void

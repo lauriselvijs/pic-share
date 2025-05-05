@@ -6,9 +6,7 @@ use App\Services\TrackingCookieService;
 
 class TrackingCookieController extends Controller
 {
-    public function __construct(private TrackingCookieService $trackingCookieService)
-    {
-    }
+    public function __construct(private TrackingCookieService $trackingCookieService) {}
 
     public function allow()
     {

@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
             $schedule->command('sanctum:prune-expired --hours=24')->name('pruned-expired:sanctum')
                 ->daily()
                 ->onOneServer()
-                ->runInBackground();;
+                ->runInBackground();
 
             // Remove failed jobs from DB every month
             $schedule->command('queue:prune-failed')->name('deleted:jobs')
@@ -89,7 +89,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__ . '/Commands');
+        $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
     }

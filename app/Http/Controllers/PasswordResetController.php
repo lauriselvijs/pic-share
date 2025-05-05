@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
-use App\Services\PasswordResetService;
 use App\Http\Requests\EmailPasswordResetRequest;
 use App\Http\Requests\UpdatePasswordResetRequest;
+use App\Services\PasswordResetService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class PasswordResetController extends Controller
 {
-    public function __construct(private PasswordResetService $passwordResetService)
-    {
-    }
+    public function __construct(private PasswordResetService $passwordResetService) {}
 
     /**
      * Returns forget password form

@@ -15,6 +15,6 @@ return [
 
     'created' => ['msg_title' => 'Success!', 'msg_info' => 'Post has been added to PicShare successfully!'],
     'updated' => ['msg_title' => 'Success!', 'msg_info' => 'Post has been update!'],
-    'deleted' => ['msg_title' => 'Success!', 'msg_info' => 'Post has been deleted!']
+    'deleted' => ['msg_title' => 'Success!', 'msg_info' => 'Post has been deleted!'],
 
 ];

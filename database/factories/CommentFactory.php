@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CommentFactory extends Factory
 {
-
     /**
      * Define the model's default state.
      *
@@ -20,7 +19,7 @@ class CommentFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'body' =>  fake()->text(),
+            'body' => fake()->text(),
         ];
     }
 }

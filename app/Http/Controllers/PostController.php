@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use Illuminate\Http\Request;
-use App\Services\PostService;
-use Illuminate\Contracts\View\View;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Post;
+use App\Services\PostService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-
-    public function __construct(private Post $post, private PostService $postService)
-    {
-    }
+    public function __construct(private Post $post, private PostService $postService) {}
 
     /**
      * Return all posts
@@ -28,7 +25,7 @@ class PostController extends Controller
         $posts = $this->post->getSearchResultsWithAuthorPaginated($search, $page);
 
         return view('posts.index', [
-            'posts' => $this->postService->includeAuthorNamesAndGenImgUrlFor($posts)
+            'posts' => $this->postService->includeAuthorNamesAndGenImgUrlFor($posts),
         ]);
     }
 
@@ -41,7 +38,7 @@ class PostController extends Controller
         return view(
             'posts.show',
             [
-                'post' =>  $this->postService->includeAuthorNameAndGenImgUrlFor($post)
+                'post' => $this->postService->includeAuthorNameAndGenImgUrlFor($post),
             ]
         );
     }
@@ -61,7 +58,7 @@ class PostController extends Controller
     {
         $this->postService->store($request->safe(), request()->user());
 
-        return redirect()->route('posts.index')->with('message',  __('post.created'));
+        return redirect()->route('posts.index')->with('message', __('post.created'));
     }
 
     /**
@@ -83,7 +80,7 @@ class PostController extends Controller
     {
         $this->postService->update($post, $request->safe());
 
-        return redirect()->route('posts.index')->with('message',  __('post.updated'));
+        return redirect()->route('posts.index')->with('message', __('post.updated'));
     }
 
     /**
@@ -95,6 +92,6 @@ class PostController extends Controller
 
         $this->postService->delete($post);
 
-        return redirect()->route('posts.index')->with('message',  __('post.deleted'));
+        return redirect()->route('posts.index')->with('message', __('post.deleted'));
     }
 }

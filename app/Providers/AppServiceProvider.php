@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Optimization
-        Model::preventLazyLoading(!$this->app->isProduction());
+        Model::preventLazyLoading(! $this->app->isProduction());
 
         Password::defaults(function () {
             $rule = Password::min(8);

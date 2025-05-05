@@ -5,8 +5,8 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
+use Laravel\Socialite\Facades\Socialite;
 
 class GoogleLoginService
 {
@@ -53,7 +53,7 @@ class GoogleLoginService
             'name' => $user->getName(),
             'email' => $user->getEmail(),
             'google_id' => $user->getId(),
-            'password' => Hash::make(Str::random(10))
+            'password' => Hash::make(Str::random(10)),
         ]);
 
         $this->login($newUser);

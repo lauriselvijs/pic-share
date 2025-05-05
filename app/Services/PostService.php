@@ -5,15 +5,13 @@ namespace App\Services;
 use App\Contracts\CanManipulateFiles;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\ValidatedInput;
 
 class PostService
 {
-    public function __construct(private CanManipulateFiles $fileManipulator)
-    {
-    }
+    public function __construct(private CanManipulateFiles $fileManipulator) {}
 
     /**
      * Includes author names and generates temporary url for posted images in post (all posts).
@@ -22,7 +20,7 @@ class PostService
     {
         $posts->map(function ($post) {
             $post->author = $post->user->name;
-            $post->image = $this->generateTempUrlForImg($post->image);;
+            $post->image = $this->generateTempUrlForImg($post->image);
         });
 
         return $posts;
@@ -75,7 +73,7 @@ class PostService
     /**
      * Store post in database.
      *
-     * @param ValidatedInput|array<string, int|string|UploadedFile> $postData
+     * @param  ValidatedInput|array<string, int|string|UploadedFile>  $postData
      */
     public function store(ValidatedInput $post, User $user): void
     {

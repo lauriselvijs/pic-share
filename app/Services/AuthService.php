@@ -10,8 +10,6 @@ class AuthService
 {
     /**
      * Store new user in database and log in user
-     *
-     * @param ValidatedInput $user
      */
     public function storeAndLogIn(ValidatedInput $user): void
     {
@@ -44,6 +42,7 @@ class AuthService
     {
         if (auth()->attempt($credentials, $remember)) {
             session()->regenerate();
+
             return true;
         }
 

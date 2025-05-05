@@ -13,18 +13,15 @@ class DropboxFileService implements CanManipulateFiles
 {
     /**
      * Link expiration time is 4 hours (https://www.dropbox.com/developers/documentation/http/documentation#files-get_temporary_link)
-     * 
+     *
      * @var int
      */
     private const URL_EXPIRATION_TIME = 60 * 60 * 4;
 
     /**
      * The name of the storage disk that will be used.
-     * 
-     * @var string
      */
     private string $storage = 'dropbox-files';
-
 
     public function store(UploadedFile $file): string
     {
@@ -37,7 +34,7 @@ class DropboxFileService implements CanManipulateFiles
     {
         try {
             return cache()->remember(($path), self::URL_EXPIRATION_TIME, function () use ($path) {
-                return Storage::disk($this->getStorageName())->url(config('filesystems.disks.dropbox-files.root') . '/' . $path);
+                return Storage::disk($this->getStorageName())->url(config('filesystems.disks.dropbox-files.root').'/'.$path);
             });
         } catch (\Throwable $th) {
             return $path;

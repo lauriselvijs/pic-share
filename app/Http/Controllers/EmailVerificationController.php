@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class EmailVerificationController extends Controller
 {
-
     /**
      * Notifies user about email verification
      *
-     * @param Request $request
      * @return RedirectResponse|View
      */
     public function notice(Request $request)
@@ -24,7 +22,6 @@ class EmailVerificationController extends Controller
     /**
      * Verify user email
      *
-     * @param EmailVerificationRequest $request
      * @return RedirectResponse
      */
     public function verify(EmailVerificationRequest $request)
@@ -34,24 +31,22 @@ class EmailVerificationController extends Controller
         return redirect()->route('posts.index')->with('message', __('email.verified'));
     }
 
-
     /**
      * Resend email verification
      *
-     * @param Request $request
-     * @return  RedirectResponse
+     * @return RedirectResponse
      */
     public function send(Request $request)
     {
         $user = $request->user();
-        // TODO: 
+        // TODO:
         // [ ] - move business logic to service class
-        if (!$user->hasVerifiedEmail()) {
+        if (! $user->hasVerifiedEmail()) {
             $user->sendEmailVerificationNotification();
 
             return back()->with('message', __('email.sent'));
         }
 
-        return  redirect()->route('posts.index')->with('message', __('email.already_verified'));
+        return redirect()->route('posts.index')->with('message', __('email.already_verified'));
     }
 }

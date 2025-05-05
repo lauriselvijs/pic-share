@@ -28,7 +28,7 @@ class StoreAuthRequest extends FormRequest
             'name' => 'required|string:min:3',
             'email' => 'required|email|unique:users',
             'agreement' => 'required',
-            'password' => ['required', 'string', 'confirmed', Password::defaults()]
+            'password' => ['required', 'string', 'confirmed', Password::defaults()],
         ];
     }
 }

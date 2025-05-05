@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use App\Services\PaymentService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Laravel\Cashier\Exceptions\IncompletePayment;
 
 class PaymentController extends Controller
 {
-
-    public function __construct(private PaymentService $paymentService)
-    {
-    }
+    public function __construct(private PaymentService $paymentService) {}
 
     /**
      * Redirects user to charging page
@@ -42,11 +38,11 @@ class PaymentController extends Controller
         $paymentMethodId = $request->input('payment_method_id');
 
         try {
-            $this->paymentService->makePayment($user,  $post->price, $paymentMethodId);
+            $this->paymentService->makePayment($user, $post->price, $paymentMethodId);
         } catch (IncompletePayment $exception) {
             return back()->withErrors(['message' => __('payment.error', ['error' => $exception->payment->status])]);
         }
 
-        return redirect()->route('posts.index')->with('message',  __('payment.success'));
+        return redirect()->route('posts.index')->with('message', __('payment.success'));
     }
 }
