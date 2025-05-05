@@ -43,14 +43,14 @@ jobs:
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
 
-      - name: Run docker-compose
-        run: docker-compose -f docker-compose.prod.yaml up -d
+      - name: Run docker compose
+        run: docker compose -f docker-compose.prod.yaml up -d
 
       - name: Feature test
-        run: docker-compose -f docker-compose.prod.yaml exec app ./vendor/bin/sail test --coverage
+        run: docker compose -f docker-compose.prod.yaml exec app ./vendor/bin/sail test --coverage
 
       - name: E2E test
-        run: docker-compose -f docker-compose.prod.yaml exec app ./vendor/bin/sail dusk
+        run: docker compose -f docker-compose.prod.yaml exec app ./vendor/bin/sail dusk
 
       - name: Upload Screenshots
         if: failure()
@@ -66,6 +66,6 @@ jobs:
           name: console
           path: tests/Browser/console
 
-      - name: Shut down docker-compose
+      - name: Shut down docker compose
         if: always()
-        run: docker-compose -f docker-compose.prod.yaml down
+        run: docker compose -f docker-compose.prod.yaml down
