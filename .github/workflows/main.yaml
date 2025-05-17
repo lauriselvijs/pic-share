@@ -46,26 +46,30 @@ jobs:
           laravelsail/php82-composer:latest \
           composer install --ignore-platform-reqs
 
-      - name: Start Sail
-        run: vendor/bin/sail up -d
-
-      - name: Wait for Laravel service to be ready (improved with timeout and debugging)
+      - name: Run
         run: |
-          echo "Checking running containers:" && \
-          docker compose ps && \
-          echo "Starting wait loop for laravel.test service..." && \
-          end=$((SECONDS+120)) && \  # max 2 minutes wait
-          until docker compose exec -T laravel.test php -r "echo \"Service is up\";" > /dev/null 2>&1; do \
-            if [ $SECONDS -ge $end ]; then \
-              echo "⛔ Timed out waiting for laravel.test service to be ready." && \
-              docker compose logs --tail=50 laravel.test && \
-              exit 1; \
-            fi; \
-            echo "[$(date)] Waiting for Laravel service to start..."; \
-            docker compose logs --tail=10 laravel.test || echo "No logs yet."; \
-            sleep 5; \
-          done && \
-          echo "✅ Laravel service is ready!"
+          ./vendor/bin/sail up -d \
+          && exit
+
+      - name: Wait for app to start
+        run: |
+          echo "Waiting for App to start on port 80..."
+
+          sleep 60
+          # while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do
+          #   sleep 1 && echo -n '.';
+          # done;
+
+          echo "App started"
+          exit;
+
+      - name: Install front end
+        run: |
+          ./vendor/bin/sail npm ci --include=dev
+
+      - name: Build front end
+        run: |
+          ./vendor/bin/sail npm run build
 
       - name: Tests
         run: vendor/bin/sail test
