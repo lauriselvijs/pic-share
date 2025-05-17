@@ -49,25 +49,23 @@ jobs:
       - name: Start Sail
         run: vendor/bin/sail up -d
 
-      - name: Wait for Laravel service to be ready (with debugging)
+      - name: Wait for Laravel service to be ready (improved with timeout and debugging)
         run: |
-          echo "Checking running containers:"
-          docker compose ps
-
-          echo "Starting wait loop for laravel.test service..."
-          until docker compose exec -T laravel.test php -r "echo 'Service is up';" > /dev/null 2>&1; do
-            echo "[$(date)] Waiting for Laravel service to start..."
-
-            echo "--- Container logs (last 10 lines) ---"
-            docker compose logs --tail=10 laravel.test || echo "No logs yet."
-
-            echo "--- Container status ---"
-            docker compose ps laravel.test || echo "Container not found."
-
-            sleep 5
-          done
-
-          echo "Laravel service is ready!"
+          echo "Checking running containers:" && \
+          docker compose ps && \
+          echo "Starting wait loop for laravel.test service..." && \
+          end=$((SECONDS+120)) && \  # max 2 minutes wait
+          until docker compose exec -T laravel.test php -r "echo \"Service is up\";" > /dev/null 2>&1; do \
+            if [ $SECONDS -ge $end ]; then \
+              echo "⛔ Timed out waiting for laravel.test service to be ready." && \
+              docker compose logs --tail=50 laravel.test && \
+              exit 1; \
+            fi; \
+            echo "[$(date)] Waiting for Laravel service to start..."; \
+            docker compose logs --tail=10 laravel.test || echo "No logs yet."; \
+            sleep 5; \
+          done && \
+          echo "✅ Laravel service is ready!"
 
       - name: Tests
         run: vendor/bin/sail test
