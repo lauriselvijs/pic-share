@@ -17,3 +17,10 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/.git
+/.github
+
+.dockerignore
+docker-composer.prod.yml
+docker-compose.yml
+Dockerfile.prod

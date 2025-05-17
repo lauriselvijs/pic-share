@@ -1,32 +1,71 @@
-ARG PHP=8.2
+FROM php:8.2-fpm-alpine
 
-FROM webdevops/php-nginx:$PHP
+# Install system dependencies and PHP extension build deps
+RUN apk update && apk add --no-cache \
+    git \
+    curl \
+    supervisor \
+    dcron \
+    bash \
+    nodejs \
+    npm \
+    mysql-client \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    libwebp-dev \
+    libxpm-dev \
+    freetype-dev \
+    libxml2-dev \
+    libzip-dev \
+    oniguruma-dev \
+    zlib-dev \
+    icu-dev \
+    autoconf \
+    gcc \
+    g++ \
+    make \
+    && docker-php-ext-configure gd \
+        --with-freetype \
+        --with-jpeg \
+        --with-webp \
+    && docker-php-ext-install -j$(nproc) \
+        pdo \
+        pdo_mysql \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \
+        zip \
+        gd \
+        xml \
+        dom \
+        intl \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del autoconf gcc g++ make  # Clean up build tools
 
-ENV WEB_DOCUMENT_ROOT=/app/public
+# Add Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-ARG NODE_VERSION=18
+# Set working directory
+WORKDIR /var/www
 
-WORKDIR /app
+# Copy application source
+COPY . /var/www
 
-RUN apt-get clean
-RUN apt-get update
-RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
-RUN apt-get install -y nodejs
-COPY package*.json ./
-COPY vite.config.js .
-RUN npm ci --include=dev
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader
+RUN npm install && npm run build
 
-COPY composer.*  ./
+# Copy Supervisor and cron config
+COPY ./docker/production/supervisord.conf /etc/supervisord.conf
+COPY ./docker/production/crontab /etc/cron.d/crontab
+RUN chmod 0644 /etc/cron.d/crontab && crontab /etc/cron.d/crontab
 
-RUN composer install --no-interaction --no-dev --no-scripts
+# Copy and configure entrypoint
+COPY ./docker/production/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-COPY . .
+EXPOSE 9000
 
-RUN npm run build
-
-COPY docker/php /opt/docker
-
-# Ensure all of our files are owned by the same user and group.
-RUN chown -R application:application .
-
-
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

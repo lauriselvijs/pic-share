@@ -33,39 +33,52 @@ jobs:
       - name: Push Docker image
         run: docker push ghcr.io/${{ github.repository_owner }}/pic-share:prod_${{ env.COMMIT_HASH }}
 
-      - name: Pull image with commit hash
-        run: docker pull ghcr.io/${{ github.repository_owner }}/pic-share:prod_${{ env.COMMIT_HASH }}
-
-      - name: Retag image as prod
-        run: docker tag ghcr.io/${{ github.repository_owner }}/pic-share:prod_${{ env.COMMIT_HASH }} ghcr.io/${{ github.repository_owner }}/pic-share:prod
-
       - name: Inject .env from secret
         run: |
-          echo "${{ secrets.ENV_FILE }}" > .env
+          echo "${{ secrets.ENV_TESTING }}" > .env
 
-      - name: Run docker compose
-        run: docker compose -f docker-compose.prod.yml up -d
+      - name: Install Sail
+        run: |
+          docker run --rm \
+          -u "$(id -u):$(id -g)" \
+          -v "$(pwd):/var/www/html" \
+          -w /var/www/html \
+          laravelsail/php82-composer:latest \
+          composer install --ignore-platform-reqs
 
-      - name: Feature test
-        run: docker compose -f docker-compose.prod.yml exec app ./vendor/bin/sail test --coverage
+      - name: Start Sail
+        run: vendor/bin/sail up -d
 
-      - name: E2E test
-        run: docker compose -f docker-compose.prod.yml exec app ./vendor/bin/sail dusk
+      - name: Wait for Sail to be ready
+        run: sleep 60
 
-      - name: Upload Screenshots
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshots
-          path: tests/Browser/screenshots
+      - name: Tests
+        run: vendor/bin/sail test
 
-      - name: Upload Console Logs
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: console
-          path: tests/Browser/console
+      - name: E2E Tests
+        run: vendor/bin/sail dusk
 
-      - name: Shut down docker compose
+      # - name: Upload Screenshots
+      #   if: failure()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: screenshots
+      #     path: tests/Browser/screenshots
+
+      # - name: Upload Console Logs
+      #   if: failure()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: console
+      #     path: tests/Browser/console
+
+      - name: Shut down containers
         if: always()
-        run: docker compose -f docker-compose.prod.yml down
+        run: vendor/bin/sail down
+
+      - name: Cleanup registry
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: ${{ github.repository_owner }}/pic-share
+          package-type: container
+          min-versions-to-keep: 5
