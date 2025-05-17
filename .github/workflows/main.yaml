@@ -52,20 +52,22 @@ jobs:
 
       - name: Run
         run: |
-          ./vendor/bin/sail up -d \
-          && exit
+          ./vendor/bin/sail up -d
 
-      - name: Wait for app to start
+      - name: Wait for Laravel to be ready
         run: |
-          echo "Waiting for App to start on port 80..."
-
-            sleep 60;
-            # while ! curl --output /dev/null --silent --head --fail http://0.0.0.0:80; do
-            #   sleep 1 && echo -n '.';
-            # done;
-
-          echo "App started"
-          exit;
+          echo "Waiting for Laravel app to be ready on port 80..."
+          for i in {1..60}; do
+            if curl --silent http://localhost | grep -q "<!DOCTYPE html>"; then
+              echo "App is up!";
+              exit 0;
+            fi
+            echo -n "."
+            sleep 1
+          done
+          echo "App failed to start in time."
+          docker ps -a
+          exit 1
 
       - name: Install front end
         run: |
