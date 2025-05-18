@@ -10,6 +10,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      selenium:
+        condition: service_healthy
     restart: always
 
   nginx:
@@ -55,11 +57,13 @@ services:
     image: "selenium/standalone-chrome"
     volumes:
       - "/dev/shm:/dev/shm"
-    depends_on:
-      - app
-      - nginx
     networks:
       - app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   redis:
