@@ -4,9 +4,12 @@ on:
   pull_request:
     branches: [main, 1.x]
 env:
-  APP_TEST_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-app:test
-  NGINX_PROD_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-nginx:prod
-  APP_PROD_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-app:prod
+  COMMIT_HASH: ${{ github.sha }}
+  APP_TEST_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-app-test:${{ github.sha }}
+  NGINX_PROD_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-nginx-prod:${{ github.sha }}
+  APP_PROD_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-app-prod:${{ github.sha }}
+  APP_PROD_IMAGE_LATEST: ghcr.io/${{ github.repository_owner }}/pic-share-app-prod:latest
+  NGINX_PROD_IMAGE_LATEST: ghcr.io/${{ github.repository_owner }}/pic-share-nginx-prod:latest
 
 jobs:
   build:
@@ -115,11 +118,10 @@ jobs:
 
       - name: Tag image with commit hash
         run: |
-          docker tag $APP_PROD_IMAGE ghcr.io/${{ github.repository_owner }}/pic-share:prod-${{ env.COMMIT_HASH }}
-
+          docker tag $APP_PROD_IMAGE ${{ env.APP_PROD_IMAGE_LATEST }}
       - name: Push new tag
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/pic-share:prod-${{ env.COMMIT_HASH }}
+          docker push ${{ env.APP_PROD_IMAGE_LATEST }}
 
       - name: Pull nginx production test image
         run: |
@@ -127,11 +129,11 @@ jobs:
 
       - name: Tag image with commit hash
         run: |
-          docker tag $NGINX_PROD_IMAGE ghcr.io/${{ github.repository_owner }}/pic-share:nginx-${{ env.COMMIT_HASH }}
+          docker tag $NGINX_PROD_IMAGE ${{ env.NGINX_PROD_IMAGE_LATEST }}
 
       - name: Push new tag
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/pic-share:nginx-${{ env.COMMIT_HASH }}
+          docker push ${{ env.NGINX_PROD_IMAGE_LATEST }}
 
       - name: Cleanup app registry
         uses: actions/delete-package-versions@v5
