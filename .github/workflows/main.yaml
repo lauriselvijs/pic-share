@@ -4,8 +4,10 @@ on:
   pull_request:
     branches: [main, 1.x]
 env:
-  APP_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-app:test
-  NGINX_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-nginx:test
+  APP_TEST_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-app:test
+  NGINX_PROD_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-nginx:prod
+  APP_PROD_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-app:prod
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,15 +24,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build and push app prod image
+        run: |
+          docker build -t $APP_PROD_IMAGE -f  docker/production/app/Dockerfile.prod .
+          docker push $APP_PROD_IMAGE
+
       - name: Build and push app test image
         run: |
-          docker build -t $APP_IMAGE -f docker/production/app/Dockerfile.test .
-          docker push $APP_IMAGE
+          docker build -t $APP_TEST_IMAGE -f docker/production/app/Dockerfile.test .
+          docker push $APP_TEST_IMAGE
 
-      - name: Build and push nginx test image
+      - name: Build and push nginx prod image
         run: |
-          docker build -t $NGINX_IMAGE -f docker/production/nginx/Dockerfile .
-          docker push $NGINX_IMAGE
+          docker build -t $NGINX_PROD_IMAGE -f docker/production/nginx/Dockerfile .
+          docker push $NGINX_PROD_IMAGE
 
   test:
     runs-on: ubuntu-latest
@@ -50,14 +57,11 @@ jobs:
 
       - name: Pull test images
         run: |
-          docker pull $APP_IMAGE
-          docker pull $NGINX_IMAGE
+          docker pull $APP_TEST_IMAGE
+          docker pull $NGINX_PROD_IMAGE
 
       - name: Inject .env from secret
-        run: |
-          cat <<EOF > .env
-          ${{ secrets.ENV_TESTING }}
-          EOF
+        run: echo "${{ secrets.ENV_TESTING }}" > .env
 
       - name: Start docker containers
         run: docker compose -f docker-compose.test.yaml up -d
@@ -86,10 +90,10 @@ jobs:
         if: always()
         run: docker compose -f docker-compose.test.yaml down
 
-  pre-build:
+  post-build:
     runs-on: ubuntu-latest
     needs: test
-    name: Build and Push Final Production Image
+    name: Push Final Production Image
 
     steps:
       - name: Checkout code
@@ -105,15 +109,40 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/pic-share:${{ env.COMMIT_HASH }} -f Dockerfile.prod .
+      - name: Pull app production test image
+        run: |
+          docker pull $APP_PROD_IMAGE
 
-      - name: Push Docker image
-        run: docker push ghcr.io/${{ github.repository_owner }}/pic-share:${{ env.COMMIT_HASH }}
+      - name: Tag image with commit hash
+        run: |
+          docker tag $APP_PROD_IMAGE ghcr.io/${{ github.repository_owner }}/pic-share:prod-${{ env.COMMIT_HASH }}
 
-      - name: Cleanup registry
+      - name: Push new tag
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/pic-share:prod-${{ env.COMMIT_HASH }}
+
+      - name: Pull nginx production test image
+        run: |
+          docker pull $NGINX_PROD_IMAGE
+
+      - name: Tag image with commit hash
+        run: |
+          docker tag $NGINX_PROD_IMAGE ghcr.io/${{ github.repository_owner }}/pic-share:nginx-${{ env.COMMIT_HASH }}
+
+      - name: Push new tag
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/pic-share:nginx-${{ env.COMMIT_HASH }}
+
+      - name: Cleanup app registry
         uses: actions/delete-package-versions@v5
         with:
-          package-name: ${{ github.repository_owner }}/pic-share
+          package-name: pic-share-app
+          package-type: container
+          min-versions-to-keep: 5
+
+      - name: Cleanup nginx registry
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: pic-share-nginx
           package-type: container
           min-versions-to-keep: 5
