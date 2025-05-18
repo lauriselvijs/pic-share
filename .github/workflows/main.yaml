@@ -45,7 +45,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: build
-    name: Run Tests with Pulled Test Images
+    name: Run Tests
 
     steps:
       - name: Checkout code
@@ -138,13 +138,20 @@ jobs:
       - name: Cleanup app registry
         uses: actions/delete-package-versions@v5
         with:
-          package-name: pic-share-app
+          package-name: pic-share-app-prod
           package-type: container
           min-versions-to-keep: 5
 
       - name: Cleanup nginx registry
         uses: actions/delete-package-versions@v5
         with:
-          package-name: pic-share-nginx
+          package-name: pic-share-nginx-prod
+          package-type: container
+          min-versions-to-keep: 5
+
+      - name: Cleanup nginx registry
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: pic-share-app-test
           package-type: container
           min-versions-to-keep: 5
