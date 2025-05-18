@@ -10,9 +10,6 @@ php artisan optimize
 echo "Clearing cache..."
 php artisan config:clear
 
-echo "Running database migrations..."
-php artisan migrate --force
-
 echo "Creating symbolic link for storage..."
 php artisan storage:link
 
