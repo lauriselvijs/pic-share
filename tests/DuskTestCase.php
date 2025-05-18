@@ -36,7 +36,7 @@ abstract class DuskTestCase extends BaseTestCase
             '--disable-gpu',
             '--headless',
             '--no-sandbox',
-            '--disable-dev-shm-usage'
+            '--disable-dev-shm-usage',
         ]);
 
         $host = static::runningInSail() ? 'http://selenium:4444/wd/hub' : 'http://localhost:9515';

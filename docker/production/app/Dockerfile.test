@@ -54,7 +54,7 @@ WORKDIR /var/www
 COPY . /var/www
 
 # Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 # Copy Supervisor and cron config
 COPY ./docker/production/app/supervisord.conf /etc/supervisord.conf

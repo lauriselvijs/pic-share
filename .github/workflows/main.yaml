@@ -24,7 +24,7 @@ jobs:
 
       - name: Build and push app test image
         run: |
-          docker build -t $APP_IMAGE -f docker/production/app/Dockerfile .
+          docker build -t $APP_IMAGE -f docker/production/app/Dockerfile.test .
           docker push $APP_IMAGE
 
       - name: Build and push nginx test image
