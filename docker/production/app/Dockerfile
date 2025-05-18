@@ -10,6 +10,7 @@ RUN apk update && apk add --no-cache \
     nodejs \
     npm \
     mysql-client \
+    mariadb-connector-c \
     libpng-dev \
     libjpeg-turbo-dev \
     libwebp-dev \
@@ -55,6 +56,7 @@ COPY . /var/www
 
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
+RUN npm install && npm run build
 
 # Copy Supervisor and cron config
 COPY ./docker/production/app/supervisord.conf /etc/supervisord.conf

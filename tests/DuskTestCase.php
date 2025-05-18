@@ -12,20 +12,6 @@ abstract class DuskTestCase extends BaseTestCase
     use CreatesApplication;
 
     /**
-     * Prepare for Dusk test execution.
-     *
-     * @beforeClass
-     *
-     * @return void
-     */
-    public static function prepare()
-    {
-        if (! static::runningInSail()) {
-            static::startChromeDriver();
-        }
-    }
-
-    /**
      * Create the RemoteWebDriver instance.
      *
      * @return \Facebook\WebDriver\Remote\RemoteWebDriver
@@ -39,7 +25,7 @@ abstract class DuskTestCase extends BaseTestCase
             '--disable-dev-shm-usage',
         ]);
 
-        $host = static::runningInSail() ? 'http://selenium:4444/wd/hub' : 'http://localhost:9515';
+        $host = 'http://selenium:4444/wd/hub';
 
         return RemoteWebDriver::create(
             $host,

@@ -21,6 +21,5 @@ yarn-error.log
 /.github
 
 .dockerignore
-docker-composer.prod.yml
+docker-compose.test.yml
 docker-compose.yml
-Dockerfile.prod
