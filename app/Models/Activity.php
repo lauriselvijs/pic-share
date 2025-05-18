@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Post;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
@@ -16,5 +15,21 @@ class Activity extends Model
     public function post()
     {
         return $this->belongsTo(Post::class);
+    }
+
+    /**
+     * Get the user that owns the activity.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the activity statuses for the activity.
+     */
+    public function activityStatuses()
+    {
+        return $this->hasMany(ActivityStatus::class);
     }
 }

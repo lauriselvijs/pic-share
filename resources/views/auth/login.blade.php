@@ -1,39 +1,37 @@
 @extends('layout.index')
 
 @section('title')
-Login
+{{ __('Login') }}
 @endsection
 
 @section('content')
 <x-card.logo>
     <x-slot name='heading'>
-        Login to your account
+        {{ __('Login to your account') }}
     </x-slot>
     <x-form.auth :action='route("auth.authenticate")'>
-        <x-slot name='extraInputFields'>
+        <x-slot name='fields'>
         </x-slot>
-        <x-slot name='addAuthFormInfo'>
+        <x-slot name='info'>
             <div class='flex items-center justify-between'>
-                <x-input.checkbox name='remember' required=''>
-                    <x-slot name='checkboxLabel'>
-                        Remember me
+                <x-input.checkbox name='remember' required>
+                    <x-slot name='label'>
+                        {{ __('Remember me') }}
                     </x-slot>
                 </x-input.checkbox>
                 <x-link :href='route("password.request")' class='text-sm font-medium text-black hover:underline'>
-                    Forgot
-                    password?</x-link>
+                    {{ __('Forgot password?') }}</x-link>
             </div>
         </x-slot>
         <x-slot name='submit'>
             <x-button type='submit'>
-                Login
+                {{ __('Login') }}
             </x-button>
         </x-slot>
-        <x-slot name='authFormFooter'>
-            Don’t have an account yet? <x-link :href='route("auth.create")'
+        <x-slot name='footer'>
+            {{ __("Don't have an account yet?") }} <x-link :href='route("auth.create")'
                 class='font-medium text-black hover:underline'>
-                Sign
-                up</x-link>
+                {{ __('Sign up') }}</x-link>
         </x-slot>
     </x-form.auth>
 </x-card.logo>

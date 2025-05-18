@@ -30,13 +30,6 @@ return [
 
     'disks' => [
 
-        'backups' => [
-            'driver' => 'local',
-            'root' => storage_path('app/backups'),
-            'throw' => false,
-        ],
-
-
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
@@ -46,15 +39,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . '/storage',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-
-        'media' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/media'),
-            'url' => env('APP_URL') . '/media',
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -71,15 +56,22 @@ return [
             'throw' => false,
         ],
 
-        'dropbox-backups' => [
-            'driver' => 'dropbox',
-            'root' => "backups"
+        // Created file systems
+
+        'backups' => [
+            'driver' => 'local',
+            'root' => storage_path('app/backups'),
+            'throw' => false,
         ],
 
+        'dropbox-backups' => [
+            'driver' => 'dropbox',
+            'root' => 'backups',
+        ],
 
         'dropbox-files' => [
             'driver' => 'dropbox',
-            'root' => "files"
+            'root' => 'files',
         ],
 
     ],
@@ -97,7 +89,6 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('media') => storage_path('app/public/media')
     ],
 
 ];

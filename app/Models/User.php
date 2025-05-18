@@ -4,22 +4,21 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Models\Post;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\MassPrunable;
+use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Events\UserRegisteredEvent;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Prunable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Prunable, Billable;
+    use Billable, HasApiTokens, HasFactory, Notifiable, Prunable, SoftDeletes;
 
     /**
      * Dispatch given event (should be avoided because of readability)
@@ -27,6 +26,25 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     // protected $dispatchesEvents  = ['created' => UserRegisteredEvent::class];
+
+    // REVIEW: Allows deleting without rising events (faster).
+    // use MassPrunable;
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'username';
+    }
+
+    /**
+     * Get the user's preferred locale.
+     */
+    // public function preferredLocale(): string
+    // {
+    //     return $this->locale;
+    // }
 
     /**
      * The attributes that are mass assignable.
@@ -74,5 +92,29 @@ class User extends Authenticatable implements MustVerifyEmail
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Relationship to videos
+     */
+    public function videos(): HasMany
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    /**
+     * Relationship to videos
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get the activities for the user.
+     */
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 }

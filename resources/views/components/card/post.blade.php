@@ -1,14 +1,20 @@
 @props(['post'])
 
+{{--
+BUG: Cant use a tag on outside div element,new a tag wraps around each of the inner element
+--}}
 <div
-    class='flex flex-col gap-2 rounded-none sm:rounded bg-shadow text-white text-left hover:scale-100 md:hover:scale-105 shadow-md transition-all'>
-    <img class='h-full w-full' src={{ asset($post->image) }} alt='User image'>
+    class='flex flex-col gap-2 bg-shadow text-white text-left md:rounded-[32px] hover:rounded-none rounded-none shadow-md transition-all overflow-hidden'>
+    <a href="{{ route('posts.show', $post->slug) }}">
+        <img decoding="async" loading="lazy" class='h-full w-full' src={{$post->image}} alt='{{ __('Post') }}'
+        title='{{ __('Post') }}'>
+    </a>
     <div class="p-6 pb-24 md:pb-12 flex flex-col justify-center items-start">
-        <h2 class='text-2xl font-bold  leading-snug hover:text-sunset pb-6'>
-            <a href={{ route('posts.show', $post->id) }}>
+        <a class="hover:text-sunset" href="{{ route('posts.show', $post->slug) }}">
+            <h2 class='text-2xl font-bold  leading-snug pb-6'>
                 {{ $post->title }}
-            </a>
-        </h2>
+            </h2>
+        </a>
 
         <x-tag :tagsCsv='$post->tags' />
 
@@ -16,5 +22,4 @@
             {{ $post->author }}
         </p>
     </div>
-
 </div>

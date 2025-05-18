@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Services\AuthService;
 use App\Http\Requests\AuthRequest;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreAuthRequest;
+use App\Services\AuthService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
-
-    public function __construct(private AuthService $authService)
-    {
-        $this->authService = $authService;
-    }
+    public function __construct(private AuthService $authService) {}
 
     /**
      * Show sign up user form
@@ -30,21 +25,17 @@ class AuthController extends Controller
      */
     public function store(StoreAuthRequest $request): RedirectResponse
     {
-        $user = $this->authService->store($request->validated());
+        $this->authService->storeAndLogIn($request->safe(), $request->session());
 
-        auth()->login($user);
-
-        return redirect()->route('verification.notice')->with('message',  __('user.created'));
+        return redirect()->route('verification.notice')->with('message', __('user.created'));
     }
 
     /**
      * User logout
      */
-    public function logout(Request $request): RedirectResponse
+    public function logout(): RedirectResponse
     {
-        auth()->logout();
-
-        $this->authService->invalidate($request->session());
+        $this->authService->logout();
 
         return redirect()->route('home')->with('message', __('user.logged_out'));
     }
@@ -62,8 +53,8 @@ class AuthController extends Controller
      */
     public function authenticate(AuthRequest $request): RedirectResponse
     {
-        if ($this->authService->authenticate($request->session(), $request->validated(), $request->has('remember'))) {
-            return redirect()->route('posts.index')->with('message',  __('user.logged_in'));
+        if ($this->authService->authenticate($request->safe()->toArray(), $request->has('remember'))) {
+            return redirect()->intended(route('posts.index'))->with('message', __('user.logged_in'));
         }
 
         return back()->withErrors(['password' => __('auth.failed')])->onlyInput('password');

@@ -15,14 +15,14 @@ class AuthTest extends DuskTestCase
      *
      * @return void
      */
-    public function testSignUp()
+    public function test_sign_up()
     {
         $this->browse(function (Browser $browser) {
             $browser->visitRoute('auth.create')
                 ->type('name', 'John')
                 ->type('email', 'john@mail.com')
-                ->type('password', '123456')
-                ->type('password_confirmation', '123456')
+                ->type('password', '}YVPrN0e1P81')
+                ->type('password_confirmation', '}YVPrN0e1P81')
                 ->check('agreement')
                 ->press('Sign up')
                 ->waitForRoute('verification.notice')

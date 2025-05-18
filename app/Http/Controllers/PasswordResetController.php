@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
-use App\Services\PasswordResetService;
 use App\Http\Requests\EmailPasswordResetRequest;
 use App\Http\Requests\UpdatePasswordResetRequest;
+use App\Services\PasswordResetService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class PasswordResetController extends Controller
 {
-    public function __construct(private PasswordResetService $passwordResetService)
-    {
-        $this->passwordResetService = $passwordResetService;
-    }
+    public function __construct(private PasswordResetService $passwordResetService) {}
 
     /**
      * Returns forget password form
@@ -28,7 +25,7 @@ class PasswordResetController extends Controller
      */
     public function email(EmailPasswordResetRequest $request): RedirectResponse
     {
-        $sent = $this->passwordResetService->email($request->validated());
+        $sent = $this->passwordResetService->email($request->safe()->toArray());
 
         if ($sent) {
             return redirect()->route('posts.index')->with(['message' => __('passwords.sent_alert')]);
@@ -50,9 +47,7 @@ class PasswordResetController extends Controller
      */
     public function update(UpdatePasswordResetRequest $request): RedirectResponse
     {
-        $request->validated();
-
-        $sent = $this->passwordResetService->update($request->only('email', 'password', 'password_confirmation', 'token'));
+        $sent = $this->passwordResetService->update($request->safe(['email', 'password', 'password_confirmation', 'token']));
 
         if ($sent) {
             return redirect()->route('auth.login')->with('message', __('passwords.reset_alert'));

@@ -15,4 +15,9 @@ export default defineConfig({
             promiseImportName: (i) => `__tla_${i}`,
         }),
     ],
+    server: {
+        hmr: {
+            host: "localhost", // tells browser to connect to localhost, not WSL2 IP
+        },
+    },
 });

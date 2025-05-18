@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use App\Models\User;
+use Laravel\Cashier\Exceptions\IncompletePayment;
 
 class PaymentService
 {
-
     /**
      * Remove special characters from name
      */
@@ -17,9 +17,11 @@ class PaymentService
 
     /**
      * Make payment
+     *
+     * @throws IncompletePayment
      */
     public function makePayment(User $user, string $price, string $paymentMethodId): void
     {
-        $user->charge(floatval($price) * 100, $paymentMethodId);
+        $user->charge((float) $price * 100, $paymentMethodId);
     }
 }

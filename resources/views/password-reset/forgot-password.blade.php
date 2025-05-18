@@ -1,26 +1,22 @@
 @extends('layout.index')
 
 @section('title')
-Sign Up
+{{ __('Sign Up') }}
 @endsection
 
 @section('content')
 <x-card.logo>
     <x-slot name='heading'>
-        Reset password
+        {{ __('Reset password') }}
     </x-slot>
     <x-form :action='route("password.email")' method='POST'>
         @csrf
 
-        <x-input label='Your email' type='email' name='email' placeholder='name@company.com' required />
-        @error('email')
-        <x-message.error>
-            {{ $message }}
-        </x-message.error>
-        @enderror
+        <x-input label="{{ __('Your email') }}" type='email' autocomplete="email" name='email'
+            placeholder="{{ __('name@company.com') }}" required />
 
         <x-button type='submit'>
-            Send reset password link
+            {{ __('Send reset password link') }}
         </x-button>
     </x-form>
 </x-card.logo>

@@ -11,15 +11,19 @@ class FileServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
-    {
-        $this->app->bind(CanManipulateFiles::class, DropboxFileService::class);
-    }
+    public function register(): void {}
+
+    /**
+     * All of the container singletons that should be registered.
+     *
+     * @var array
+     */
+    public $singletons = [
+        CanManipulateFiles::class => DropboxFileService::class,
+    ];
 
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-    }
+    public function boot(): void {}
 }

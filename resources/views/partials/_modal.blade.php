@@ -10,7 +10,7 @@
             <h3 class='text-xl font-bold text-black'>{{ auth()->user()->name }}</h3>
             @else
             <h3 class='text-xl font-bold text-black'>
-                Menu
+                {{ __('Menu') }}
             </h3>
             @endauth
             <x-button.close id='close-modal-btn' />

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,7 +11,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ActivityFactory extends Factory
 {
-
     /**
      * Define the model's default state.
      *
@@ -25,10 +25,10 @@ class ActivityFactory extends Factory
          */
         $type = ['Updated', 'Liked', 'Commented'];
 
-
         return [
-            'post_id' => Post::all()->random()->id,
-            'type' => fake()->randomElement($type)
+            'post_id' => Post::factory(),
+            'user_id' => User::factory(),
+            'type' => fake()->randomElement($type),
         ];
     }
 }

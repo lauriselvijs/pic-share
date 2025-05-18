@@ -215,8 +215,8 @@ return [
         [
             'name' => env('APP_NAME', 'laravel-backup'),
             'disks' => [
-                // 'backups', 
-                'dropbox-backups'
+                // 'backups',
+                'dropbox-backups',
             ],
             'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,

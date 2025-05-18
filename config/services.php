@@ -34,13 +34,13 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('APP_URL') . '/auth/google/callback',
+        'redirect' => env('APP_URL').'/auth/google/callback',
     ],
 
     'dropbox' => [
         'refresh_token' => env('DROPBOX_REFRESH_TOKEN'),
         'app_secret' => env('DROPBOX_APP_SECRET'),
         'app_key' => env('DROPBOX_APP_KEY'),
-    ]
+    ],
 
 ];

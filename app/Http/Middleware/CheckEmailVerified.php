@@ -15,7 +15,7 @@ class CheckEmailVerified
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user()?->email_verified_at) {
+        if (! $request->user()?->email_verified_at) {
             return redirect()->route('verification.notice');
         }
 

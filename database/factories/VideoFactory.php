@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class VideoFactory extends Factory
 {
-
     /**
      * Define the model's default state.
      *
@@ -26,11 +25,11 @@ class VideoFactory extends Factory
         $tags = ['History', 'Forest', 'Water', 'Castle', 'Sea'];
 
         return [
-            'title' =>  rtrim(fake()->sentence(3), '.'),
-            'user_id' =>  User::all()->random()->id,
-            'thumbnail' =>  fake()->imageUrl(),
+            'user_id' => User::factory(),
+            'title' => rtrim(fake()->sentence(3), '.'),
+            'thumbnail' => fake()->imageUrl(),
             'path' => fake()->url(),
-            'tags' => implode(', ', fake()->randomElements($tags, 3))
+            'tags' => implode(', ', fake()->randomElements($tags, 3)),
         ];
     }
 }

@@ -12,14 +12,37 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        if (env('CI')) {
+            return;
+        }
 
         if (config('app.server_type') == 'default') {
+
+            $schedule->command('sanctum:prune-expired --hours=24')->name('pruned-expired:sanctum')
+                ->daily()
+                ->onOneServer()
+                ->runInBackground();
 
             // Remove failed jobs from DB every month
             $schedule->command('queue:prune-failed')->name('deleted:jobs')
                 ->monthly()
                 ->appendOutputTo(storage_path('/logs/deleted_jobs.log'))
+                ->onOneServer()
+                ->runInBackground();
+
+            $schedule->command('queue:prune-batches --unfinished=72 --cancelled=72')->name('pruned:batches')
+                ->daily()
+                ->onOneServer()
+                ->runInBackground();
+
+            $schedule->command('auth:clear-resets')->name('cleared:auth')
+                ->everyFifteenMinutes()
+                ->onOneServer()
+                ->runInBackground();
+
+            // Send newsletter
+            $schedule->command('newsletter:send')->name('sent:newsletters')
+                ->monthly()
                 ->onOneServer()
                 ->runInBackground();
 
@@ -30,19 +53,26 @@ class Kernel extends ConsoleKernel
                 ->onOneServer()
                 ->runInBackground();
 
-            // Back up
-            $schedule->command('backup:run')->name('run:backup')
-                ->monthly()
-                ->onOneServer()
-                ->runInBackground();
-            $schedule->command('backup:clean')->name('cleaned:backup')
-                ->monthly()
-                ->onOneServer()
-                ->runInBackground();
+            if (config('app.env') == 'production') {
+                // Back up
+                $schedule->command('backup:run')->name('run:backup')
+                    ->monthly()
+                    ->onOneServer()
+                    ->runInBackground()->environments('production');
+                $schedule->command('backup:clean')->name('cleaned:backup')
+                    ->monthly()
+                    ->onOneServer()
+                    ->runInBackground()->environments('production');
+            }
 
             // Prune stale cache tags
             $schedule->command('cache:prune-stale-tags')->name('pruned-stale-tags:cache')
                 ->hourly()
+                ->onOneServer()
+                ->runInBackground();
+
+            $schedule->command('horizon:snapshot')->name('horizon:snapshot')
+                ->everyFiveMinutes()
                 ->onOneServer()
                 ->runInBackground();
         }
@@ -61,7 +91,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__ . '/Commands');
+        $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
     }

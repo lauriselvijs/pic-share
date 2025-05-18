@@ -12,14 +12,14 @@ Home
     <div class='flex flex-col gap-4'>
         <a href={{ route('posts.index')}}>
             <x-button type='button'>
-                View posts
+                {{ __('View posts')}}
             </x-button>
         </a>
         @auth
         @else
         <a href={{ route('auth.create')}}>
             <x-button type='button'>
-                Sign up
+                {{ __('Sign up')}}
             </x-button>
         </a>
         @endauth

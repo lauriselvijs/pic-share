@@ -3,44 +3,46 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\ValidatedInput;
 
 class AuthService
 {
     /**
-     * Store new user in database
-     *
-     * @param array<string, mixed> $userData
+     * Store new user in database and log in user
      */
-    public function store(array $userData): User
+    public function storeAndLogIn(ValidatedInput $user): void
     {
-        // TODO: 
-        // [ ] - Add agreement checked to user table as column.
         // Hash password.
-        $userData['password'] = bcrypt($userData['password']);
+        $user->password = Hash::make($user->password);
 
         // Create user
-        $user = User::create($userData);
+        $user = User::create($user->toArray());
 
-        return $user;
+        auth()->login($user);
+
+        session()->regenerate();
     }
 
     /**
      * Invalidate current session and regenerate CSRF token
      */
-    public function invalidate(Session $session): void
+    public function logout(): void
     {
-        $session->invalidate();
-        $session->regenerateToken();
+        auth()->logout();
+
+        session()->invalidate();
+        session()->regenerateToken();
     }
 
     /**
      * Auth user
      */
-    public function authenticate(Session $session, array $credentials, bool $remember): bool
+    public function authenticate(array $credentials, bool $remember): bool
     {
         if (auth()->attempt($credentials, $remember)) {
-            $session->regenerate();
+            session()->regenerate();
+
             return true;
         }
 

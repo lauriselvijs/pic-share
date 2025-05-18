@@ -6,47 +6,56 @@ use App\Contracts\CanManipulateFiles;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
-// REVIEW: check if everything works before implementing
+/**
+ * This class provides file manipulation functionality specifically for the Dropbox file storage service.
+ */
 class DropboxFileService implements CanManipulateFiles
 {
-
     /**
-     * How long keep link active
-     * 
+     * Link expiration time is 4 hours (https://www.dropbox.com/developers/documentation/http/documentation#files-get_temporary_link)
+     *
      * @var int
      */
-    protected final const TEMPORARY_URL_ACTIVE_DEFAULT_TIME = 60 * 5;
+    private const URL_EXPIRATION_TIME = 60 * 60 * 4;
 
-    public function storeFileAndReturnPath(UploadedFile $file): string
+    /**
+     * The name of the storage disk that will be used.
+     */
+    private string $storage = 'dropbox-files';
+
+    public function store(UploadedFile $file): string
     {
-        $fileName = Storage::disk('dropbox-files')->putFile('/', $file);
-        $filePath = Storage::disk('dropbox-files')->path($fileName);
+        $path = Storage::disk($this->getStorageName())->putFile('/', $file);
 
-        return $filePath;
+        return $path;
     }
 
-    public function getTemporaryUrlForFile(string $filePath, int $secondsActive = self::TEMPORARY_URL_ACTIVE_DEFAULT_TIME): string
+    public function generateTemporaryUrl(string $path): string
     {
-        $url = Storage::disk('dropbox-files')->temporaryUrl(
-            $filePath,
-            now()->seconds($secondsActive)
-        );
-
-        return $url;
+        try {
+            return cache()->remember(($path), self::URL_EXPIRATION_TIME, function () use ($path) {
+                return Storage::disk($this->getStorageName())->url(config('filesystems.disks.dropbox-files.root').'/'.$path);
+            });
+        } catch (\Throwable $th) {
+            return $path;
+        }
     }
 
-    public function deleteFile(string $path): void
+    public function delete(string $path): void
     {
-        $fileRelativePathInDisk = Storage::disk('dropbox-files')->path($path);
-
-        Storage::disk('dropbox-files')->delete($fileRelativePathInDisk);
+        Storage::disk($this->getStorageName())->delete($path);
     }
 
-    public function storeFileAndUpdatePath(UploadedFile $newImage, string $oldImagePath): string
+    public function update(UploadedFile $file, string $oldPath): string
     {
-        $this->deleteFile($oldImagePath);
-        $filePath = $this->saveFileAndReturnPath($newImage);
+        $this->delete($oldPath);
+        $path = $this->store($file);
 
-        return $filePath;
+        return $path;
+    }
+
+    public function getStorageName(): string
+    {
+        return $this->storage;
     }
 }

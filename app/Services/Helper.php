@@ -3,25 +3,14 @@
 namespace App\Services;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
 class Helper
 {
     /**
-     * Returns path of file in disk
+     * Generates unique username for given email
      */
-    public static function getFileRelativePathInDisk(string $disk, string $path): string
+    public static function generateUsernameFrom(string $email): string
     {
-        $diskName = basename(Storage::disk($disk)->path(''));
-
-        return str_replace('/' . $diskName . '/', '', $path);
-    }
-
-    /**
-     * Generates unique username for given users name
-     */
-    public static function generateUsernameFor(string $name): string
-    {
-        return Str::of($name)->replace(' ', '.')->ascii()->append('#')->append(Str::uuid())->lower();
+        return Str::of($email)->before('@')->ascii()->append('-')->append(Str::uuid())->lower();
     }
 }

@@ -24,10 +24,8 @@ class ActivityStatusFactory extends Factory
          */
         $type = ['Pending', 'Approved', 'Rejected'];
 
-
         return [
-            'activity_id' => Activity::all()->random()->id,
-            'type' => fake()->randomElement($type)
+            'type' => fake()->randomElement($type),
         ];
     }
 }

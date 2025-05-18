@@ -9,31 +9,28 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client as DropboxClient;
-use Spatie\FlysystemDropbox\DropboxAdapter;;
+use Spatie\FlysystemDropbox\DropboxAdapter;
 
 class DropboxServiceProvider extends ServiceProvider
 {
-
     /**
      * Cache key for dropbox token
-     * 
-     * @var string 
+     *
+     * @var string
      */
-    public final const TOKEN_CACHE_KEY = "dropbox_token";
+    public final const TOKEN_CACHE_KEY = 'dropbox_token';
 
     /**
      * Expiration time of access token
-     * 
-     * @var int 
+     *
+     * @var int
      */
     public final const TOKEN_EXPIRATION_TIME = 60 * 60 * 4;
 
     /**
      * Register services.
      */
-    public function register(): void
-    {
-    }
+    public function register(): void {}
 
     /**
      * Bootstrap services.
@@ -56,7 +53,7 @@ class DropboxServiceProvider extends ServiceProvider
                 $newToken
             );
 
-            $adapter = new DropboxAdapter($client, $config['root'] ?? "");
+            $adapter = new DropboxAdapter($client, $config['root'] ?? '');
 
             return new FilesystemAdapter(
                 new Filesystem($adapter, $config),

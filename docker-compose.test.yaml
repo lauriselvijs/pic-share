@@ -1,0 +1,76 @@
+services:
+  app:
+    image: ${APP_TEST_IMAGE}
+    volumes:
+      - .env:/var/www/.env
+    networks:
+      - app
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      selenium:
+        condition: service_healthy
+    restart: always
+
+  nginx:
+    image: ${NGINX_PROD_IMAGE}
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    networks:
+      - app
+
+  mysql:
+    image: "mysql/mysql-server:8.0"
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    networks:
+      - app
+    healthcheck:
+      test:
+        ["CMD", "mysqladmin", "ping", "-u${DB_USERNAME}", "-p${DB_PASSWORD}"]
+      retries: 10
+      timeout: 5s
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis:/data
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    restart: always
+
+  selenium:
+    image: "selenium/standalone-chrome"
+    volumes:
+      - "/dev/shm:/dev/shm"
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  redis:
+    driver: local
+  mysql:
+    driver: local
+
+networks:
+  app:
+    driver: bridge
