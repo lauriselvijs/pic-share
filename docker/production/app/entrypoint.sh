@@ -11,16 +11,20 @@ chown www-data:www-data /var/www/storage/logs/horizon.log /var/www/storage/logs/
 chmod 664 /var/www/storage/logs/horizon.log /var/www/storage/logs/horizon-error.log
 
 echo "Running Laravel optimizations..."
+php artisan config:clear
 php artisan config:cache
 php artisan route:cache
-php artisan view:cache
 php artisan event:cache
-
-echo "Running database migrations..."/
-php artisan migrate --force
 
 echo "Creating symbolic link for storage..."
 php artisan storage:link
+
+echo "Caching views..."
+php artisan view:clear
+php artisan view:cache
+
+echo "Running database migrations..."
+php artisan migrate --force
 
 # Start
 echo "Starting supervisord..."
