@@ -1,3 +1,4 @@
+name: Build and Test Docker Images
 on:
   push:
     branches: [main, 1.x]
