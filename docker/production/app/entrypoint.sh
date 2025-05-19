@@ -11,9 +11,12 @@ chown www-data:www-data /var/www/storage/logs/horizon.log /var/www/storage/logs/
 chmod 664 /var/www/storage/logs/horizon.log /var/www/storage/logs/horizon-error.log
 
 echo "Running Laravel optimizations..."
-php artisan optimize
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
 
-echo "Running database migrations..."
+echo "Running database migrations..."/
 php artisan migrate --force
 
 echo "Creating symbolic link for storage..."

@@ -17,7 +17,6 @@ class Kernel extends ConsoleKernel
         }
 
         if (config('app.server_type') == 'default') {
-
             $schedule->command('sanctum:prune-expired --hours=24')->name('pruned-expired:sanctum')
                 ->daily()
                 ->onOneServer()
@@ -53,18 +52,6 @@ class Kernel extends ConsoleKernel
                 ->onOneServer()
                 ->runInBackground();
 
-            if (config('app.env') == 'production') {
-                // Back up
-                $schedule->command('backup:run')->name('run:backup')
-                    ->monthly()
-                    ->onOneServer()
-                    ->runInBackground()->environments('production');
-                $schedule->command('backup:clean')->name('cleaned:backup')
-                    ->monthly()
-                    ->onOneServer()
-                    ->runInBackground()->environments('production');
-            }
-
             // Prune stale cache tags
             $schedule->command('cache:prune-stale-tags')->name('pruned-stale-tags:cache')
                 ->hourly()
@@ -84,6 +71,19 @@ class Kernel extends ConsoleKernel
                 ->onOneServer()
                 ->runInBackground();
         }
+
+        if (config('app.server_type') == 'backup') {
+            // Back up
+            $schedule->command('backup:run')->name('run:backup')
+                ->monthly()
+                ->onOneServer()
+                ->runInBackground();
+
+            $schedule->command('backup:clean')->name('cleaned:backup')
+                ->monthly()
+                ->onOneServer()
+                ->runInBackground();
+        }
     }
 
     /**
@@ -91,7 +91,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
