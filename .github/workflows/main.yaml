@@ -28,12 +28,12 @@ jobs:
 
       - name: Build and push app prod image
         run: |
-          docker build -t $APP_PROD_IMAGE -f  docker/production/app/Dockerfile .
+          docker build -t $APP_PROD_IMAGE -f  docker/production/Dockerfile .
           docker push $APP_PROD_IMAGE
 
       - name: Build and push app test image
         run: |
-          docker build -t $APP_TEST_IMAGE -f docker/production/app/Dockerfile.test .
+          docker build -t $APP_TEST_IMAGE -f docker/test/Dockerfile .
           docker push $APP_TEST_IMAGE
 
   test:
