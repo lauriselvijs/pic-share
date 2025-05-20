@@ -7,10 +7,8 @@ on:
 env:
   COMMIT_HASH: ${{ github.sha }}
   APP_TEST_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-app-test:${{ github.sha }}
-  NGINX_PROD_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-nginx-prod:${{ github.sha }}
   APP_PROD_IMAGE: ghcr.io/${{ github.repository_owner }}/pic-share-app-prod:${{ github.sha }}
   APP_PROD_IMAGE_LATEST: ghcr.io/${{ github.repository_owner }}/pic-share-app-prod:latest
-  NGINX_PROD_IMAGE_LATEST: ghcr.io/${{ github.repository_owner }}/pic-share-nginx-prod:latest
 
 jobs:
   build:
@@ -38,11 +36,6 @@ jobs:
           docker build -t $APP_TEST_IMAGE -f docker/production/app/Dockerfile.test .
           docker push $APP_TEST_IMAGE
 
-      - name: Build and push nginx prod image
-        run: |
-          docker build -t $NGINX_PROD_IMAGE -f docker/production/nginx/Dockerfile .
-          docker push $NGINX_PROD_IMAGE
-
   test:
     runs-on: ubuntu-latest
     needs: build
@@ -62,7 +55,6 @@ jobs:
       - name: Pull test images
         run: |
           docker pull $APP_TEST_IMAGE
-          docker pull $NGINX_PROD_IMAGE
 
       - name: Inject .env from secret
         run: echo "${{ secrets.ENV_TESTING }}" > .env
@@ -123,18 +115,6 @@ jobs:
       - name: Push new tag
         run: |
           docker push ${{ env.APP_PROD_IMAGE_LATEST }}
-
-      - name: Pull nginx production test image
-        run: |
-          docker pull $NGINX_PROD_IMAGE
-
-      - name: Tag image with commit hash
-        run: |
-          docker tag $NGINX_PROD_IMAGE ${{ env.NGINX_PROD_IMAGE_LATEST }}
-
-      - name: Push new tag
-        run: |
-          docker push ${{ env.NGINX_PROD_IMAGE_LATEST }}
 
       - name: Cleanup app registry
         uses: actions/delete-package-versions@v5

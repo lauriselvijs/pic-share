@@ -15,13 +15,10 @@ php artisan config:clear
 php artisan config:cache
 php artisan route:cache
 php artisan event:cache
+php artisan view:cache
 
 echo "Creating symbolic link for storage..."
 php artisan storage:link
-
-echo "Caching views..."
-php artisan view:clear
-php artisan view:cache
 
 echo "Running database migrations..."
 php artisan migrate --force

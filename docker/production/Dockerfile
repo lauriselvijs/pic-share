@@ -25,6 +25,8 @@ RUN apk update && apk add --no-cache \
     gcc \
     g++ \
     make \
+    nginx \
+    && mkdir -p /run/nginx \
     && docker-php-ext-configure gd \
         --with-freetype \
         --with-jpeg \
@@ -58,15 +60,18 @@ COPY . /var/www
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
 
+# Copy Nginx configuration
+COPY ./docker/production/default.conf /etc/nginx/http.d/default.conf
+
 # Copy Supervisor and cron config
-COPY ./docker/production/app/supervisord.conf /etc/supervisord.conf
-COPY ./docker/production/app/crontab /etc/cron.d/crontab
+COPY ./docker/production/supervisord.conf /etc/supervisord.conf
+COPY ./docker/production/crontab /etc/cron.d/crontab
 RUN chmod 0644 /etc/cron.d/crontab && crontab /etc/cron.d/crontab
 
 # Copy and configure entrypoint
-COPY ./docker/production/app/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY ./docker/production/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-EXPOSE 9000
+EXPOSE 80
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
