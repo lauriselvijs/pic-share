@@ -1,14 +1,13 @@
 #!/bin/sh
 
 echo "Setting file permissions..."
-chown -R www-data:www-data /var/www/html
-chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+chown -R www-data:www-data /var/www
+chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-echo "Setting horizon log file permissions..."
-mkdir -p /var/www/html/storage/logs
-touch /var/www/html/storage/logs/horizon.log /var/www/html/storage/logs/horizon-error.log
-chown www-data:www-data /var/www/html/storage/logs/horizon.log /var/www/html/storage/logs/horizon-error.log
-chmod 664 /var/www/html/storage/logs/horizon.log /var/www/html/storage/logs/horizon-error.log
+mkdir -p /var/www/storage/logs
+touch /var/www/storage/logs/horizon.log /var/www/storage/logs/horizon-error.log
+chown www-data:www-data /var/www/storage/logs/horizon.log /var/www/storage/logs/horizon-error.log
+chmod 664 /var/www/storage/logs/horizon.log /var/www/storage/logs/horizon-error.log
 
 echo "Running Laravel optimizations..."
 php artisan route:cache
