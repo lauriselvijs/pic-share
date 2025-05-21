@@ -21,7 +21,7 @@ echo "Running database migrations..."
 php artisan migrate --force
 
 echo "Installing chrome driver..."
-php artisan dusk:chrome-driver
+# php artisan dusk:chrome-driver
 
 # Start
 echo "Starting supervisord..."

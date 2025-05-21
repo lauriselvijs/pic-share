@@ -65,6 +65,9 @@ jobs:
       - name: Tests
         run: docker compose exec -T nginx php artisan test
 
+      - name: Check nginx is up
+        run: docker compose exec -T selenium curl -v nginx
+
       - name: E2E Tests
         run: docker compose exec -T nginx php artisan dusk
 
