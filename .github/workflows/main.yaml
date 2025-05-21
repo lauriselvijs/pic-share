@@ -126,13 +126,6 @@ jobs:
       - name: Cleanup nginx registry
         uses: actions/delete-package-versions@v5
         with:
-          package-name: pic-share-nginx-prod
-          package-type: container
-          min-versions-to-keep: 5
-
-      - name: Cleanup nginx registry
-        uses: actions/delete-package-versions@v5
-        with:
           package-name: pic-share-app-test
           package-type: container
           min-versions-to-keep: 5
