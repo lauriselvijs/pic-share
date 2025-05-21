@@ -1,5 +1,5 @@
 services:
-  app:
+  nginx:
     image: ${APP_TEST_IMAGE}
     ports:
       - "${APP_PORT:-80}:80"
