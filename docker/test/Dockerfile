@@ -51,10 +51,10 @@ RUN apk update && apk add --no-cache \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Copy application source
-COPY . /var/www
+COPY . /var/www/html
 
 # Install dependencies
 RUN composer install --optimize-autoloader
