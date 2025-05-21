@@ -4,7 +4,6 @@ echo "Setting file permissions..."
 chown -R www-data:www-data /var/www/html
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-echo "Setting horizon log file permissions..."
 mkdir -p /var/www/html/storage/logs
 touch /var/www/html/storage/logs/horizon.log /var/www/html/storage/logs/horizon-error.log
 chown www-data:www-data /var/www/html/storage/logs/horizon.log /var/www/html/storage/logs/horizon-error.log
