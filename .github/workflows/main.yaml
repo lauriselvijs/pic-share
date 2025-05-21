@@ -65,9 +65,6 @@ jobs:
       - name: Tests
         run: docker compose exec -T nginx php artisan test
 
-      - name: Cache config
-        run: docker compose exec -T nginx php artisan config:cache
-
       - name: E2E Tests
         run: docker compose exec -T nginx php artisan dusk
 
