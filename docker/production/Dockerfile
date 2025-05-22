@@ -57,7 +57,7 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 # Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 RUN npm install && npm run build
 
 # Copy Nginx configuration
