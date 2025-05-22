@@ -65,6 +65,17 @@ jobs:
       - name: Tests
         run: docker compose exec -T nginx php artisan test
 
+      - name: Wait for nginx to be healthy
+        run: |
+          for i in {1..10}; do
+            if docker inspect --format='{{json .State.Health.Status}}' $(docker compose ps -q nginx) | grep -q "healthy"; then
+              echo "nginx is healthy"
+              break
+            fi
+            echo "Waiting for nginx to become healthy..."
+            sleep 3
+          done
+
       - name: Check nginx is up
         run: docker compose exec -T selenium curl -v nginx
 
