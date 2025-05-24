@@ -22,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(UrlGenerator $url): void
     {
+        // Force HTTPS in production
+        if ($this->app->isProduction()) {
+            $url->forceScheme('https');
+        }
+
         // Optimization
         Model::preventLazyLoading(! $this->app->isProduction());
 
