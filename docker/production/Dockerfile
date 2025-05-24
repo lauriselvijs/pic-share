@@ -60,9 +60,6 @@ COPY . /var/www/html
 RUN composer install --optimize-autoloader
 RUN npm install && npm run build
 
-# Copy Nginx configuration
-COPY ./docker/production/default.conf /etc/nginx/http.d/default.conf
-
 # Copy Supervisor and cron config
 COPY ./docker/production/supervisord.conf /etc/supervisord.conf
 COPY ./docker/production/crontab /etc/cron.d/crontab
