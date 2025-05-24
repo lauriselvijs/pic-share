@@ -7,9 +7,15 @@ services:
     ports:
       - "${APP_PORT:-80}:80"
     volumes:
-      - .env:/var/www/html/.env
+      - .env:/var/www/html/.env:ro
+      - ./docker/test/default.conf:/etc/nginx/http.d/default.conf:ro
     networks:
       - app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      timeout: 30s
+      retries: 5
+      start_period: 30s
     depends_on:
       mysql:
         condition: service_healthy

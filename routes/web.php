@@ -83,7 +83,7 @@ Route::middleware(['throttle:global'])->group(function () {
     Route::get('/track/allow', [TrackingCookieController::class, 'allow'])->name('track.allow');
 });
 
-if (config('app.env') == 'development') {
+if (config('app.env') === 'local') {
     Route::get('/mailable', function () {
         $user = User::find(1);
 

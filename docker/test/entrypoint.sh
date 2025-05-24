@@ -1,29 +1,27 @@
 #!/bin/sh
 
-echo "Setting file permissions..."
-chown -R www-data:www-data /var/www/html
-chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+mkdir -p /var/log/supervisord
+
+find ./ -type f -exec chmod 644 {} \;
+find ./ -type d -exec chmod 755 {} \;
 
 mkdir -p /var/www/html/storage/logs
-touch /var/www/html/storage/logs/horizon.log /var/www/html/storage/logs/horizon-error.log
-chown www-data:www-data /var/www/html/storage/logs/horizon.log /var/www/html/storage/logs/horizon-error.log
-chmod 664 /var/www/html/storage/logs/horizon.log /var/www/html/storage/logs/horizon-error.log
-
 mkdir -p /var/www/html/storage/framework/views
-chown -R www-data:www-data /var/www/html/storage/framework/views
-chmod -R 775 /var/www/html/storage/framework/views
+
+chown -R root:www-data /var/www/html
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+chmod -R 774 /var/www/html/storage /var/www/html/bootstrap/cache
 
 echo "Running Laravel optimizations..."
-php artisan route:cache
-php artisan view:cache
-php artisan event:cache
+php /var/www/html/artisan route:cache
+php /var/www/html/artisan view:cache
+php /var/www/html/artisan event:cache
 
 echo "Creating symbolic link for storage..."
-php artisan storage:link
+php /var/www/html/artisan storage:link
 
 echo "Running database migrations..."
-php artisan migrate --force
+php /var/www/html/artisan migrate --force
 
 # Start
 echo "Starting supervisord..."
