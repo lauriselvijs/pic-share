@@ -1,22 +1,23 @@
 {
     "private": true,
+    "type": "module",
     "engines": {
-        "node": "18",
-        "npm": ">=8"
+        "node": "22",
+        "npm": ">=10"
     },
     "scripts": {
         "dev": "vite",
         "build": "vite build"
     },
     "devDependencies": {
-        "@stripe/stripe-js": "^1.46.0",
-        "algoliasearch": "^4.14.3",
-        "autoprefixer": "^10.4.8",
-        "axios": "^1.2.3",
-        "laravel-vite-plugin": "^0.7.3",
-        "postcss": "^8.4.16",
+        "@stripe/stripe-js": "^ 7.3.1",
+        "algoliasearch": "^5.25.0",
+        "autoprefixer": "^10.4.21",
+        "axios": "^1.9.0",
+        "laravel-vite-plugin": "^1.2.0",
+        "postcss": "^8.5.4",
         "tailwindcss": "^3.1.8",
-        "vite": "^4.0.4",
+        "vite": "^6.3.5",
         "vite-plugin-top-level-await": "^1.3.0",
         "zxcvbn": "^4.4.2"
     },

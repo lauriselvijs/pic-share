@@ -1,32 +1,20 @@
 <?php
 
-namespace Tests\Browser;
-
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+uses(\Tests\DuskTestCase::class);
 use Laravel\Dusk\Browser;
-use Tests\DuskTestCase;
 
-class AuthTest extends DuskTestCase
-{
-    use DatabaseMigrations;
+uses(\Illuminate\Foundation\Testing\DatabaseMigrations::class);
 
-    /**
-     * Test if user can sign up.
-     *
-     * @return void
-     */
-    public function test_sign_up()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->visitRoute('auth.create')
-                ->type('name', 'John')
-                ->type('email', 'john@mail.com')
-                ->type('password', '}YVPrN0e1P81')
-                ->type('password_confirmation', '}YVPrN0e1P81')
-                ->check('agreement')
-                ->press('Sign up')
-                ->waitForRoute('verification.notice')
-                ->assertRouteIs('verification.notice');
-        });
-    }
-}
+test('sign up', function () {
+    $this->browse(function (Browser $browser) {
+        $browser->visitRoute('auth.create')
+            ->type('name', 'John')
+            ->type('email', 'john@mail.com')
+            ->type('password', '}YVPrN0e1P81')
+            ->type('password_confirmation', '}YVPrN0e1P81')
+            ->check('agreement')
+            ->press('Sign up')
+            ->waitForRoute('verification.notice')
+            ->assertRouteIs('verification.notice');
+    });
+});

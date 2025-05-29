@@ -1,4 +1,4 @@
-import algoliasearch from "algoliasearch/lite";
+import { algoliasearch } from "algoliasearch";
 
 import { ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY } from "./const";
 
@@ -40,7 +40,7 @@ async function onPostsSearchInput(event) {
     const retrievedPosts = await searchPosts(event.target.value);
 
     const postsSearchInput = event.target.value;
-    const retrievedPostsLength = retrievedPosts.length;
+    const retrievedPostsLength = retrievedPosts?.length;
 
     toggleClearPostsSearchInputBtn(postsSearchInput, clearPostsSearchInputBtn);
     resetPostSearchSuggestionBox(postSearchSuggestionBoxList);
@@ -65,7 +65,7 @@ async function onPostsSearchInputFocus(event) {
         postSearchSuggestionBox.style.display = "block";
 
         const postsSearchInput = event.target.value;
-        const retrievedPostsLength = retrievedPosts.length;
+        const retrievedPostsLength = retrievedPosts?.length;
 
         resetPostSearchSuggestionBox(postSearchSuggestionBoxList);
         togglePostSearchSuggestionBox(
@@ -123,7 +123,7 @@ function togglePostSearchSuggestionBox(
 }
 
 function displayPostSearchSuggestion(posts, searchPostSuggestionListItem) {
-    posts.forEach(({ title, slug }, index) => {
+    posts?.forEach(({ title, slug }, index) => {
         if (index === 0) {
             searchPostSuggestionListItem.id = slug;
             searchPostSuggestionListItem.textContent = title;

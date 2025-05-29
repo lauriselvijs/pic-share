@@ -22,6 +22,10 @@ class PaymentService
      */
     public function makePayment(User $user, string $price, string $paymentMethodId): void
     {
-        $user->charge((float) $price * 100, $paymentMethodId);
+        $user->charge(
+            (float) $price * 100,
+            $paymentMethodId,
+            ['return_url' => route('posts.index')]
+        );
     }
 }
