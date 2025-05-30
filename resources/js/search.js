@@ -2,7 +2,7 @@ import { algoliasearch } from "algoliasearch";
 
 import { ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY } from "./const";
 
-const searchClient = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY);
+const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY);
 
 const POST_SEARCH_SUGGESTION_LIST_ITEM_ID = "post-search-suggestion-list-item";
 const postSearchContainer = document.getElementById("post-search-container");
@@ -164,12 +164,13 @@ function toggleClearPostsSearchInputBtn(
  * @returns { Promise<Array<any> | undefined>}
  */
 async function searchPosts(param) {
-    const index = searchClient.initIndex("posts");
-
     try {
-        const { hits = [] } = await index.search(param);
+        const results = await client.searchSingleIndex({
+            indexName: "posts",
+            searchParams: { query: param },
+        });
 
-        return hits;
+        return results.hits;
     } catch (error) {
         console.log(error);
     }

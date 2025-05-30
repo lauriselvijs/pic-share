@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50dfbb553252ffebbfaba93e215df13c",
+    "content-hash": "ae5ef566f2a8b4278d98a7a370e08198",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -4398,16 +4398,16 @@
         },
         {
             "name": "spatie/flysystem-dropbox",
-            "version": "3.0.0",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/flysystem-dropbox.git",
-                "reference": "01b530218caa99b546f993490e54cd13b67604ff"
+                "reference": "e6bf18e4dcfe5b21945bdc8b633f7e4c3ae4b9eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/flysystem-dropbox/zipball/01b530218caa99b546f993490e54cd13b67604ff",
-                "reference": "01b530218caa99b546f993490e54cd13b67604ff",
+                "url": "https://api.github.com/repos/spatie/flysystem-dropbox/zipball/e6bf18e4dcfe5b21945bdc8b633f7e4c3ae4b9eb",
+                "reference": "e6bf18e4dcfe5b21945bdc8b633f7e4c3ae4b9eb",
                 "shasum": ""
             },
             "require": {
@@ -4450,7 +4450,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/flysystem-dropbox/issues",
-                "source": "https://github.com/spatie/flysystem-dropbox/tree/3.0.0"
+                "source": "https://github.com/spatie/flysystem-dropbox/tree/3.0.2"
             },
             "funding": [
                 {
@@ -4462,7 +4462,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-13T12:19:03+00:00"
+            "time": "2025-01-06T14:05:49+00:00"
         },
         {
             "name": "spatie/laravel-backup",

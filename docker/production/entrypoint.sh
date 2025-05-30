@@ -23,11 +23,20 @@ chmod 440 /var/www/html/.env
 echo "Creating symbolic link for storage..."
 php /var/www/html/artisan storage:link
 
+echo "Wiping the database..."
+php /var/www/html/artisan db:wipe --force
+
 echo "Running database migrations..."
 php /var/www/html/artisan migrate --force
 
 echo "Running database seeder..."
 php /var/www/html/artisan db:seed --force
+
+echo "Flushing Scout models..."
+php /var/www/html/artisan scout:flush "App\Models\Post"
+
+echo "Importing Scout models..."
+php /var/www/html/artisan scout:import "App\Models\Post"
 
 # Start
 echo "Starting supervisord..."

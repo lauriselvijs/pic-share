@@ -1,5 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap");
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+    --breakpoint-*: initial;
+    --breakpoint-sm: 770px;
+    --breakpoint-md: 1200px;
+
+    --color-*: initial;
+    --color-sunset: #ffe2d6;
+    --color-shadow: #43374f;
+    --color-error: #d30124;
+    --color-black: #000;
+    --color-white: #fff;
+
+    --font-*: initial;
+    --font-sans: Quicksand, Arial, sans-serif;
+}
