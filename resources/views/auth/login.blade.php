@@ -14,7 +14,7 @@
         </x-slot>
         <x-slot name='info'>
             <div class='flex items-center justify-between'>
-                <x-input.checkbox name='remember' required>
+                <x-input.checkbox name='remember'>
                     <x-slot name='label'>
                         {{ __('Remember me') }}
                     </x-slot>
