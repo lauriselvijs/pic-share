@@ -16,7 +16,7 @@
                 value="{{ old('name') }}" autocomplete="name" />
         </x-slot>
         <x-slot name='info'>
-            <div class='flex items-center justify-between'>
+            <div class='flex items-center justify-between pt-4'>
                 <x-input.checkbox name='agreement' required>
                     <x-slot name='label'>
                         @include('partials._terms')

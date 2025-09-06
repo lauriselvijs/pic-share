@@ -13,7 +13,7 @@
         <x-slot name='fields'>
         </x-slot>
         <x-slot name='info'>
-            <div class='flex items-center justify-between'>
+            <div class='flex items-center justify-between pt-4'>
                 <x-input.checkbox name='remember'>
                     <x-slot name='label'>
                         {{ __('Remember me') }}
