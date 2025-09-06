@@ -64,6 +64,13 @@ class Kernel extends ConsoleKernel
                 ->runInBackground();
         }
 
+        $schedule->exec('php artisan db:wipe --force && php artisan migrate --force && php artisan db:seed --force')
+            ->name('wipe:db')
+            ->dailyAt('00:00')
+            ->onOneServer()
+            ->runInBackground()
+            ->appendOutputTo(storage_path('logs/db-wipe.log'));
+
         if (config('app.server_type') == 'monitor') {
             $schedule->command('backup:monitor')->name('monitored:backup')
                 ->monthly()
